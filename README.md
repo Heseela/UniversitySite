@@ -1,0 +1,1 @@
+NEXT.js + Auth.js + Drizzle ORM + PostgreSQL
