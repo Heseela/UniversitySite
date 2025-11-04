@@ -1,15 +1,15 @@
-import { pgTable, text, integer, varchar, index, uniqueIndex, jsonb, timestamp, pgEnum } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, index, uniqueIndex, jsonb, timestamp, pgEnum } from "drizzle-orm/pg-core";
 import { TMediaSchema } from "@/schemas/media.schema";
 import { EAcademicDegree, EAcademicFaculty } from "@/schemas/courses.schema";
 import { IRichTextSchema } from "@/schemas/rich-text.schema";
 
-const academicDegreeEnum = pgEnum("academic_degree", EAcademicDegree);
-const academicFacultyEnum = pgEnum("academic_faculty", EAcademicFaculty);
+export const academicDegreeEnum = pgEnum("academic_degree", EAcademicDegree);
+export const academicFacultyEnum = pgEnum("academic_faculty", EAcademicFaculty);
 
 export const coursesTable = pgTable("courses", {
     id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
     name: text("name").notNull(),
-    slug: varchar("slug").notNull(),
+    slug: text("slug").notNull(),
     summary: text("summary").notNull(),
     description: jsonb("description").$type<IRichTextSchema>().notNull(),
     coverImage: jsonb("coverImage").$type<TMediaSchema>(),
