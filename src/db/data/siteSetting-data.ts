@@ -4,7 +4,7 @@ export const siteSettingData: TSiteSettingSelect[] = [
   {
     "id": "ea794fd7-7be9-4b0e-8d68-cf9147ad2fae",
     "logoLight": {
-      "alt": "Future Creatify Logo",
+      "alt": "University Logo",
       "name": "logo-magenta.png",
       "bytes": 192093,
       "width": 500,

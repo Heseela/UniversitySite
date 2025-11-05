@@ -2749,7 +2749,7 @@ export const pagesData: TPageTableSelect[] = [
                   "children": [
                     {
                       "mode": "normal",
-                      "text": "Future Creatify",
+                      "text": "University",
                       "type": "text",
                       "style": "color: var(--primary);",
                       "detail": 0,

@@ -33,12 +33,10 @@ export function AppSidebarHeader({
 
               {open && (
                 <section className="overflow-hidden">
-                  <h1 className="font-semibold text-xl leading-5 whitespace-nowrap">
-                    Future <span className="text-primary">Creatify</span>
+                  <h1 className="font-semibold text-2xl leading-5 whitespace-nowrap">
+                    <span className="text-primary">UNIVERSITY</span>
                   </h1>
-                  <p className="text-xs text-muted-foreground font-medium whitespace-nowrap">
-                    Education Hub
-                  </p>
+              
                 </section>
               )}
             </Link>

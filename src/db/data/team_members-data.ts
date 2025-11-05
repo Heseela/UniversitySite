@@ -43,7 +43,7 @@ export const teamMemberData: TTeamTableSelect[] = [
       "resource_type": "image"
     },
     "role": "Founder & CEO",
-    "description": "With over 20 years in education innovation, Dr. Patel founded Future Creatify to transform how educators approach teaching and learning. Her vision guides ou",
+    "description": "With over 20 years in education innovation, Dr. Patel founded this university to transform how educators approach teaching and learning. Her vision guides ou",
     "socialLinks": [
       { "link": "https://facebook.com/vercel.app/teams#" },
       { "link": "https://instagram.com/vercel.app/teams#" },

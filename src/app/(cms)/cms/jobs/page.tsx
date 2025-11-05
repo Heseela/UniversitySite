@@ -1,5 +1,5 @@
 import ContainerLayout from "@/components/cms/container-layout";
-import CoursesList from "@/components/cms/courses/courses-list";
+import JobsList from "@/components/cms/jobs/jobs-list";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Metadata } from "next";
@@ -7,37 +7,38 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
-  title: "Courses",
+  title: "Jobs",
 };
 
-export type CoursesPageProps = {
+export type JobsPageProps = {
   searchParams: {
     q?: string;
-    faculty?: string;
-    degree?: string;
+    department?: string;
+    type?: string;
+    status?: string;
     limit?: string;
   };
 };
 
-export default async function CoursesPage(props: {
-  searchParams: Promise<CoursesPageProps["searchParams"]>;
+export default async function JobsPage(props: {
+  searchParams: Promise<JobsPageProps["searchParams"]>;
 }) {
   const searchParams = await props.searchParams;
 
   return (
     <ContainerLayout
-      title="Courses"
-      description="Manage your academic courses here."
+      title="Jobs"
+      description="Manage your job postings here."
       actionTrigger={
         <Button asChild>
-          <Link href="/cms/courses/new">
-            <Plus /> New Course
+          <Link href="/cms/jobs/new">
+            <Plus /> New Job
           </Link>
         </Button>
       }
     >
-      <Suspense fallback={<div>Loading courses...</div>}>
-        <CoursesList searchParams={searchParams} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <JobsList searchParams={searchParams} />
       </Suspense>
     </ContainerLayout>
   );
