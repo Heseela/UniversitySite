@@ -1,6 +1,6 @@
 import CourseForm from "@/components/cms/courses/course-form";
 import { db } from "@/db";
-import { coursesTable } from "@/db/schema/course";
+import { coursesTable } from "@/db/schema/courses";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
