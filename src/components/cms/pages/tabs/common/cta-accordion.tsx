@@ -190,7 +190,7 @@ export default function CtaAccordion({ idx, name, onRemove, isFieldError }: Prop
                                     <FormLabel>Label <span className='text-destructive'>*</span></FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Eg. Learm More"
+                                            placeholder="Eg. Learn More"
                                             required
                                             {...field}
                                         />

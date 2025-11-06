@@ -14,6 +14,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.1684 0 0);
   --primary: #213F9B;
+  --pinkish: #E642A7;
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9612 0 0);
   --secondary-foreground: oklch(0.5555 0 0);
@@ -66,32 +67,35 @@
   --card-foreground: oklch(1 0 0);
   --popover: oklch(0.1684 0 0);
   --popover-foreground: oklch(1 0 0);
-  --primary: oklch(0.6017 0.2568 344.0723);
+  
+  --primary: var(--pinkish);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.2686 0 0);
   --secondary-foreground: oklch(0.8359 0 0);
   --muted: oklch(0.2686 0 0);
   --muted-foreground: oklch(0.5555 0 0);
-  --accent: oklch(0.5875 0.2395 334.0681);
+
+  --accent: var(--pinkish);
   --accent-foreground: oklch(1 0 0);
+
   --destructive: oklch(0.6732 0.2143 24.4654);
   --destructive-foreground: oklch(1 0 0);
   --border: oklch(0.2686 0 0);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.6017 0.2568 344.0723);
-  --chart-1: oklch(0.6017 0.2568 344.0723);
-  --chart-2: oklch(0.5875 0.2395 334.0681);
+  --ring: var(--pinkish);
+  --chart-1: var(--pinkish);
+  --chart-2: var(--pinkish);
   --chart-3: oklch(0.6056 0.2189 292.7172);
   --chart-4: oklch(0.7227 0.192 149.5793);
   --chart-5: oklch(0.8606 0.1731 91.9357);
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary: var(--pinkish);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent: var(--pinkish);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --sidebar-ring: var(--pinkish);  
   --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -111,6 +115,7 @@
   --color-error-light: #f87171;
   --color-error-dark: #dc2626;
 }
+
 
 @theme inline {
   --color-background: var(--background);

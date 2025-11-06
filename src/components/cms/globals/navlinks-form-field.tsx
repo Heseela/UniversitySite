@@ -234,7 +234,7 @@ export default function NavLinkFormField({
                                     <FormLabel>Label <span className='text-destructive'>*</span></FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Eg. Learm More"
+                                            placeholder="Eg. Learn More"
                                             required
                                             {...field}
                                         />
@@ -292,7 +292,11 @@ export default function NavLinkFormField({
                                                                 idx={subIdx}
                                                                 name={name}
                                                                 subIdx={subIdx}
-                                                                actions={{ swap, remove, insert }}
+                                                                actions={{ 
+                                                                    swap, 
+                                                                    remove, 
+                                                                    insert: insert as UseFieldArrayInsert<any>
+                                                                }}
                                                             />
                                                         ))
                                                     }

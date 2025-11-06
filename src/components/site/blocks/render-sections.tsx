@@ -28,7 +28,7 @@ export default function RenderSections({ sections }: Props) {
           <section
             key={idx}
             className={cn(
-              "py-20 relative even:bg-cream first:!pt-20",
+              "py-20 relative even:bg-gray-50 first:!pt-20",
             )}
             style={
               {

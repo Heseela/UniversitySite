@@ -1,7 +1,7 @@
 import { db } from "@/db";
-import { events } from "@/db/schema/event";
+import { coursesTable } from "@/db/schema/courses";
 import { getPaginationQueryParams, paginatedResponse } from "@/lib/db-utils";
-import { and, desc, ilike, SQL } from "drizzle-orm";
+import { and, asc, ilike, SQL } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -11,22 +11,22 @@ export async function GET(request: NextRequest) {
   const { page, pageSize } = getPaginationQueryParams(searchParams);
 
   const filters: SQL[] = [];
-  if (q) filters.push(ilike(events.title, `%${q}%`));
+  if (q) filters.push(ilike(coursesTable.name, `%${q}%`));
 
   const query = db
     .select({
-      label: events.title,
-      value: events.slug,
+      label: coursesTable.name,
+      value: coursesTable.slug,
     })
-    .from(events)
+    .from(coursesTable)
     .where(and(...filters));
 
-  const foundEvents = await paginatedResponse({
-    orderByColumn: desc(events.eventDate),
+  const foundCourses = await paginatedResponse({
+    orderByColumn: asc(coursesTable.name),
     qb: query.$dynamic(),
     page,
     pageSize,
   });
 
-  return NextResponse.json(foundEvents);
+  return NextResponse.json(foundCourses);
 }
