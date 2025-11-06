@@ -17,6 +17,7 @@ import { useMemo, useTransition } from 'react';
 import { toast } from 'sonner';
 import { updatePage } from '@/lib/actions/pages.action';
 import { useCustomSearchParams } from '@/hooks/useCustomSearchParams';
+import { useQueryClient } from '@tanstack/react-query';
 
 type Props = {
     page: TPage,
@@ -41,6 +42,7 @@ const tabs = [
 export default function PageForm({ page, defaultTab }: Props) {
     const [isPending, startTransition] = useTransition();
     const { setSearchParams } = useCustomSearchParams();
+    const queryClient = useQueryClient();
 
     const form = useForm<TPageDto>({
         resolver: zodResolver(PageDtoSchema),
@@ -52,8 +54,10 @@ export default function PageForm({ page, defaultTab }: Props) {
         startTransition(async () => {
             try {
                 await updatePage(page.id, data);
-
                 toast.success("Page updated");
+                queryClient.invalidateQueries({
+                    queryKey: ['pages', 'options', '']
+                });
             } catch (e) {
                 showServerError(e);
             }

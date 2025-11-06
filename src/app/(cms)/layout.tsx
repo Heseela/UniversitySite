@@ -8,6 +8,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/lib/queryClient";
 import NextTopLoader from 'nextjs-toploader';
 import { SITE_TITLE } from "@/CONSTANTS";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -42,6 +43,7 @@ export default async function RootLayout({
             <QueryClientProvider client={queryClient}>
               <NextTopLoader />
               {children}
+              <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </SessionProvider>
           <Toaster richColors />
