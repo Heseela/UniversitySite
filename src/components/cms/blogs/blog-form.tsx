@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   defaultValues: TBlog;
@@ -38,6 +39,7 @@ type Props = {
 export default function BlogForm({ defaultValues, categoriesOptions }: Props) {
   const [isPending, startTransition] = useTransition();
   const isPublished = defaultValues.publishedAt !== null;
+  const queryClient = useQueryClient();
 
   const form = useForm<blogSchemaType>({
     resolver: zodResolver(blogSchema),
@@ -59,6 +61,10 @@ export default function BlogForm({ defaultValues, categoriesOptions }: Props) {
             ? values.title
             : defaultValues.title || "Untitled",
           length: form.getValues("length"),
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ['blogs', 'options', '']
         });
       } catch (e) {
         if (e instanceof Error) {

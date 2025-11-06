@@ -4,7 +4,6 @@ import { Editor } from "@/components/editor/blocks/editor-x/editor";
 import { InfiniteSelect } from "@/components/forms/infinite-select";
 import { MediaInput, MediaItem } from "@/components/forms/media-field";
 import { LoadingButton } from "@/components/ui/button";
-import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
@@ -70,8 +69,6 @@ export default function EventForm({ defaultValues, selectedCategory }: Props) {
     name: "title",
   });
   
-  console.log(form.getValues())
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
