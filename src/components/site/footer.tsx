@@ -23,7 +23,7 @@ export default async function Footer() {
     : null;
 
   return (
-    <footer className="bg-[#fcfcfc] pt-16 pb-8">
+    <footer className="bg-primary text-white pt-16 pb-8">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
@@ -37,7 +37,7 @@ export default async function Footer() {
                 className="h-16 w-auto"
               />
             </Link>
-            <p className="mb-4 text-muted-foreground">
+            <p className="mb-4">
               {footerData?.footerText || ""}
             </p>
             <div className="flex space-x-4">
@@ -47,15 +47,15 @@ export default async function Footer() {
 
                   return (
                     <a
-                      key={index}
-                      href={social.link}
-                      aria-label={`Social Link ${index + 1}`}
-                      className="hover:text-primary"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Icon className="size-6" />
-                    </a>
+                    key={index}
+                    href={social.link}
+                    aria-label={`Social Link ${index + 1}`}
+                    className="hover:text-secondary transition-transform duration-200 hover:scale-110"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon className="size-6" />
+                  </a>
                   )
                 }
               )}
@@ -64,7 +64,7 @@ export default async function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-bold mb-4">Quick Links</h4>
+            <h4 className="text-white text-xl font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {
                 footerData?.navLinks?.map((link) => (
@@ -78,7 +78,7 @@ export default async function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h4 className="text-xl font-bold mb-4">Contact Info</h4>
+            <h4 className="text-white text-xl font-bold mb-4">Contact Info</h4>
             <ul className="space-y-3">
               {
                 siteData?.address && (
@@ -134,19 +134,19 @@ export default async function Footer() {
 
           {/* Newsletter */}
           <div>
-            <h4 className="text-xl font-bold mb-4">Newsletter</h4>
-            <p className="mb-4 text-muted-foreground">
+            <h4 className="text-white text-xl font-bold mb-4">Newsletter</h4>
+            <p className="mb-4">
               Subscribe to our newsletter to get the latest updates on our
               events and blogs.
             </p>
             <form className="flex flex-col space-y-3">
               <Input type="email" placeholder="Your email" />
-              <Button type="submit">Subscribe</Button>
+              <Button type="submit" variant="secondary">Subscribe</Button>
             </form>
           </div>
         </div>
 
-        <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
+        <div className="border-t mt-12 pt-8 text-center">
           <p>&copy; {currentYear} Feature Creatify. All rights reserved.</p>
         </div>
       </div>

@@ -13,8 +13,8 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Feature Creatify",
-    template: "%s | Feature Creatify",
+    default: "University",
+    template: "%s | University",
   },
 };
 

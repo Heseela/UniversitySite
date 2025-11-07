@@ -69,7 +69,7 @@ export default function CertificationsTabContent() {
                                                                                             <FormItem>
                                                                                                 <FormControl>
                                                                                                     <input
-                                                                                                        maxLength={50}
+                                                                                                        maxLength={100}
                                                                                                         onClick={(e) => e.stopPropagation()}
                                                                                                         className="focus:outline-0 text-sm field-sizing-content"
                                                                                                         placeholder="Untitled"
@@ -119,7 +119,7 @@ export default function CertificationsTabContent() {
                                                                                         <FormControl>
                                                                                             <Input
                                                                                                 className='py-5'
-                                                                                                maxLength={50}
+                                                                                                maxLength={100}
                                                                                                 {...field}
                                                                                             />
                                                                                         </FormControl>

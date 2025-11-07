@@ -58,7 +58,7 @@ export default async function CoursesBlock({
             <div className="flex justify-center">
                 <Button variant={"link"} asChild>
                     <Link className="text-primary  w-fit flex justify-center" href={"/courses"}>
-                        View All Blogs
+                        View All Courses
                     </Link>
                 </Button>
             </div>

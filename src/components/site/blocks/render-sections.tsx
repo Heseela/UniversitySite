@@ -10,6 +10,10 @@ import { EAlignment } from "../../../../types/global.types";
 import { RenderContactTextBlock } from "./contact";
 import { RenderTestimonialBlock } from "./testimonials";
 import { RenderMapBlock } from "./map";
+import { RenderPartnerBlock } from "./partner";
+import { RenderCertificationBlock } from "./certification";
+import { RenderAlumniBlock } from "./alumni";
+import { RenderFaqBlock } from "./faq";
 
 type Props = {
   sections: TPageDto["sections"];
@@ -101,6 +105,14 @@ export default function RenderSections({ sections }: Props) {
                     <RenderContactTextBlock key={idx} />
                   ) : b.type === EBlock.Testimonial ? (
                     <RenderTestimonialBlock key={idx} />
+                  ) : b.type === EBlock.Partner ? (
+                    <RenderPartnerBlock key={idx} />
+                  ) : b.type === EBlock.Faq ? (
+                    <RenderFaqBlock key={idx} />
+                  ) : b.type === EBlock.Alumni ? (
+                    <RenderAlumniBlock key={idx} />
+                  ) : b.type === EBlock.Certification ? (
+                    <RenderCertificationBlock key={idx} />
                   ) : b.type === EBlock.Map ? (
                     <div className={cn(s.blocks?.items?.length === 1 ? "min-h-[400px]" : "h-full")}>
                       <div className={cn(s.blocks?.items?.length === 1 && 'absolute inset-0')}>
