@@ -41,7 +41,7 @@ export default function RenderCardsBlock({
                         <Card
                             key={index}
                             className={cn(
-                                "overflow-hidden gap-4 py-8",
+                                "overflow-hidden gap-0 py-0",
                                 card.borderLess && "border-0"
                             )}
                         >
@@ -69,7 +69,7 @@ export default function RenderCardsBlock({
                                     </CardTitle>
                                 </CardHeader>
                             )}
-                            <CardContent className='px-8'>
+                            <CardContent className='px-8 py-8'>
                                 <p className='text-muted-foreground'>{card.subtitle}</p>
                                 {
                                     !isEmptyHTML(card.description.html) && (

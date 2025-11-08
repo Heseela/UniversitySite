@@ -61,7 +61,7 @@ export default function RenderSections({ sections }: Props) {
                     {!!s.headline && (
                       <h2
                         className={cn(
-                          "text-4xl font-bold",
+                          "text-4xl font-bold text-primary",
                           s.headlineAlignment === EAlignment.Left
                             ? "text-left"
                             : s.headlineAlignment === EAlignment.Center
@@ -75,7 +75,7 @@ export default function RenderSections({ sections }: Props) {
                     {!!s.subheadline && (
                       <p
                         className={cn(
-                          "text-muted-foreground max-w-4xl text-balance",
+                          "text-muted-foreground max-w-6xl text-balance",
                           s.headlineAlignment === EAlignment.Left
                             ? "text-left"
                             : s.headlineAlignment === EAlignment.Center

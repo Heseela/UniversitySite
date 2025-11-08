@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "../globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/sonner";
@@ -10,8 +10,8 @@ import NextTopLoader from 'nextjs-toploader';
 import { SITE_TITLE } from "@/CONSTANTS";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
 });
 
@@ -31,7 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} antialiased`}
+        className={`${manrope.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
