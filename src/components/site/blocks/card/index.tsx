@@ -56,7 +56,7 @@ export default function RenderCardsBlock({
                             }
                             {card.title && (
                                 <CardHeader className='px-8'>
-                                    <CardTitle className='sm:text-2xl leading-snug font-playfair'>
+                                    <CardTitle className='sm:text-2xl leading-snug font-manrope'>
                                         {
                                             card.link?.url
                                                 ? (

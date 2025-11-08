@@ -6,6 +6,7 @@ import CardsBlock from "./card/card-block";
 import RefItemBlock from "./ref-item.block";
 import FormBlock from "./form-block";
 import FaqBlock from "./faq-block";
+import TimelineBlock from "./timeline-block";
 
 export type BlockComponentProps = {
   sectionIdx: number;
@@ -25,4 +26,5 @@ export const blocks: Partial<Record<EBlock, FC<BlockComponentProps>>> = {
   [EBlock.Certification]: FaqBlock,
   [EBlock.ContactText]: FaqBlock,
   [EBlock.Map]: FaqBlock,
+  [EBlock.Timeline]: TimelineBlock,
 };

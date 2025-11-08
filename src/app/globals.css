@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -156,13 +156,14 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  --font-playfair: var(--font-manrope);
+  --font-manrope: var(--font-manrope);
   --color-warning: var(--color-warning);
   --color-warning-light: var(--color-warning-light);
   --color-warning-dark: var(--color-warning-dark);
   --color-error: var(--color-error);
   --color-error: var(--color-error-light);
   --color-error: var(--color-error-dark);
+  --color-pinkish: var(--pinkish);
 }
 
 html {
@@ -210,7 +211,7 @@ body {
   h4,
   h5,
   h6 {
-    @apply text-gray-800 dark:text-foreground font-playfair tracking-tight;
+    @apply text-gray-800 dark:text-foreground font-manrope tracking-tight;
   }
 
   .container {
