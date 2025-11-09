@@ -164,10 +164,23 @@ export const ContactBlockSchema = BaseBlockSchema.extend({
   type: z.literal(EBlock.ContactText),
 });
 
-//map
+// --- MapBlockDto ---
 export const MapBlockSchema = BaseBlockSchema.extend({
   type: z.literal(EBlock.Map),
 });
+
+// --- TimelineBlockDto ---
+export const TimelineBlockSchema = BaseBlockSchema.extend({
+  type: z.literal(EBlock.Timeline),
+  events: z.array(z.object({
+    title: z.string().min(1, { message: "Title is required" }),
+    date: z.string().min(1, { message: "Date is required" }),
+    description: z.string(),
+    media: mediaSchema.nullish(),
+  })).min(1, { message: "At least one event is required" }),
+});
+
+export type TimelineBlockDto = z.infer<typeof TimelineBlockSchema>;
 
 // ---- Discriminated union of all blocks ----
 export const BlockSchema = z.discriminatedUnion("type", [
@@ -182,7 +195,8 @@ export const BlockSchema = z.discriminatedUnion("type", [
   PartnerBlockSchema,
   CertificationBlockSchema,
   ContactBlockSchema,
-  MapBlockSchema
+  MapBlockSchema,
+  TimelineBlockSchema
 ]);
 
 export type TBlock = z.infer<typeof BlockSchema>;

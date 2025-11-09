@@ -43,7 +43,7 @@ export default function RenderCardsBlock({
                         <Card
                             key={index}
                             className={cn(
-                                "overflow-hidden gap-4 py-8",
+                                "overflow-hidden gap-0 py-0",
                                 card.borderLess && "border-0"
                             )}
                         >
@@ -59,11 +59,8 @@ export default function RenderCardsBlock({
                                 )
                             }
                             {card.title && (
-                                <CardHeader className={cn(
-                                    "px-8",
-                                    !hasImage && "pt-0" 
-                                )}>
-                                    <CardTitle className='sm:text-2xl leading-snug font-playfair'>
+                                <CardHeader className='px-8'>
+                                    <CardTitle className='sm:text-2xl leading-snug font-manrope'>
                                         {
                                             card.link?.url
                                                 ? (
@@ -76,10 +73,7 @@ export default function RenderCardsBlock({
                                     </CardTitle>
                                 </CardHeader>
                             )}
-                            <CardContent className={cn(
-                                "px-8",
-                                !hasImage && !card.title && "pt-0"
-                            )}>
+                            <CardContent className='px-8 py-8'>
                                 <p className='text-muted-foreground'>{card.subtitle}</p>
                                 {
                                     !isEmptyHTML(card.description.html) && (

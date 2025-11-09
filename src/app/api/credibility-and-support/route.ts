@@ -1,40 +1,5 @@
-// import { db } from "@/db";
-// import {
-//   credibilityAndSupportTable,
-//   TCredibilityAndSupportTableSelect,
-// } from "@/db/schema/credibility-and-support";
-// import { NextRequest, NextResponse } from "next/server";
-
-// export const GET = async (request: NextRequest) => {
-//    const searchParams = request.nextUrl.searchParams;
-
-//   const column = searchParams.get("col");
-
-//   const isValidColumn =
-//     column && Object.keys(credibilityAndSupportTable).includes(column);
-
-//   if (!isValidColumn) throw new Error("Please provide valid column");
-
-//   const [cas] = await db
-//     .select({
-//       [column]:
-//         credibilityAndSupportTable[
-//           column as keyof TCredibilityAndSupportTableSelect
-//         ],
-//     })
-//     .from(credibilityAndSupportTable)
-//     .limit(1);
-
-//   return NextResponse.json(cas);
-// };
-
-
-
 import { db } from "@/db";
-import {
-  credibilityAndSupportTable,
-  TCredibilityAndSupportTableSelect,
-} from "@/db/schema/credibility-and-support";
+import { credibilityAndSupportTable } from "@/db/schema/credibility-and-support";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest) => {
@@ -44,11 +9,11 @@ export const GET = async (request: NextRequest) => {
 
     // Define valid columns based on your schema
     const validColumns = [
-      'faqCategories', 
-      'faqs', 
-      'partners', 
-      'testimonials', 
-      'certifications', 
+      'faqCategories',
+      'faqs',
+      'partners',
+      'testimonials',
+      'certifications',
       'alumni'
     ];
 
@@ -68,10 +33,10 @@ export const GET = async (request: NextRequest) => {
 
     if (invalidColumns.length > 0) {
       return NextResponse.json(
-        { 
-          error: "Invalid columns provided", 
+        {
+          error: "Invalid columns provided",
           invalidColumns,
-          validColumns 
+          validColumns
         },
         { status: 400 }
       );
