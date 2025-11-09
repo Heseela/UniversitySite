@@ -14,7 +14,7 @@ export default function JumboTron({ hero }: RenderHeroProps) {
   return (
     <section
       className={cn(
-        "bg-cream h-[80vh] max-h-[400px]",
+        " h-[80vh] max-h-[400px]",
         hero.image?.secure_url && "h-[80vh] max-h-[600px]",
       )}
       style={{
