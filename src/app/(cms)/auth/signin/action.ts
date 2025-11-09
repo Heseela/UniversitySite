@@ -1,7 +1,6 @@
 "use server"
 
 import { signIn } from '@/auth'
-import { redirect } from 'next/navigation';
 import { z } from 'zod'
 
 const emailSchema = z.string().email("Invalid email address").trim();
@@ -18,6 +17,4 @@ export async function signInAction(email: string) {
     }
 
     await signIn("resend", { email, redirect: false });
-
-    redirect("/auth/signin/verify-request?email=" + email);
 }

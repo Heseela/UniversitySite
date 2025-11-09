@@ -14,7 +14,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import isEmptyHTML from "@/lib/utilities/isEmptyHTML";
 import { cn, showServerError } from "@/lib/utils";
 import { createFormSubmission } from "@/lib/actions/forms.action";
 import { toast } from "sonner";
@@ -45,11 +44,7 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
     return (
         <Card className="w-full">
             <CardHeader>
-                {!isEmptyHTML(introContent?.html || "") && (
-                    <section>
-                        <RichTextPreview html={introContent?.html || ""} />
-                    </section>
-                )}
+                <RichTextPreview html={introContent?.html || ""} />
             </CardHeader>
             <CardContent>
                 <form action={handleFormSubmission} className="space-y-6">
