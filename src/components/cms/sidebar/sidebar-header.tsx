@@ -27,7 +27,7 @@ export function AppSidebarHeader({
                   height={64}
                   src={siteData?.logoLight?.secure_url}
                   alt="Feature Creatify Logo"
-                  className="h-auto max-w-18"
+                  className="max-h-28 max-auto"
                 />
               )}
 

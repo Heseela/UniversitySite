@@ -84,7 +84,30 @@ export default function CredibilityAndSupportForm({ credibilityAndSupport: cas, 
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='@container h-full'>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+
+                    const errors = credibilityAndSupportSchema.safeParse(form.getValues()).error;
+
+                    if (errors?.issues.length) {
+                        errors.issues.forEach(e => {
+                            if (Array.isArray(e.path)) {
+                                const stringPath = e.path.join('.') as keyof TCredibilityAndSupport;
+                                form.setError(stringPath, {
+                                    message: e.message,
+                                    type: "manual",
+                                });
+                            }
+                        });
+
+                        return;
+                    }
+
+                    onSubmit(form.getValues());
+                }}
+                className='@container h-full'
+            >
                 <FormProvider {...form}>
                     <section className="h-full flex flex-col space-y-6">
                         <header className='@6xl:px-24 @3xl:px-16 px-8 space-y-2'>

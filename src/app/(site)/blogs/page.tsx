@@ -28,7 +28,7 @@ export default async function BlogsPage() {
 
   return (
     <>
-      <RenderHero hero={page.heroSections[0]} />
+      <RenderHero heroSections={page.heroSections} />
 
       {/* Blogs Section */}
       <section className="container py-12">

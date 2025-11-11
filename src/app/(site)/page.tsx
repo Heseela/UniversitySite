@@ -34,7 +34,7 @@ export default async function Page() {
 
   return (
     <div>
-      <RenderHero hero={page.heroSections[0]} />
+      <RenderHero heroSections={page.heroSections} />
       <RenderSections sections={page.sections} />
     </div>
   );

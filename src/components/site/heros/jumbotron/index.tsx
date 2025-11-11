@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
-import { RenderHeroProps } from "../render-hero";
 import { EHeroLayoutTypes } from "../../../../../types/page.types";
 import { EAlignment } from "../../../../../types/global.types";
 import { RichTextPreview } from "@/components/editor/blocks/editor-x/rich-text-preview";
 import CMSLink from "@/components/ui/cms-link";
+import { THeroSectionDto } from "@/schemas/hero-section.schema";
 
-export default function JumboTron({ hero }: RenderHeroProps) {
+export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
   const layoutType = hero.layout.type;
   if (layoutType !== EHeroLayoutTypes.Jumbotron) return null;
 

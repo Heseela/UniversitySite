@@ -140,6 +140,9 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@uiw/react-json-view':
+        specifier: 2.0.0-alpha.39
+        version: 2.0.0-alpha.39(@babel/runtime@7.28.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@yoopta/accordion':
         specifier: ^4.9.9
         version: 4.9.9(@yoopta/editor@4.9.9(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(slate-react@0.102.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(slate@0.102.0))(slate@0.102.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2124,6 +2127,13 @@ packages:
       codemirror: '>=6.0.0'
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
+
+  '@uiw/react-json-view@2.0.0-alpha.39':
+    resolution: {integrity: sha512-D9MHNan56WhtdAsmjtE9x18YLY0JSMnh0a6Ji0/2sVXCF456ZVumYLdx2II7hLQOgRMa4QMaHloytpTUHxsFRw==}
+    peerDependencies:
+      '@babel/runtime': '>=7.10.0'
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     resolution: {integrity: sha512-ppLRUgHVaGRWUx0R0Ut06Mjo9gBaBkg3v/8AxusGLhsIotbBLuRk51rAzqLC8gq6NyyAojEXglNjzf6R948DNw==}
@@ -6300,6 +6310,12 @@ snapshots:
       - '@codemirror/language'
       - '@codemirror/lint'
       - '@codemirror/search'
+
+  '@uiw/react-json-view@2.0.0-alpha.39(@babel/runtime@7.28.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
+    dependencies:
+      '@babel/runtime': 7.28.4
+      react: 19.2.0
+      react-dom: 19.2.0(react@19.2.0)
 
   '@unrs/resolver-binding-android-arm-eabi@1.11.1':
     optional: true

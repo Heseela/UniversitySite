@@ -24,6 +24,7 @@ import { EAlignment } from "../../../../../types/global.types";
 import FieldArraySortableContext from "@/components/dnd/field-array-sortable-context";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
+import { BLOGS_SLUG, COURSES_SLUG, EVENTS_SLUG } from "@/app/slugs";
 
 const sectionDefaultValue: TPageSection = {
     tagline: "",
@@ -37,13 +38,19 @@ const sectionDefaultValue: TPageSection = {
     },
 }
 
-export default function ContentTabContent() {
+export default function ContentTabContent({ slug }: { slug: string }) {
     const form = useFormContext<TPageDto>();
 
     const { fields, append, remove, swap, insert, move } = useFieldArray({
         control: form.control,
         name: "sections",
     });
+
+     if (([BLOGS_SLUG, EVENTS_SLUG, COURSES_SLUG] as string[]).includes(slug)) {
+        return <div className="py-12 max-w-2xl flex justify-center">
+            <p>{`You cannot update the content of ${slug} page.`}</p>
+        </div>
+    }
 
     return (
         <section className="space-y-2">

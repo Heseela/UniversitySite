@@ -3,7 +3,7 @@ import SplitHero from "./split-hero"
 import JumboTron from "./jumbotron"
 
 export type RenderHeroProps = {
-    hero: THeroSectionDto
+    heroSections: THeroSectionDto[]
 }
 
 const heros = {
@@ -11,8 +11,12 @@ const heros = {
     splitHero: SplitHero
 }
 
-export default function RenderHero(props: RenderHeroProps) {
-    const type = props.hero.layout.type;
+export default function RenderHero({ heroSections }: RenderHeroProps) {
+    if (!heroSections.length) return null;
+
+    const hero = heroSections[0];
+
+    const type = hero.layout.type;
 
     if (!type) return null;
 
@@ -21,6 +25,6 @@ export default function RenderHero(props: RenderHeroProps) {
     if (!HeroToRender) return null;
 
     return (
-        <HeroToRender {...props} />
+        <HeroToRender hero={hero} />
     )
 }
