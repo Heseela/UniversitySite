@@ -12,7 +12,7 @@ const heros = {
 }
 
 export default function RenderHero(props: RenderHeroProps) {
-    const type = props.hero.layout.type;
+    const type = props.hero?.layout.type;
 
     if (!type) return null;
 

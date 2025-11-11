@@ -35,6 +35,7 @@ const blockToRender: Record<EBlock, FC<any>> = {
   [EBlock.Certification]: RenderCertificationBlock,
   [EBlock.Map]: RenderMapBlock,
   [EBlock.Timeline]: RenderTimelineBlock
+  
 }
 
 export default function RenderSections({ sections }: Props) {
@@ -82,7 +83,6 @@ export default function RenderSections({ sections }: Props) {
                   s.blocks?.items?.map((b, idx) => {
                     const BlockToRender = blockToRender[b.type];
 
-                    // a different case for the Map block
                     if (b.type === EBlock.Map) {
                       return (
                         <div className={cn(s.blocks?.items?.length === 1 ? "min-h-[400px]" : "h-full")}>

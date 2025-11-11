@@ -55,13 +55,6 @@ export default async function CoursesBlock({
                     return <CourseCard key={course.slug} course={course} />;
                 })}
             </section>
-            <div className="flex justify-center">
-                <Button variant={"link"} asChild>
-                    <Link className="text-primary  w-fit flex justify-center" href={"/courses"}>
-                        View All Courses
-                    </Link>
-                </Button>
-            </div>
         </>
     );
 }

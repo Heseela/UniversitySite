@@ -43,7 +43,7 @@ export default function CourseCard({ course, className }: Props) {
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-        
+
         {course.duration && (
           <Badge className="absolute bottom-4 left-4 bg-[var(--pinkish)] text-white px-3 py-1 rounded-full text-sm font-medium border-0">
             <Clock size={14} className="mr-1" />
@@ -92,10 +92,10 @@ export default function CourseCard({ course, className }: Props) {
             <ul className="space-y-2">
               {features.slice(0, 3).map((feature, index) => (
                 <li key={index} className="flex items-start">
-                  <svg 
-                    className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -124,12 +124,12 @@ export function CourseCardSkeleton() {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full flex flex-col">
       <Skeleton className="w-full h-60 rounded-none" />
-      
+
       <div className="p-6 flex flex-col flex-grow">
         <Skeleton className="h-5 w-20 mb-3" />
-        
+
         <Skeleton className="h-6 w-3/4 mb-3" />
-        
+
         <div className="space-y-2 mb-5 flex-grow">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-5/6" />

@@ -43,7 +43,7 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
     }
 
     return (
-        <Card className="w-full">
+        <Card className="w-10/12 mx-auto h-fit">
             <CardHeader>
                 {!isEmptyHTML(introContent?.html || "") && (
                     <section>
@@ -173,7 +173,7 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                     <LoadingButton
                         type="submit"
                         isLoading={isPending}
-                        className="w-full"
+                        className="w-full mb-6"
                         disabled={isPending}
                         loadingText="Submitting..."
                     >

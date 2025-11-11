@@ -48,7 +48,8 @@ export enum ERefRelation {
   Events = "events",
   Blogs = "blogs",
   Teams = "teams",
-  Courses = "courses"
+  Courses = "courses",
+  Jobs = "jobs"
 }
 
 export enum EOrder {

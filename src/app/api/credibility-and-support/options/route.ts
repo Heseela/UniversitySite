@@ -1,4 +1,3 @@
-// app/api/credibility-and-support/options/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db";
 import { credibilityAndSupportTable } from "@/db/schema/credibility-and-support";
@@ -9,7 +8,6 @@ export async function GET(request: NextRequest) {
     const column = searchParams.get("col");
     const q = searchParams.get("q") || "";
 
-    // Define valid columns that can be used for options
     const validOptionColumns = ['faqCategories'];
 
     if (!column || !validOptionColumns.includes(column)) {
@@ -22,7 +20,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get all data first, then extract the specific column
     const [data] = await db.select().from(credibilityAndSupportTable);
 
     if (!data || !data[column as keyof typeof data]) {
@@ -31,7 +28,6 @@ export async function GET(request: NextRequest) {
 
     const columnData = data[column as keyof typeof data] as any[];
 
-    // Transform data based on column type
     let options: Array<{ label: string; value: string }> = [];
 
     switch (column) {
