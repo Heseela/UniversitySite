@@ -37,6 +37,8 @@ export default function RenderCardsBlock({
                             ? card.link.url
                             : `/${card.link}`
 
+                    const hasImage = card.image?.secure_url
+
                     return (
                         <Card
                             key={index}
@@ -46,11 +48,13 @@ export default function RenderCardsBlock({
                             )}
                         >
                             {
-                                card.image?.secure_url && (
+                                hasImage && card.image && (
                                     <CloudinaryImage
                                         src={card.image.secure_url}
                                         className='w-full h-64 object-cover'
-                                        {...card.image}
+                                        alt={card.image.alt || ''}
+                                        width={card.image.width}
+                                        height={card.image.height}
                                     />
                                 )
                             }

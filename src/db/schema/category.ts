@@ -6,6 +6,7 @@ import { events } from "./event";
 export enum CategoryType {
   EVENT = "event",
   BLOG = "blog",
+  COURSE = "course"
 }
 
 export const categories = pgTable(

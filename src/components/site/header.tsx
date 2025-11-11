@@ -3,13 +3,11 @@
 import React, { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { buttonVariants } from "../ui/button";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { RefinedSiteNavLinks } from "./navbar";
 import { TSiteSettingSchema } from "@/schemas/site-setting.schema";
-import { ECtaVariant } from "../../../types/blocks.types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,7 +54,7 @@ export default function Header({
             width={64}
             height={64}
             src={siteData?.logoLight?.secure_url || `/logo.png`}
-            alt="Feature Creatify Logo"
+            alt="University Logo"
             className="h-16 w-auto"
           />
         </Link>
@@ -69,15 +67,12 @@ export default function Header({
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  buttonVariants({ variant: link.variant }),
-                  "px-0 text-base font-normal capitalize",
-                  link.variant === ECtaVariant.Link &&
-                    "text-black hover:text-primary",
-                  link.variant === ECtaVariant.Link &&
-                    pathname === link.href &&
-                    "text-primary underline",
-                  link.variant === ECtaVariant.Default &&
-                    "px-4 py-5 font-medium",
+                  "px-0 text-base font-normal capitalize shadow-none hover:text-primary transition-colors duration-200",
+                  // Default button styles
+                  link.variant === "default" && "text-black hover:text-[var(--pinkish)]",
+                  // Link variant styles
+                  link.variant === "link" && "text-black hover:text-[var(--pinkish)]",
+                  link.variant === "link" && pathname === link.href && "text-primary underline",
                   hasHero && !scrolled && pathname !== link.href && "!text-white"
                 )}
                 target={link.newTab ? "_blank" : "_self"}
@@ -86,7 +81,7 @@ export default function Header({
               </Link>
             ) : (
               <DropdownMenu key={link.label}>
-                <DropdownMenuTrigger className="flex items-center gap-1 text-base capitalize">
+                <DropdownMenuTrigger className="flex items-center outline-none font-normal gap-1 text-base capitalize text-black hover:text-[var(--pinkish)] transition-colors duration-200">
                   {link.label}
                   <ChevronDown size={16} />
                 </DropdownMenuTrigger>
@@ -96,7 +91,7 @@ export default function Header({
                       <Link
                         href={l.url}
                         target={l.newTab ? "_blank" : "_self"}
-                        className="w-full text-base font-normal capitalize hover:text-primary"
+                        className="w-full text-base font-normal capitalize hover:text-[var(--pinkish)] transition-colors duration-200"
                       >
                         {l.text}
                       </Link>
@@ -128,14 +123,14 @@ export default function Header({
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-2 py-2 text-lg font-medium text-gray-800 hover:text-primary"
+                  className="px-2 py-2 text-lg font-normal text-gray-800 hover:text-[var(--pinkish)]"
                 >
                   {link.label}
                 </Link>
               ) : (
                 <div key={link.label}>
                   <button
-                    className="w-full text-left px-2 py-2 text-lg font-medium flex justify-between items-center"
+                    className="w-full text-left px-2 py-2 text-lg font-normal flex justify-between items-center hover:text-[var(--pinkish)]"
                     onClick={() => toggleMobileDropdown(link.label)}
                   >
                     {link.label}
@@ -155,7 +150,7 @@ export default function Header({
                           href={l.url}
                           target={l.newTab ? "_blank" : "_self"}
                           onClick={() => setMobileMenuOpen(false)}
-                          className="text-base text-gray-600 hover:text-primary capitalize"
+                          className="text-base text-gray-600 hover:text-[var(--pinkish)] capitalize"
                         >
                           {l.text}
                         </Link>
