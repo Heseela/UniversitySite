@@ -5,67 +5,30 @@ import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useFetchData } from '@/hooks/useFetchData';
 import { LoaderCircle, Search, X } from 'lucide-react';
-import { ColumnDef } from '@tanstack/react-table';
 import CloudinaryImage from '../ui/cloudinary-image';
 import { Input } from '../ui/input';
 import { cn, createQueryString, formatBytes, showServerError } from '@/lib/utils';
 import { TMediaSchema } from '@/schemas/media.schema';
 import { uploadMedia } from '@/lib/actions/media.action';
 import { Textarea } from '../ui/textarea';
-import { CldUploadWidget } from 'next-cloudinary';
-import { CLOUDINARY_SIGNATURE_ENDPOINT } from '@/CONSTANTS';
 import CustomDialog from '../ui/custom-dialog';
 import LoadingButton from '../forms/loading-button';
 import { TMedia, TMediaResponse } from '../../../types/media.types';
 import { MediaSelectDataTablePagination } from './media-select-data-table-patination';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { DataTable } from '../data-table/data-table';
 import { AddFilesButton } from './add-files-btn';
 import { Checkbox } from '../ui/checkbox';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 type MediaFieldProps = {
     media: TMediaSchema;
-    onChange: (value: TMediaSchema | TMediaSchema[]) => void;
+    onChange: (value: TMedia[]) => void;
     onClose: () => void;
     onRemove: () => void;
+    defaultSelected?: TMedia[]
 }
 
-export function MediaItem({ media, onRemove }: Pick<MediaFieldProps, 'media' | 'onRemove'>) {
-    return (
-        <section className="bg-card border rounded-md p-3 flex items-center justify-between gap-4">
-            <section className='flex items-center gap-4'>
-                <CloudinaryImage
-                    src={media.secure_url}
-                    alt={media.alt ?? ""}
-                    width={40}
-                    height={40}
-                />
-                <section className="text-sm space-y-1">
-                    <p>{media.name}</p>
-                    <p className="text-muted-foreground text-xs">
-                        <span>{formatBytes(media.bytes)} | </span>
-                        <span>{media.width} x {media.height} | </span>
-                        <span>{media.resource_type}/{media.format}</span>
-                    </p>
-                </section>
-            </section>
-
-            <section>
-                <Button
-                    type="button"
-                    variant={'ghost'}
-                    size={'icon'}
-                    title='Remove'
-                    onClick={onRemove}
-                >
-                    <X />
-                </Button>
-            </section>
-        </section>
-    )
-}
-
-export function MediaInput__Bulk({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
+export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldProps, 'onChange' | 'defaultSelected'>) {
     const [createNewOpen, setCreateNewOpen] = useState(false);
     const [selectorOpen, setSelectorOpen] = useState(false);
 
@@ -117,6 +80,7 @@ export function MediaInput__Bulk({ onChange }: Pick<MediaFieldProps, 'onChange'>
                         <MediaSelector
                             onClose={() => setSelectorOpen(false)}
                             onChange={onChange}
+                            defaultSelected={defaultSelected}
                         />
                     </section>
                 </DialogContent>
@@ -156,8 +120,8 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
 
         startTransition(async () => {
             try {
-                await uploadMedia(files);
-                onChange(files);
+                const inserted = await uploadMedia(files);
+                onChange(inserted);
                 onClose();
             } catch (e) {
                 showServerError(e);
@@ -314,14 +278,18 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
     );
 }
 
-export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
+
+export default function MediaSelector({ onClose, onChange, defaultSelected }: Pick<MediaFieldProps, 'onClose' | 'onChange' | 'defaultSelected'>) {
     const [search, setSearch] = useState("");
     const [queryParams, setQueryParams] = useState<Record<string, string | undefined>>({
         resource_type: "image",
     });
 
     // persistent selection across pages
-    const [selectedMap, setSelectedMap] = useState<Map<string, TMedia>>(new Map());
+    const [selectedMap, setSelectedMap] = useState<Map<string, TMedia>>(
+        () => new Map((defaultSelected ?? []).map(m => [m.public_id, m]))
+    );
+
     const selectedCount = selectedMap.size;
 
     const queryString = useMemo(() => createQueryString(queryParams), [queryParams]);
@@ -332,27 +300,27 @@ export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onCl
         queryString,
     });
 
-    // debounced search
+    // debounce search
     useEffect(() => {
-        const handler = setTimeout(() => {
-            setQueryParams((prev) => ({ ...prev, q: search }));
+        const t = setTimeout(() => {
+            setQueryParams((p) => ({ ...p, q: search }));
         }, 500);
-        return () => clearTimeout(handler);
+        return () => clearTimeout(t);
     }, [search]);
 
-    // convenience
     const pageRows = data?.data ?? [];
     const pageIds = useMemo(() => new Set(pageRows.map((r) => r.public_id)), [pageRows]);
 
-    const allOnPageSelected = pageRows.length > 0 && pageRows.every((r) => selectedMap.has(r.public_id));
+    const allOnPageSelected =
+        pageRows.length > 0 && pageRows.every((r) => selectedMap.has(r.public_id));
     const someOnPageSelected =
         pageRows.some((r) => selectedMap.has(r.public_id)) && !allOnPageSelected;
 
     const toggleRow = (m: TMedia, checked?: boolean) => {
         setSelectedMap((prev) => {
             const next = new Map(prev);
-            const isChecked = checked ?? !next.has(m.public_id);
-            if (isChecked) next.set(m.public_id, m);
+            const willCheck = checked ?? !next.has(m.public_id);
+            if (willCheck) next.set(m.public_id, m);
             else next.delete(m.public_id);
             return next;
         });
@@ -362,98 +330,13 @@ export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onCl
         setSelectedMap((prev) => {
             const next = new Map(prev);
             if (checked === true || checked === "indeterminate") {
-                // select all on current page
                 for (const m of pageRows) next.set(m.public_id, m);
             } else {
-                // unselect all on current page
                 for (const id of pageIds) next.delete(id);
             }
             return next;
         });
     };
-
-    const mediaColumns: ColumnDef<TMedia>[] = [
-        {
-            id: "select",
-            header: () => (
-                <div className="pl-2">
-                    <Checkbox
-                        checked={allOnPageSelected ? true : someOnPageSelected ? "indeterminate" : false}
-                        onCheckedChange={(c) => toggleAllOnPage(c)}
-                        aria-label="Select all on page"
-                    />
-                </div>
-            ),
-            cell: ({ row }) => {
-                const m = row.original;
-                const checked = selectedMap.has(m.public_id);
-                return (
-                    <div className="pl-2">
-                        <Checkbox
-                            checked={checked}
-                            onCheckedChange={(c) => toggleRow(m, !!c)}
-                            aria-label={`Select ${m.name}`}
-                        />
-                    </div>
-                );
-            },
-            size: 32,
-            enableSorting: false,
-        },
-        {
-            accessorKey: "secure_url",
-            header: "File Name",
-            cell: ({ row }) => {
-                const m = row.original;
-                const checked = selectedMap.has(m.public_id);
-                return (
-                    <section
-                        role="button"
-                        className={cn(
-                            "flex items-center gap-5 p-2 hover:cursor-pointer",
-                            checked && "bg-accent/40 rounded"
-                        )}
-                        onClick={() => toggleRow(m)}
-                    >
-                        <CloudinaryImage src={m.secure_url} alt={m.alt || ""} height={40} width={40} crop="auto" />
-                        <div className="flex flex-col">
-                            <span className="text-sm underline underline-offset-2">{m.name}</span>
-                            {typeof m.bytes === "number" && (
-                                <span className="text-[11px] text-muted-foreground">{formatBytes(m.bytes)}</span>
-                            )}
-                        </div>
-                    </section>
-                );
-            },
-        },
-        {
-            accessorKey: "alt",
-            header: "Alt",
-            cell: ({ row }) =>
-                row.original.alt ? (
-                    <span className="text-sm">{row.original.alt}</span>
-                ) : (
-                    <span className="text-sm text-muted-foreground">&lt;No Alt&gt;</span>
-                ),
-        },
-        {
-            accessorKey: "caption",
-            header: "Caption",
-            cell: ({ row }) =>
-                row.original.caption ? (
-                    <span className="text-sm">{row.original.caption}</span>
-                ) : (
-                    <span className="text-sm text-muted-foreground">&lt;No Caption&gt;</span>
-                ),
-        },
-        {
-            accessorKey: "updatedAt",
-            header: "Updated At",
-            cell: ({ row }) => (
-                <span className="text-sm">{new Date(row.original.updatedAt).toLocaleString()}</span>
-            ),
-        },
-    ];
 
     if (isLoading)
         return (
@@ -479,7 +362,73 @@ export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onCl
 
             {/* Table */}
             <ScrollArea className="h-[69vh] w-full">
-                <DataTable columns={mediaColumns} data={pageRows} />
+                <div className="rounded-md border overflow-hidden">
+                    <Table>
+                        <TableHeader className='bg-border'>
+                            <TableRow>
+                                <TableHead className="w-[44px] pl-2">
+                                    <Checkbox
+                                        checked={allOnPageSelected ? true : someOnPageSelected ? "indeterminate" : false}
+                                        onCheckedChange={(c) => toggleAllOnPage(c)}
+                                        aria-label="Select all on page"
+                                    />
+                                </TableHead>
+                                <TableHead>File Name</TableHead>
+                                <TableHead>Alt</TableHead>
+                                <TableHead>Caption</TableHead>
+                                <TableHead>Updated At</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {pageRows.map((m) => {
+                                const checked = selectedMap.has(m.public_id);
+                                return (
+                                    <TableRow key={m.public_id} className={cn("hover:cursor-pointer", checked && "bg-accent/40")} onClick={() => toggleRow(m)}>
+                                        <TableCell className="pl-2">
+                                            <Checkbox
+                                                checked={checked}
+                                                onCheckedChange={(c) => toggleRow(m, !!c)}
+                                                aria-label={`Select ${m.name}`}
+                                            />
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-5 p-2">
+                                                <CloudinaryImage
+                                                    src={m.secure_url}
+                                                    alt={m.alt || ""}
+                                                    height={40}
+                                                    width={40}
+                                                    crop="auto"
+                                                />
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm underline underline-offset-2">{m.name}</span>
+                                                    <span className="text-[11px] text-muted-foreground">{formatBytes(m.bytes)}</span>
+                                                </div>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            {m.alt ? (
+                                                <span className="text-sm">{m.alt}</span>
+                                            ) : (
+                                                <span className="text-sm text-muted-foreground">&lt;No Alt&gt;</span>
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            {m.caption ? (
+                                                <span className="text-sm">{m.caption}</span>
+                                            ) : (
+                                                <span className="text-sm text-muted-foreground">&lt;No Caption&gt;</span>
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="align-top">
+                                            <span className="text-sm">{new Date(m.updatedAt).toLocaleString()}</span>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
+                </div>
                 <ScrollBar orientation="horizontal" />
             </ScrollArea>
 
@@ -494,12 +443,7 @@ export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onCl
                         {selectedCount ? `${selectedCount} selected` : "No selection"}
                     </span>
                     {selectedCount > 0 && (
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setSelectedMap(new Map())}
-                            className="text-muted-foreground"
-                        >
+                        <Button variant="ghost" size="sm" onClick={() => setSelectedMap(new Map())}>
                             Clear
                         </Button>
                     )}
@@ -507,8 +451,7 @@ export function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onCl
                         size="sm"
                         disabled={selectedCount === 0}
                         onClick={() => {
-                            const selected = Array.from(selectedMap.values());
-                            onChange(selected); // <-- array of TMedia
+                            onChange(Array.from(selectedMap.values())); // ← array of TMedia
                             onClose();
                         }}
                     >

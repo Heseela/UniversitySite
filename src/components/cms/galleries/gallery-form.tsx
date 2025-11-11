@@ -14,10 +14,10 @@ import { CategoriesSelect } from "@/db/schema/category";
 import { TMediaSelect } from "@/db/schema/media";
 import { addMediaToGallery } from "@/lib/actions/gallery.action";
 import { cn } from "@/lib/utils";
-import { TMediaSchema } from "@/schemas/media.schema";
-import { Copy } from "lucide-react";
+import { Copy, LoaderCircle } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import "./gallery.css";
 
 type Props = {
     galleryCategories: CategoriesSelect[];
@@ -87,42 +87,56 @@ function GalleryItem({
 }) {
     const [isPending, startTransition] = useTransition();
 
-    // function handleUpload(media: TMediaSchema[]) {
-    //     startTransition(async () => {
-    //         try {
-    //             await addMediaToGallery(g.id, media.map(m => m.id));
-    //         } catch (e) {
-    //             toast.error("An unexpected error occurred")
-    //         }
-    //     })
-    // }
-
-    if (!g.media.length) {
-        return <div className="grid place-items-center">
-            <MediaInput__Bulk
-                onChange={media => {
-                    console.log(media)
-                }}
-            />
-        </div>
-    }
-
     return (
         <div>
-            {
-                g.media.map(media => {
-                    return (
-                        <CloudinaryImage
-                            src={media.secure_url}
-                            alt={media.alt}
-                            width={100}
-                            height={100}
-                            key={media.id}
-                            className={cn(selectedItems.includes(media.id) && "border-2 border-primary")}
+            <section className="columns-6 [&>*]:mb-3">
+                {
+                    g.media.map(media => {
+                        return (
+                            <div
+                                key={media.id}
+                                onClick={() => setSelectedItems(prev => prev.includes(media.id) ? prev.filter(id => id !== media.id) : [...prev, media.id])}
+                                className={cn("w-fit", selectedItems.includes(media.id) && "outline-3 outline-primary")}
+                            >
+                                <CloudinaryImage
+                                    src={media.secure_url}
+                                    alt={media.alt}
+                                    width={media.width}
+                                    height={media.height}
+                                    sizes="300px,400px"
+                                    className={cn("shadow-sm")}
+                                />
+                            </div>
+                        )
+                    })
+                }
+            </section>
+
+            <div className="grid place-items-center h-17 mt-8">
+                {
+                    isPending ? (
+                        <>
+                            <p className="text-sm text-muted-foreground flex items-center gap-2">
+                                <LoaderCircle className="animate-spin" size={16} />
+                                Adding images to gallery...
+                            </p>
+                        </>
+                    ) : (
+                        <MediaInput__Bulk
+                            onChange={media => {
+                                startTransition(async () => {
+                                    try {
+                                        await addMediaToGallery(g.id, media.map(m => m.id));
+                                    } catch (e) {
+                                        toast.error("An unexpected error occurred")
+                                    }
+                                })
+                            }}
+                            defaultSelected={g.media}
                         />
                     )
-                })
-            }
+                }
+            </div>
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { galleriesTable } from "@/db/schema/gallery";
 import checkAuth from "../utilities/check-auth";
 import { eq, inArray } from "drizzle-orm";
 import { media } from "@/db/schema/media";
+import { revalidatePath } from "next/cache";
 
 export async function createGallery(categoryId: string) {
     await checkAuth("admin");
@@ -21,4 +22,6 @@ export async function addMediaToGallery(galleryId: string, mediaIds: string[]) {
     await checkAuth("admin");
 
     await db.update(media).set({ galleryId }).where(inArray(media.id, mediaIds));
+
+    revalidatePath(`/cms/gallery`);
 }
