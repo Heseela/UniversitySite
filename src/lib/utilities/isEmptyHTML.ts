@@ -11,5 +11,5 @@ const emptyNodes = [
  * Checks if the HTML is empty
  */
 export default function isEmptyHTML(html: string) {
-    return emptyNodes.includes(html?.trim());
+    return emptyNodes.includes(html?.trim()) || !html;
 }
