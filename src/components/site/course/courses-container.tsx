@@ -1,4 +1,3 @@
-// components/site/courses/courses-container.tsx
 "use client";
 
 import { TCoursesResponse_Public } from "../../../../types/course.types";

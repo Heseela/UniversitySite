@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const categorySchema = z.object({
   name: z.string().min(3, { message: "Category Name is required" }).trim(),
-  type: z.enum([CategoryType.BLOG, CategoryType.EVENT], {
+  type: z.nativeEnum(CategoryType, {
     required_error: "Category Type is required",
   }),
 });

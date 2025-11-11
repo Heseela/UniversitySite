@@ -59,12 +59,13 @@ export async function createFormSubmission(formId: string, values: Record<string
 
     const { success, data, error } = validator.safeParse(values);
 
-    if (!success) return Promise.reject({
+    if (!success) return ({
         errors: formatZodErrors(error),
-        cause: "FormValidationException"
     });
 
     // TODO: also need to handle relation fields
 
     await db.insert(formSubmissions).values({ formId, data });
+
+    return { errors: null }
 }

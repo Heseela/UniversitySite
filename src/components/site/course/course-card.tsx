@@ -1,5 +1,5 @@
 import { TCoursesResponse_Public } from "../../../../types/course.types";
-import { Clock, Award, Users, BookOpen } from "lucide-react";
+import { Clock, BookOpen, Check } from "lucide-react";
 import CloudinaryImage from "@/components/ui/cloudinary-image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -15,7 +15,7 @@ type Props = {
 export default function CourseCard({ course, className }: Props) {
   const features = [
     course.duration && `${course.duration} months duration`,
-    course.degree && `${course.degree} Degree`,
+    course.degree && `${course.degree.split("_").join(" ")} Degree`, // split is done to avoid "_" in `post_graduate`
     course.faculty && `Faculty of ${course.faculty}`,
     course.eligibility && `Eligibility: ${course.eligibility}`,
   ].filter(Boolean) as string[];
@@ -91,16 +91,9 @@ export default function CourseCard({ course, className }: Props) {
             </h4>
             <ul className="space-y-2">
               {features.slice(0, 3).map((feature, index) => (
-                <li key={index} className="flex items-start">
-                  <svg
-                    className="w-4 h-4 text-primary mt-0.5 mr-2 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span className="text-gray-700 text-sm">{feature}</span>
+                <li key={index} className="flex items-end gap-2">
+                  <Check className="text-primary" size={16} />
+                  <span className="text-gray-700 text-sm capitalize">{feature}</span>
                 </li>
               ))}
             </ul>
