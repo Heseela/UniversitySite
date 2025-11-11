@@ -11,6 +11,7 @@ import {
     Users,
     Briefcase,
     BookOpen,
+    Images,
   } from "lucide-react";
   import { TGroupMenuItem } from "./sidebar";
   
@@ -57,6 +58,11 @@ import {
           title: "Credibility & Support",
           url: "/cms/credibility-and-support",
           icon: Handshake,
+        },
+        {
+          title: "Gallery",
+          url: "/cms/gallery",
+          icon: Images,
         },
       ],
     },

@@ -27,7 +27,7 @@ import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { TMediaSchema } from '@/schemas/media.schema';
-import { MediaInput, MediaItem } from '@/components/forms/media-field';
+import { MediaInput, MediaItem } from '@/components/media/media-field';
 
 export default function TimelineBlock({ blockIdx, sectionIdx }: BlockComponentProps) {
     const form = useFormContext<TPageDto>();

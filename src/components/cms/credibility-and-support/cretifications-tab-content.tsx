@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { certificationDefaultvalue, TCredibilityAndSupport } from "@/schemas/credibility-and-support.schema";
 import { TMediaSchema } from "@/schemas/media.schema";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 
 export default function CertificationsTabContent() {
     const form = useFormContext<TCredibilityAndSupport>();

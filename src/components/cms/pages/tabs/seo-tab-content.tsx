@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 
 export default function SeoTabContent() {
     const form = useFormContext<TPageDto>();

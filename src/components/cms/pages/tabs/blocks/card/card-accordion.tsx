@@ -16,7 +16,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { TMediaSchema } from "@/schemas/media.schema";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { ELinkType } from "../../../../../../../types/global.types";
 import { InternalLinkField } from "../../common/internal-link-field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";

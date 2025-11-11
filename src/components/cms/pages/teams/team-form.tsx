@@ -1,6 +1,6 @@
 "use client";
 
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { Button, LoadingButton } from "@/components/ui/button";
 import {
   Form,

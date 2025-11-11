@@ -1,4 +1,6 @@
 import { index, integer, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { galleriesTable } from "./gallery";
+import { relations } from "drizzle-orm";
 
 export const media = pgTable(
     "media",
@@ -17,6 +19,8 @@ export const media = pgTable(
         resource_type: text("resource_type").notNull(),
         bytes: integer("bytes").notNull(),
 
+        galleryId: text("galleryId").references(() => galleriesTable.id),
+
         createdAt: timestamp("createdAt").notNull().defaultNow(),
         updatedAt: timestamp("updatedAt").notNull().defaultNow().$onUpdate(() => new Date()),
     },
@@ -25,3 +29,11 @@ export const media = pgTable(
     ]
 );
 
+export type TMediaSelect = typeof media.$inferSelect;
+
+export const mediaRelations = relations(media, ({ one }) => ({
+    category: one(galleriesTable, {
+        fields: [media.galleryId],
+        references: [galleriesTable.id],
+    }),
+}));
