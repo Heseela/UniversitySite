@@ -4,6 +4,7 @@ import BlogsBlock from "./blogs-block";
 import TeamsBlock from "./teams-block";
 import EventsBlock from "./event-block";
 import CoursesBlock from "./courses-block";
+import JobsBlock from "./jobs-block";
 
 export const gridClassName = {
   1: "grid-cols-1",
@@ -22,5 +23,7 @@ export default function RenderRefItems(props: RefItemBlockDto) {
     <EventsBlock {...props} refRelation={props.refRelation} />
   ) : props.refRelation === ERefRelation.Courses ? (
     <CoursesBlock {...props} refRelation={props.refRelation} />
-  ): null;
+  ) : props.refRelation === ERefRelation.Jobs ? (
+    <JobsBlock {...props} refRelation={props.refRelation} />
+  ) : null;
 }
