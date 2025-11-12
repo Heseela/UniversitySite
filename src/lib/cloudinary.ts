@@ -1,18 +1,9 @@
 import { CLOUDINARY_SIGNATURE_ENDPOINT } from "@/CONSTANTS";
 import { uploadMedia } from "./actions/media.action";
+import cloudinary from "./cloudinary.config";
+import { TMediaSchema } from "@/schemas/media.schema";
 
-export type MediaObject = {
-    secure_url: string;
-    url: string;
-    height: number;
-    width: number;
-    asset_id: string;
-    format: string;
-    public_id: string;
-    version_id: string;
-    name: string;
-    bytes: number;
-};
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
 
 /**
  * Upload a File object directly to Cloudinary using your Next.js signature route.
@@ -27,7 +18,7 @@ export async function uploadToCloudinary(
     type = 'image',
     folder?: string,
     publicId?: string
-): Promise<MediaObject> {
+): Promise<TMediaSchema> {
     // 1. Prepare the params you want to sign
     const timestamp = Math.floor(Date.now() / 1000);
     const paramsToSign: Record<string, string | number> = { timestamp };
@@ -56,7 +47,6 @@ export async function uploadToCloudinary(
     if (publicId) formData.append('public_id', publicId);
 
     // 4. POST to Cloudinary REST endpoint
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
     const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/${type}/upload`;
     const uploadRes = await fetch(uploadUrl, {
         method: 'POST',
@@ -70,7 +60,7 @@ export async function uploadToCloudinary(
 
     const response = await uploadRes.json();
 
-    await uploadMedia({
+    const mediaObj = {
         public_id: response.public_id,
         alt: "<No alt>",
         bytes: response.bytes,
@@ -82,18 +72,46 @@ export async function uploadToCloudinary(
         resource_type: response.resource_type,
         secure_url: response.secure_url,
         width: response.width,
-    });
-
-    return {
-        secure_url: response.secure_url,
-        width: response.width,
-        height: response.height,
-        url: response.url,
-        asset_id: response.asset_id,
-        format: response.format,
-        public_id: response.public_id,
-        version_id: response.version_id,
-        name: response.original_filename,
-        bytes: response.bytes,
     };
+
+    await uploadMedia([mediaObj]);
+
+    return mediaObj;
+}
+
+/**
+ * Updates the image and applies the crop at given coordinates.
+ * @param publicId if you’re overwriting existing asset, else undefined/new
+ * @param coords coordinates: top-left x,y and width,height in pixels or percentage
+ */
+export async function cropExistingImage(
+    publicId: string,
+    coords: { x: number; y: number; width: number; height: number }
+) {
+    const { x, y, width, height } = coords;
+
+    const result = await cloudinary.uploader.upload(
+        // Upload again the same asset (you could also pass the original URL or(remote) if you want),
+        // but since you said “no filePath” you might use `upload` with the original file's URL
+        // or use cloudinary.uploader.explicit/update — whichever fits.
+        // For simplicity here: assume original image is accessible via some URL `originalUrl`
+        `https://res.cloudinary.com/${cloudName}/image/upload/` + publicId,
+        {
+            public_id: publicId,
+            overwrite: true,
+            transformation: [
+                {
+                    crop: 'crop',
+                    gravity: 'custom',
+                    x,
+                    y,
+                    width,
+                    height
+                }
+            ],
+            invalidate: true
+        }
+    );
+
+    return result;
 }

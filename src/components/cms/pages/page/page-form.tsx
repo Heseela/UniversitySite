@@ -17,6 +17,7 @@ import { Dispatch, SetStateAction, useEffect, useMemo, useState, useTransition }
 import { toast } from 'sonner';
 import { updatePage } from '@/lib/actions/pages.action';
 import { useCustomSearchParams } from '@/hooks/useCustomSearchParams';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     page: TPage,
@@ -62,6 +63,7 @@ const TOOL_BAR_HEIGHT = "66px";
 export default function PageForm({ page, defaultTab, children, defaultMode }: Props) {
     const [isPending, startTransition] = useTransition();
     const [mode, setMode] = useState<TMode>(defaultMode as TMode || modes[0].value);
+    const router = useRouter();
 
     const form = useForm<TPageDto>({
         resolver: zodResolver(PageDtoSchema),
@@ -134,16 +136,26 @@ export default function PageForm({ page, defaultTab, children, defaultMode }: Pr
                                 </p>
                             </section>
 
-                            <LoadingButton
-                                type="submit"
-                                isLoading={isPending}
-                                disabled={isPending}
-                                loadingText='Saving...'
-                                size={"lg"}
-                                className='sm:w-auto w-full'
-                            >
-                                Save Changes
-                            </LoadingButton>
+                            <section className="space-x-3">
+                                <Button
+                                    type="button"
+                                    variant={'outline'}
+                                    size={'lg'}
+                                    onClick={() => router.push("/cms/pages")}
+                                >
+                                    Cancel
+                                </Button>
+
+                                <LoadingButton
+                                    type="submit"
+                                    size={"lg"}
+                                    isLoading={isPending}
+                                    disabled={isPending}
+                                    loadingText="Saving..."
+                                >
+                                    Save Changes
+                                </LoadingButton>
+                            </section>
                         </section>
                     </section>
 

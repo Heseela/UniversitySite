@@ -40,7 +40,7 @@ export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldP
                 title='Media'
                 className="full-screen-dialog"
             >
-                <CreateNew
+                <UploadBulkMedia
                     onClose={() => setCreateNewOpen(false)}
                     onChange={onChange}
                 />
@@ -89,7 +89,7 @@ export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldP
     )
 }
 
-function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
+export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
     const [files, setFiles] = useState<TMediaSchema[]>([]);
     const [activeIdx, setActiveIdx] = useState<number>(0);
     const [isSaving, startTransition] = useTransition();
@@ -387,6 +387,9 @@ export default function MediaSelector({ onClose, onChange, defaultSelected }: Pi
                                         <TableCell className="pl-2">
                                             <Checkbox
                                                 checked={checked}
+                                                onClick={e => {
+                                                    e.stopPropagation()
+                                                }}
                                                 onCheckedChange={(c) => toggleRow(m, !!c)}
                                                 aria-label={`Select ${m.name}`}
                                             />

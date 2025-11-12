@@ -1,7 +1,7 @@
 "use client";
 
 import { Editor } from "@/components/editor/blocks/editor-x/editor";
-import { LoadingButton } from "@/components/ui/button";
+import { Button, LoadingButton } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -30,10 +30,10 @@ import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 
 type Props = {
-    defaultValues?: TJobsTabelSelect & { id: string };
-  };
-  
-  export default function JobForm({ defaultValues }: Props) {
+  defaultValues?: TJobsTabelSelect & { id: string };
+};
+
+export default function JobForm({ defaultValues }: Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -79,21 +79,32 @@ type Props = {
               {title || "Untitled Job"}
             </h3>
           </header>
-          
+
           <section className="border-y sticky z-[1] backdrop-blur-3xl top-0">
             <section className="container flex justify-between items-center py-3">
               <p className="text-sm text-muted-foreground">
                 {defaultValues ? "Editing job" : "Creating new job"}
               </p>
-              <LoadingButton
-                type="submit"
-                size={"lg"}
-                isLoading={isPending}
-                disabled={isPending}
-                loadingText="Saving..."
-              >
-                Save
-              </LoadingButton>
+              <section className="space-x-3">
+                <Button
+                  type="button"
+                  variant={'outline'}
+                  size={'lg'}
+                  onClick={() => router.push("/cms/jobs")}
+                >
+                  Cancel
+                </Button>
+
+                <LoadingButton
+                  type="submit"
+                  size={"lg"}
+                  isLoading={isPending}
+                  disabled={isPending}
+                  loadingText="Saving..."
+                >
+                  Save
+                </LoadingButton>
+              </section>
             </section>
           </section>
 
@@ -105,10 +116,10 @@ type Props = {
                 <FormItem>
                   <FormLabel>Job Title<span className="text-destructive">*</span></FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="e.g., Senior Frontend Developer" 
-                      className="min-h-10" 
-                      {...field} 
+                    <Input
+                      placeholder="e.g., Senior Frontend Developer"
+                      className="min-h-10"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -123,10 +134,10 @@ type Props = {
                 <FormItem>
                   <FormLabel>Department<span className="text-destructive">*</span></FormLabel>
                   <FormControl>
-                    <Input 
-                      placeholder="e.g., Engineering, Marketing, Design" 
-                      className="min-h-10" 
-                      {...field} 
+                    <Input
+                      placeholder="e.g., Engineering, Marketing, Design"
+                      className="min-h-10"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -143,15 +154,16 @@ type Props = {
                     <FormLabel>Job Type<span className="text-destructive">*</span></FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full min-h-10">
                           <SelectValue placeholder="Select job type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={EJobType.FullTime}>Full Time</SelectItem>
-                        <SelectItem value={EJobType.PartTime}>Part Time</SelectItem>
-                        <SelectItem value={EJobType.Internship}>Internship</SelectItem>
-                        <SelectItem value={EJobType.Contract}>Contract</SelectItem>
+                        {
+                          Object.entries(EJobType).map(([key, value]) => (
+                            <SelectItem key={key} value={value}>{key}</SelectItem>
+                          ))
+                        }
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -167,13 +179,16 @@ type Props = {
                     <FormLabel>Status<span className="text-destructive">*</span></FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full min-h-10">
                           <SelectValue placeholder="Select status" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={EJobStatus.Open}>Open</SelectItem>
-                        <SelectItem value={EJobStatus.Closed}>Closed</SelectItem>
+                        {
+                          Object.entries(EJobStatus).map(([key, value]) => (
+                            <SelectItem key={key} value={value}>{key}</SelectItem>
+                          ))
+                        }
                       </SelectContent>
                     </Select>
                     <FormMessage />

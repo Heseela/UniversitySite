@@ -12,6 +12,7 @@ import {
     Briefcase,
     BookOpen,
     Images,
+    FileImage,
   } from "lucide-react";
   import { TGroupMenuItem } from "./sidebar";
   
@@ -79,6 +80,11 @@ import {
           url: "/cms/globals/footer",
           icon: Footprints,
         },
+        {
+          title: "Media",
+          url: "/cms/globals/media",
+          icon: FileImage,
+        }
       ],
     },
     {
