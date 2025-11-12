@@ -25,3 +25,11 @@ export async function addMediaToGallery(galleryId: string, mediaIds: string[]) {
 
     revalidatePath(`/cms/gallery`);
 }
+
+export async function removeMediaFromGallery(mediaIds: string[]) {
+    await checkAuth("admin");
+
+    await db.update(media).set({ galleryId: null }).where(inArray(media.id, mediaIds));
+
+    revalidatePath(`/cms/gallery`);
+}

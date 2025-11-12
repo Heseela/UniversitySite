@@ -1,31 +1,21 @@
 import GalleryView from "@/components/cms/galleries/gallery-form";
 import { db } from "@/db";
-import { categories, CategoryType } from "@/db/schema/category";
-import { galleriesTable } from "@/db/schema/gallery";
-import { media } from "@/db/schema/media";
-import { eq } from "drizzle-orm";
 
 export default async function GalleryPage() {
-    const categoriesPromise = db
-        .select()
-        .from(categories)
-        .where(eq(categories.type, CategoryType.GALLERY));
-
-    const galleryPromise = db.query.galleriesTable.findMany({
+    const galleries = await db.query.galleriesTable.findMany({
         with: {
             media: true,
+            category: true
         }
     })
 
-    const [galleryCategories, gallery] = await Promise.all([categoriesPromise, galleryPromise]);
-
-    if (!galleryCategories.length) {
+    if (!galleries.length) {
         return (
-            <div>No categories for gallery. Please add one.</div>
+            <div className="container mx-auto h-80 grid place-items-center text-muted-foreground">No categories for gallery. Please add one.</div>
         )
     }
 
     return (
-        <GalleryView galleryCategories={galleryCategories} gallery={gallery} />
+        <GalleryView galleries={galleries} />
     )
 }
