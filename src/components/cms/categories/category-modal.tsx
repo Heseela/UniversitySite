@@ -19,11 +19,7 @@ import {
 import { showServerError } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { useQueryClient } from "@tanstack/react-query";
-
-type CategoryFormType = {
-  name: string;
-  type: CategoryType;
-};
+import { CategorySchemaType } from "@/schemas/category.schema";
 
 const formDefaultValues = {
   name: "",
@@ -41,7 +37,7 @@ const CategoryModal = ({
 }) => {
   const isEditing = !!defaultValues;
 
-  const [values, setValues] = useState<CategoryFormType>(
+  const [values, setValues] = useState<CategorySchemaType>(
     defaultValues || formDefaultValues
   );
   const [isPending, startTransition] = useTransition();

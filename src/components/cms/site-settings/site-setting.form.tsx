@@ -1,10 +1,11 @@
 "use client";
 
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { Button, LoadingButton } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import TagsInput from "@/components/ui/tags-input";
+import { Textarea } from "@/components/ui/textarea";
 import { TSiteSettingSelect } from "@/db/schema/site-setting";
 import { updateSiteSetting } from "@/lib/actions/site-setting.action";
 import { showServerError } from "@/lib/utils";
@@ -222,6 +223,23 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                                             type="url"
                                             className="min-h-10"
                                             placeholder="Eg. https://maps.app.goo.gl....."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="highlightAnnouncement"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Highlight Announcement</FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            rows={2}
+                                            className="field-sizing-content resize-none"
                                             {...field}
                                         />
                                     </FormControl>

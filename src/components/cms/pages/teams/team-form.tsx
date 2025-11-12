@@ -1,6 +1,6 @@
 "use client";
 
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { Button, LoadingButton } from "@/components/ui/button";
 import {
   Form,
@@ -101,15 +101,26 @@ export default function TeamForm({ defaultValues }: Props) {
                   Creating new team member
                 </span>
               )}
-              <LoadingButton
-                type="submit"
-                size={"lg"}
-                isLoading={isPending}
-                disabled={isPending}
-                loadingText="Saving..."
-              >
-                Save
-              </LoadingButton>
+              <section className="space-x-3">
+                <Button
+                  type="button"
+                  variant={'outline'}
+                  size={'lg'}
+                  onClick={() => router.push("/cms/teams")}
+                >
+                  Cancel
+                </Button>
+
+                <LoadingButton
+                  type="submit"
+                  size={"lg"}
+                  isLoading={isPending}
+                  disabled={isPending}
+                  loadingText="Saving..."
+                >
+                  Save
+                </LoadingButton>
+              </section>
             </section>
           </section>
 

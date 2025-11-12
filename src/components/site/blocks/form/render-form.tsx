@@ -14,16 +14,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import isEmptyHTML from "@/lib/utilities/isEmptyHTML";
 import { cn, showServerError } from "@/lib/utils";
 import { createFormSubmission } from "@/lib/actions/forms.action";
 import { toast } from "sonner";
 import { FormBlockDto } from "@/schemas/page.schema";
 import { TForm } from "../../../../../types/form.types";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 
 export default function RenderFormFields({ fields, introContent, id, submitBtnLabel }: FormBlockDto & TForm) {
     const [isPending, startTransition] = useTransition();
+    const [error, setError] = useState<string[]>([]);
 
     async function handleFormSubmission(formData: FormData) {
         // Convert FormData to object
@@ -34,9 +34,14 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
 
         startTransition(async () => {
             try {
-                await createFormSubmission(id, data);
+                const res = await createFormSubmission(id, data);
+                if (res.errors) throw res.errors;
                 toast.success("Submitted successfully");
             } catch (error) {
+                if (error instanceof Object) {
+                    setError(Object.values(error));
+                    return;
+                }
                 showServerError(error);
             }
         })
@@ -45,11 +50,18 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
     return (
         <Card className="w-10/12 mx-auto h-fit">
             <CardHeader>
-                {!isEmptyHTML(introContent?.html || "") && (
-                    <section>
-                        <RichTextPreview html={introContent?.html || ""} />
-                    </section>
-                )}
+                <RichTextPreview html={introContent?.html || ""} />
+                {
+                    !!error.length && (
+                        <ul className="p-2 border border-destructive bg-destructive/10 text-destructive text-sm rounded-md">
+                            {
+                                error.map((err, idx) => (
+                                    <li key={idx} className="list-disc list-inside">{err}</li>
+                                ))
+                            }
+                        </ul>
+                    )
+                }
             </CardHeader>
             <CardContent>
                 <form action={handleFormSubmission} className="space-y-6">

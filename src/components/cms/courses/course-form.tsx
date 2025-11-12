@@ -1,8 +1,8 @@
 "use client";
 
 import { Editor } from "@/components/editor/blocks/editor-x/editor";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
-import { LoadingButton } from "@/components/ui/button";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
+import { Button, LoadingButton } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -94,15 +94,26 @@ export default function CourseForm({ defaultValues }: Props) {
                             <p className="text-sm text-muted-foreground">
                                 {defaultValues ? "Editing course" : "Creating new course"}
                             </p>
-                            <LoadingButton
-                                type="submit"
-                                size={"lg"}
-                                isLoading={isPending}
-                                disabled={isPending}
-                                loadingText="Saving..."
-                            >
-                                Save
-                            </LoadingButton>
+                            <section className="space-x-3">
+                                <Button
+                                    type="button"
+                                    variant={'outline'}
+                                    size={'lg'}
+                                    onClick={() => router.push("/cms/courses")}
+                                >
+                                    Cancel
+                                </Button>
+
+                                <LoadingButton
+                                    type="submit"
+                                    size={"lg"}
+                                    isLoading={isPending}
+                                    disabled={isPending}
+                                    loadingText="Saving..."
+                                >
+                                    Save
+                                </LoadingButton>
+                            </section>
                         </section>
                     </section>
 
@@ -188,15 +199,16 @@ export default function CourseForm({ defaultValues }: Props) {
                                         <FormLabel>Degree<span className="text-destructive">*</span></FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
+                                                <SelectTrigger className="w-full min-h-10">
                                                     <SelectValue placeholder="Select degree level" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value={EAcademicDegree.Undergraduate}>Undergraduate</SelectItem>
-                                                <SelectItem value={EAcademicDegree.Graduate}>Graduate</SelectItem>
-                                                <SelectItem value={EAcademicDegree.Post_Graduate}>Post Graduate</SelectItem>
-                                                <SelectItem value={EAcademicDegree.PhD}>PhD</SelectItem>
+                                                {
+                                                    Object.entries(EAcademicDegree).map(([key, value]) => (
+                                                        <SelectItem key={key} value={value}>{key.split("_").join(" ")}</SelectItem>
+                                                    ))
+                                                }
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -213,17 +225,16 @@ export default function CourseForm({ defaultValues }: Props) {
                                         <FormLabel>Faculty<span className="text-destructive">*</span></FormLabel>
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                             <FormControl>
-                                                <SelectTrigger>
+                                                <SelectTrigger className="w-full min-h-10">
                                                     <SelectValue placeholder="Select faculty" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>
-                                                <SelectItem value={EAcademicFaculty.Science}>Science</SelectItem>
-                                                <SelectItem value={EAcademicFaculty.Management}>Management</SelectItem>
-                                                <SelectItem value={EAcademicFaculty.Arts}>Arts</SelectItem>
-                                                <SelectItem value={EAcademicFaculty.Humanity}>Humanity</SelectItem>
-                                                <SelectItem value={EAcademicFaculty.Law}>Law</SelectItem>
-                                                <SelectItem value={EAcademicFaculty.Other}>Other</SelectItem>
+                                                {
+                                                    Object.entries(EAcademicFaculty).map(([key, value]) => (
+                                                        <SelectItem key={key} value={value}>{key}</SelectItem>
+                                                    ))
+                                                }
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />

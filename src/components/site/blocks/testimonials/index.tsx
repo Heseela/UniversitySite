@@ -62,7 +62,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({
       
       <div className="bg-gray-100 p-4 rounded-lg mb-6 relative">
         <p className="text-gray-700 italic relative z-10 wrap-break-word">
-          "{testimonial.quote}"
+          &quot;{testimonial.quote}&quot;
         </p>
         <div className="absolute -bottom-3 left-6 w-4 h-4 transform rotate-45 bg-gray-100"></div>
       </div>

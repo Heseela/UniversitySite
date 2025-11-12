@@ -18,15 +18,15 @@ import { Textarea } from '../ui/textarea';
 import { CldUploadWidget } from 'next-cloudinary';
 import { CLOUDINARY_SIGNATURE_ENDPOINT } from '@/CONSTANTS';
 import CustomDialog from '../ui/custom-dialog';
-import LoadingButton from './loading-button';
+import LoadingButton from '../forms/loading-button';
 import { TMedia, TMediaResponse } from '../../../types/media.types';
-import { MediaSelectDataTablePagination } from '../data-table/media-select-data-table-patination';
+import { MediaSelectDataTablePagination } from './media-select-data-table-patination';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DataTable } from '../data-table/data-table';
 
 type MediaFieldProps = {
   media: TMediaSchema;
-  onChange: (value: TMediaSchema | TMediaSchema[]) => void;
+  onChange: (value: TMediaSchema) => void;
   onClose: () => void;
   onRemove: () => void;
 }
@@ -75,7 +75,7 @@ export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
       <CustomDialog
         isOpen={createNewOpen}
         onClose={() => setCreateNewOpen(false)}
-        title='Create New Media'
+        title='Add New Media'
         className="full-screen-dialog"
       >
         <CreateNew
@@ -140,7 +140,7 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
   function onSubmit(data: TMediaSchema) {
     startTransition(async () => {
       try {
-        await uploadMedia(data);
+        await uploadMedia([data]);
         onChange(data);
         onClose();
       } catch (e) {

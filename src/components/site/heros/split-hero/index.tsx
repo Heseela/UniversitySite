@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 import { EHeroLayoutTypes } from "../../../../../types/page.types";
-import { RenderHeroProps } from "../render-hero";
 import { RichTextPreview } from "@/components/editor/blocks/editor-x/rich-text-preview";
 import CMSLink from "@/components/ui/cms-link";
 import CloudinaryImage from "@/components/ui/cloudinary-image";
 import { EAlignmentExcludeCenter } from "../../../../../types/global.types";
+import { THeroSectionDto } from "@/schemas/hero-section.schema";
 
-export default function SplitHero({ hero }: RenderHeroProps) {
+export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
   const layoutType = hero.layout.type;
   if (layoutType !== EHeroLayoutTypes.Split_Hero) return null;
 

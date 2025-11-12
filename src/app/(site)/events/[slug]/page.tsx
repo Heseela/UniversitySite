@@ -143,7 +143,7 @@ export default async function SingleeventPage({ params }: Props) {
                 />
               )}
             </div>
-            <div className="prose prose-lg max-w-none ">
+            <div>
               <p className="text-lg leading-relaxed mb-6">{event.summary}</p>
               <RichTextPreview html={event.content.html} />
             </div>

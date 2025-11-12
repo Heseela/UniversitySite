@@ -85,7 +85,7 @@ export default function RenderSections({ sections }: Props) {
 
                     if (b.type === EBlock.Map) {
                       return (
-                        <div className={cn(s.blocks?.items?.length === 1 ? "min-h-[400px]" : "h-full")}>
+                        <div key={idx} className={cn(s.blocks?.items?.length === 1 ? "min-h-[400px]" : "h-full")}>
                           <div className={cn(s.blocks?.items?.length === 1 && 'absolute inset-0')}>
                             <RenderMapBlock key={idx} {...b} />
                           </div>

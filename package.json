@@ -56,6 +56,7 @@
     "@tanstack/react-query": "^5.90.2",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-table": "^8.21.3",
+    "@uiw/react-json-view": "2.0.0-alpha.39",
     "@yoopta/accordion": "^4.9.9",
     "@yoopta/action-menu-list": "^4.9.9",
     "@yoopta/blockquote": "^4.9.9",

@@ -4,9 +4,9 @@ import { fetchPage } from "@/lib/utilities/fetchPage";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import { COURSES_SLUG } from "@/app/slugs";
-import CoursesSearchFilters from "@/components/site/course/courses-search-filters";
 import { CourseCardSkeleton } from "@/components/site/course/course-card";
 import CoursesContainer from "@/components/site/course/courses-container";
+import CoursesSearchFilters_Public from "@/components/site/course/courses-search-filters";
 
 export const revalidate = 60;
 
@@ -24,12 +24,12 @@ export default async function CoursesPage() {
 
   return (
     <>
-      <RenderHero hero={page.heroSections[0]} />
+      <RenderHero heroSections={page.heroSections} />
 
       <section className="container py-12">
         {/* Search Filters - No props needed now */}
         <Suspense fallback={<Skeleton className="h-12 max-w-md" />}>
-          <CoursesSearchFilters />
+          <CoursesSearchFilters_Public />
         </Suspense>
 
         {/* Courses Grid */}

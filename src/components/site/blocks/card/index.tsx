@@ -75,11 +75,7 @@ export default function RenderCardsBlock({
                             )}
                             <CardContent className='px-8 py-8'>
                                 <p className='text-muted-foreground'>{card.subtitle}</p>
-                                {
-                                    !isEmptyHTML(card.description.html) && (
-                                        <RichTextPreview html={card.description.html} />
-                                    )
-                                }
+                                <RichTextPreview html={card.description.html} />
                             </CardContent>
                         </Card>
                     )

@@ -2,8 +2,8 @@
 
 import { Editor } from "@/components/editor/blocks/editor-x/editor";
 import { InfiniteSelect } from "@/components/forms/infinite-select";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
-import { LoadingButton } from "@/components/ui/button";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
+import { Button, LoadingButton } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -38,6 +38,7 @@ type Props = {
 export default function EventForm({ defaultValues, selectedCategory }: Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const isEditing = !!defaultValues;
 
   const form = useForm<eventSchemaType>({
     resolver: zodResolver(eventSchema),
@@ -51,7 +52,7 @@ export default function EventForm({ defaultValues, selectedCategory }: Props) {
   function onSubmit(values: eventSchemaType) {
     startTransition(async () => {
       try {
-        defaultValues
+        isEditing
           ? await updateEvent(defaultValues.id, values)
           : await createEvent(values);
 
@@ -68,7 +69,7 @@ export default function EventForm({ defaultValues, selectedCategory }: Props) {
     control: form.control,
     name: "title",
   });
-  
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -81,17 +82,28 @@ export default function EventForm({ defaultValues, selectedCategory }: Props) {
           <section className="border-y sticky z-[1] backdrop-blur-3xl top-0">
             <section className="container flex justify-between items-center py-3">
               <p className="text-sm text-muted-foreground">
-                Creating new event
+                {isEditing ? "Updating an event" : "Creating new event"}
               </p>
-              <LoadingButton
-                type="submit"
-                size={"lg"}
-                isLoading={isPending}
-                disabled={isPending}
-                loadingText="Saving..."
-              >
-                Save
-              </LoadingButton>
+              <section className="space-x-3">
+                <Button
+                  type="button"
+                  variant={'outline'}
+                  size={'lg'}
+                  onClick={() => router.push("/cms/events")}
+                >
+                  Cancel
+                </Button>
+
+                <LoadingButton
+                  type="submit"
+                  size={"lg"}
+                  isLoading={isPending}
+                  disabled={isPending}
+                  loadingText="Saving..."
+                >
+                  Save
+                </LoadingButton>
+              </section>
             </section>
           </section>
 

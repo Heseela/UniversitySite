@@ -53,7 +53,7 @@ export default function CoursesContainer() {
       <div className="text-center py-12">
         <h3 className="text-2xl font-bold mb-4">No Courses Found</h3>
         <p className="text-muted-foreground mb-6">
-          No courses found matching "<span className="font-semibold">{searchQuery}</span>".
+          No courses found matching &quot;<span className="font-semibold">{searchQuery}</span>&quot;
         </p>
       </div>
     );

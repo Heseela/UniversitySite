@@ -111,7 +111,7 @@ export default function CustomDialog({
                 )}
 
                 {/* Content */}
-                <div className={title ? "pt-10" : ""}>
+                <div className={cn("h-full", title ? "pt-10" : "")}>
                     {children}
                 </div>
             </div>

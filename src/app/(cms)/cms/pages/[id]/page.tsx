@@ -3,6 +3,8 @@ import { pages } from "@/db/schema/page";
 import { eq } from "drizzle-orm";
 import { TPage } from "../../../../../../types/page.types";
 import PageForm from "@/components/cms/pages/page/page-form";
+import PageLivePreview from "@/components/cms/pages/page/live-preview";
+import PageApiView from "@/components/cms/pages/page/api-view";
 
 type Props = {
     params: Promise<{
@@ -10,12 +12,13 @@ type Props = {
     }>,
     searchParams: Promise<{
         tab?: string
+        mode?: string
     }>
 }
 
 export default async function PageEditPage({ params, searchParams }: Props) {
     const { id } = await params;
-    const { tab } = await searchParams;
+    const { tab, mode } = await searchParams;
 
     const foundPage: TPage | undefined = await db.query.pages.findFirst({
         where: eq(pages.id, id),
@@ -31,6 +34,15 @@ export default async function PageEditPage({ params, searchParams }: Props) {
         <PageForm
             page={foundPage}
             defaultTab={tab}
-        />
+            defaultMode={mode}
+        >
+            {
+                mode === "preview" ? (
+                    <PageLivePreview page={foundPage} />
+                ) : mode === "api" && (
+                    <PageApiView page={foundPage} />
+                )
+            }
+        </PageForm>
     )
 }

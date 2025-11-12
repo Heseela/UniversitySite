@@ -56,7 +56,7 @@ export default async function SingleCoursePage({ params }: Props) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Course Not Found</h2>
-          <p className="text-muted-foreground mb-4">The course you're looking for doesn't exist.</p>
+          <p className="text-muted-foreground mb-4">The course you&apos;re looking for doesn't exist.</p>
           <Link href="/courses" className="btn btn-primary">
             Back to Courses
           </Link>

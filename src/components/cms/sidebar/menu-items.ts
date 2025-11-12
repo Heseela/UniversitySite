@@ -11,6 +11,8 @@ import {
     Users,
     Briefcase,
     BookOpen,
+    Images,
+    FileImage,
   } from "lucide-react";
   import { TGroupMenuItem } from "./sidebar";
   
@@ -58,6 +60,11 @@ import {
           url: "/cms/credibility-and-support",
           icon: Handshake,
         },
+        {
+          title: "Gallery",
+          url: "/cms/gallery",
+          icon: Images,
+        },
       ],
     },
     {
@@ -73,6 +80,11 @@ import {
           url: "/cms/globals/footer",
           icon: Footprints,
         },
+        {
+          title: "Media",
+          url: "/cms/globals/media",
+          icon: FileImage,
+        }
       ],
     },
     {

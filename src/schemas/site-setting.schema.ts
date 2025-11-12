@@ -14,6 +14,7 @@ export const siteSettingSchema = z.object({
     socialLinks: z.array(z.object({
         link: z.string().url({ message: "Social link must be a valid URL" })
     })).max(5, { message: "You can add up to 5 social links" }),
+    highlightAnnouncement: z.string().optional(),
 });
 
 export type TSiteSettingSchema = z.infer<typeof siteSettingSchema>;
