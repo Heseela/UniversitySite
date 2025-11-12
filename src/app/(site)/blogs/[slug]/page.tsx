@@ -1,5 +1,4 @@
 import { BlogCardSkeleton } from "@/components/site/blogs/blog-card";
-import RelatedBlogs from "@/components/site/blogs/related-blogs";
 import { Button } from "@/components/ui/button";
 import YooptaEditorReadonly from "@/components/yoopta-editor/readonly";
 import { Metadata } from "next";
@@ -100,7 +99,7 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
       {/* Blog Content */}
       <section className="py-8 md:py-12 md:mt-0 mt-[200px] bg-white">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <div className="">
             <div className="mb-10"></div>
 
             <div className="prose prose-lg max-w-none">
@@ -111,15 +110,6 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
           </div>
         </div>
       </section>
-
-      {/* Related Posts */}
-      <Suspense
-        fallback={Array.from({ length: 3 }, (_, index) => (
-          <BlogCardSkeleton key={index} />
-        ))}
-      >
-        <RelatedBlogs slug={slug} />
-      </Suspense>
     </>
   );
 }

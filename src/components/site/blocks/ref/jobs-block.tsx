@@ -140,7 +140,7 @@ function JobCard({ job, className }: JobCardProps) {
                     <Badge className={cn("capitalize border", getJobTypeColor(job.type))}>
                         {job.type.replace('-', ' ')}
                     </Badge>
-                    <Badge variant="secondary" className="capitalize">
+                    <Badge className="capitalize bg-pink-100 border border-pink-200 text-[var(--pinkish)]">
                         {job.status}
                     </Badge>
                 </div>

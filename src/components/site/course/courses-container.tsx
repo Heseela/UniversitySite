@@ -1,4 +1,3 @@
-// components/site/courses/courses-container.tsx
 "use client";
 
 import { TCoursesResponse_Public } from "../../../../types/course.types";
@@ -38,7 +37,6 @@ export default function CoursesContainer() {
     );
   }
 
-  // No courses at all
   if (data.length === 0 && !searchQuery) {
     return (
       <div className="text-center py-12">
@@ -50,7 +48,6 @@ export default function CoursesContainer() {
     );
   }
 
-  // Search returned no results
   if (searchQuery && data.length === 0) {
     return (
       <div className="text-center py-12">

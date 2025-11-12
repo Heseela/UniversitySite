@@ -24,16 +24,17 @@ export default function SiteSettingForm({ defaultValues }: Props) {
 
     const form = useForm<TSiteSettingSchema>({
         resolver: zodResolver(siteSettingSchema),
-        defaultValues: defaultValues ?? {
-            address: "",
-            emails: [],
-            phones: [],
-            headerLogo: null,
-            footerLogo: null,
-            socialLinks: [],
-            mapLink: ""
+        defaultValues: {
+            address: defaultValues.address || "",
+            emails: defaultValues.emails || [],
+            phones: defaultValues.phones || [],
+            logoLight: defaultValues.logoLight || null,
+            logoDark: defaultValues.logoDark || null,
+            socialLinks: defaultValues.socialLinks || [],
+            mapLink: defaultValues.mapLink || ""
         }
     });
+
 
     function onSubmit(values: TSiteSettingSchema) {
         startTransition(async () => {

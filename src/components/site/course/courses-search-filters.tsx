@@ -25,7 +25,6 @@ export default function CoursesSearchFilters() {
 
   return (
     <div className="mb-12">
-      {/* Search Input */}
       <div className="relative max-w-md">
         <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
@@ -36,7 +35,6 @@ export default function CoursesSearchFilters() {
           className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
         />
         
-        {/* Clear button */}
         {searchQuery && (
           <button
             onClick={clearSearch}
@@ -46,7 +44,6 @@ export default function CoursesSearchFilters() {
           </button>
         )}
         
-        {/* Loading indicator */}
         {isPending && (
           <div className="absolute right-10 top-1/2 transform -translate-y-1/2">
             <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -54,7 +51,6 @@ export default function CoursesSearchFilters() {
         )}
       </div>
 
-      {/* Active search display */}
       {searchQuery && (
         <div className="mt-4 flex items-center gap-2">
           <span className="text-sm text-gray-600">Searching for:</span>

@@ -16,7 +16,7 @@ export default async function BlogHero({
       // "-mt-[10.4rem]"
     )}>
       <div className="container z-10 relative pb-8">
-        <div className="max-w-4xl mx-auto md:translate-y-0 translate-y-[200px]">
+        <div className="md:translate-y-0 translate-y-[200px]">
           <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl font-medium text-shadow-md">
             {title}
           </h1>
