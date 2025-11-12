@@ -1,6 +1,5 @@
 import { CLOUDINARY_SIGNATURE_ENDPOINT } from "@/CONSTANTS";
 import { uploadMedia } from "./actions/media.action";
-import cloudinary from "./cloudinary.config";
 import { TMediaSchema } from "@/schemas/media.schema";
 
 const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
@@ -77,41 +76,4 @@ export async function uploadToCloudinary(
     await uploadMedia([mediaObj]);
 
     return mediaObj;
-}
-
-/**
- * Updates the image and applies the crop at given coordinates.
- * @param publicId if you’re overwriting existing asset, else undefined/new
- * @param coords coordinates: top-left x,y and width,height in pixels or percentage
- */
-export async function cropExistingImage(
-    publicId: string,
-    coords: { x: number; y: number; width: number; height: number }
-) {
-    const { x, y, width, height } = coords;
-
-    const result = await cloudinary.uploader.upload(
-        // Upload again the same asset (you could also pass the original URL or(remote) if you want),
-        // but since you said “no filePath” you might use `upload` with the original file's URL
-        // or use cloudinary.uploader.explicit/update — whichever fits.
-        // For simplicity here: assume original image is accessible via some URL `originalUrl`
-        `https://res.cloudinary.com/${cloudName}/image/upload/` + publicId,
-        {
-            public_id: publicId,
-            overwrite: true,
-            transformation: [
-                {
-                    crop: 'crop',
-                    gravity: 'custom',
-                    x,
-                    y,
-                    width,
-                    height
-                }
-            ],
-            invalidate: true
-        }
-    );
-
-    return result;
 }
