@@ -32,8 +32,10 @@ export async function seed() {
     });
 
     await db.insert(siteSetting).values({
-        logoLight: null,
-        logoDark: null,
+        logoLight_primary: null,
+        logoLight_secondary:null,
+        logoDark_primary: null,
+        logoDark_secondary: null,
         address: "",
         mapLink: "",
         emails: [],

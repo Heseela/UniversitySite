@@ -1,9 +1,5 @@
 import { TCoursesResponse_Public } from "../../../../types/course.types";
-<<<<<<< HEAD
-import { Clock, BookOpen } from "lucide-react";
-=======
 import { Clock, BookOpen, Check } from "lucide-react";
->>>>>>> a160e4da1d29c3554168949a9c9321e40f90882f
 import CloudinaryImage from "@/components/ui/cloudinary-image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

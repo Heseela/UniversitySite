@@ -26,16 +26,18 @@ export default function SiteSettingForm({ defaultValues }: Props) {
     const form = useForm<TSiteSettingSchema>({
         resolver: zodResolver(siteSettingSchema),
         defaultValues: {
+            logoLight_primary: defaultValues.logoLight_primary || null,
+            logoDark_primary: defaultValues.logoDark_primary || null,
+            logoLight_secondary: defaultValues.logoLight_secondary || null,
+            logoDark_secondary: defaultValues.logoDark_secondary || null,
             address: defaultValues.address || "",
             emails: defaultValues.emails || [],
             phones: defaultValues.phones || [],
-            logoLight: defaultValues.logoLight || null,
-            logoDark: defaultValues.logoDark || null,
             socialLinks: defaultValues.socialLinks || [],
-            mapLink: defaultValues.mapLink || ""
+            mapLink: defaultValues.mapLink || "",
+            highlightAnnouncement: defaultValues.highlightAnnouncement || ""
         }
     });
-
 
     function onSubmit(values: TSiteSettingSchema) {
         startTransition(async () => {
@@ -82,67 +84,135 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                     </section>
 
                     <section className="container space-y-6">
-                        <FormField
-                            control={form.control}
-                            name="logoLight"
-                            render={({ field }) => {
-                                const value = field.value;
+                        {/* Primary Logos Section */}
+                        <div className="space-y-4 p-4 border rounded-lg">
+                            <h4 className="text-lg font-semibold">Primary Logos</h4>
+                            
+                            <FormField
+                                control={form.control}
+                                name="logoLight_primary"
+                                render={({ field }) => {
+                                    const value = field.value;
+                                    return (
+                                        <FormItem>
+                                            <FormLabel>Primary Logo Light</FormLabel>
+                                            <FormControl>
+                                                {
+                                                    value ? (
+                                                        <MediaItem
+                                                            media={value}
+                                                            onRemove={() => {
+                                                                field.onChange(null)
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <MediaInput onChange={(value) => {
+                                                            field.onChange(value)
+                                                        }} />
+                                                    )
+                                                }
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )
+                                }}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="logoDark_primary"
+                                render={({ field }) => {
+                                    const value = field.value;
+                                    return (
+                                        <FormItem>
+                                            <FormLabel>Primary Logo Dark</FormLabel>
+                                            <FormControl>
+                                                {
+                                                    value ? (
+                                                        <MediaItem
+                                                            media={value}
+                                                            onRemove={() => {
+                                                                field.onChange(null)
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <MediaInput onChange={(value) => {
+                                                            field.onChange(value)
+                                                        }} />
+                                                    )
+                                                }
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )
+                                }}
+                            />
+                        </div>
 
-                                return (
-                                    <FormItem>
-                                        <FormLabel>Logo Light</FormLabel>
-                                        <FormControl>
-                                            {
-                                                value ? (
-                                                    <MediaItem
-                                                        media={value}
-                                                        onRemove={() => {
-                                                            field.onChange(null)
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <MediaInput onChange={(value) => {
-                                                        field.onChange(value)
-                                                    }} />
-                                                )
-                                            }
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )
-                            }}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="logoDark"
-                            render={({ field }) => {
-                                const value = field.value;
+                        {/* Secondary Logos Section */}
+                        <div className="space-y-4 p-4 border rounded-lg">
+                            <h4 className="text-lg font-semibold">Secondary Logos</h4>
+                            
+                            <FormField
+                                control={form.control}
+                                name="logoLight_secondary"
+                                render={({ field }) => {
+                                    const value = field.value;
+                                    return (
+                                        <FormItem>
+                                            <FormLabel>Secondary Logo Light</FormLabel>
+                                            <FormControl>
+                                                {
+                                                    value ? (
+                                                        <MediaItem
+                                                            media={value}
+                                                            onRemove={() => {
+                                                                field.onChange(null)
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <MediaInput onChange={(value) => {
+                                                            field.onChange(value)
+                                                        }} />
+                                                    )
+                                                }
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )
+                                }}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="logoDark_secondary"
+                                render={({ field }) => {
+                                    const value = field.value;
+                                    return (
+                                        <FormItem>
+                                            <FormLabel>Secondary Logo Dark</FormLabel>
+                                            <FormControl>
+                                                {
+                                                    value ? (
+                                                        <MediaItem
+                                                            media={value}
+                                                            onRemove={() => {
+                                                                field.onChange(null)
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <MediaInput onChange={(value) => {
+                                                            field.onChange(value)
+                                                        }} />
+                                                    )
+                                                }
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )
+                                }}
+                            />
+                        </div>
 
-                                return (
-                                    <FormItem>
-                                        <FormLabel>Logo Dark</FormLabel>
-                                        <FormControl>
-                                            {
-                                                value ? (
-                                                    <MediaItem
-                                                        media={value}
-                                                        onRemove={() => {
-                                                            field.onChange(null)
-                                                        }}
-                                                    />
-                                                ) : (
-                                                    <MediaInput onChange={(value) => {
-                                                        field.onChange(value)
-                                                    }} />
-                                                )
-
-                                            }
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )
-                            }}
-                        />
+                        {/* Rest of the form fields remain the same */}
                         <FormField
                             control={form.control}
                             name={"emails"}

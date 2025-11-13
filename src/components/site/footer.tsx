@@ -28,15 +28,26 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="space-y-4">
+           <div className="flex gap-4">
+           <Link href="/" className="flex items-center">
+              <Image
+                width={64}
+                height={64}
+                src={siteData?.logoDark_primary?.secure_url || `/logo.png`}
+                alt="Primary Logo"
+                className="h-16 w-auto"
+              />
+            </Link>
             <Link href="/" className="flex items-center">
               <Image
                 width={64}
                 height={64}
-                src={siteData?.logoLight?.secure_url || `/logo.png`}
-                alt="Feature Creatify Logo"
+                src={siteData?.logoDark_secondary?.secure_url || `/logo.png`}
+                alt="Secondary Logo"
                 className="h-16 w-auto"
               />
-            </Link>
+              </Link>
+           </div>
             <p className="mb-4">
               {footerData?.footerText || ""}
             </p>

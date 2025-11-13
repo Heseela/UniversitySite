@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { header } from "@/db/schema/globals";
 import { cache } from "react";
 import Header from "./header";
+import SubHeader from "./sub-header";
 import { ENavLinkType } from "@/schemas/globals.schema";
 import { ECtaVariant } from "../../../types/blocks.types";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
@@ -67,5 +68,10 @@ export default async function Navbar({
     };
   });
 
-  return <Header hasHero={hasHero} navLinks={navLinks} siteData={siteData} />;
+  return (
+    <div className="sticky top-0 left-0 z-50">
+      {siteData && <SubHeader companyInfo={siteData} />}
+      <Header hasHero={hasHero} navLinks={navLinks} siteData={siteData} />
+    </div>
+  );
 }

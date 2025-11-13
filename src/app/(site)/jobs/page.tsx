@@ -30,7 +30,7 @@ export default async function JobsPage() {
 
   return (
     <>
-      <RenderHero hero={page.heroSections[0]} />
+      <RenderHero heroSections={page.heroSections} />
 
       <section className="container py-12">
         {/* Header with Apply Button */}
