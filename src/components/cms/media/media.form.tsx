@@ -64,8 +64,8 @@ export default function MediaForm({ media }: Props) {
                         </h3>
                     </header>
                     <section className="border-y sticky z-[1] backdrop-blur-3xl top-0">
-                        <section className="container flex justify-between items-center py-3">
-                            <section className="text-sm @sm:flex gap-6">
+                        <section className="container flex flex-wrap gap-3 justify-between items-center py-3">
+                            <section className="text-sm @lg:flex gap-6">
                                 <p>
                                     <span className="text-muted-foreground">Last Modified:&nbsp;</span>
                                     <time className="font-medium">{media.updatedAt.toLocaleString()}</time>
@@ -75,12 +75,13 @@ export default function MediaForm({ media }: Props) {
                                     <time className="font-medium">{media.createdAt.toLocaleString()}</time>
                                 </p>
                             </section>
-                            <section className="space-x-3">
+                            <section className="flex flex-wrap gap-3 grow @lg:grow-0">
                                 <Button
                                     type="button"
                                     variant={'outline'}
                                     size={'lg'}
                                     onClick={() => router.push("/cms/globals/media")}
+                                    className="grow"
                                 >
                                     Cancel
                                 </Button>
@@ -91,6 +92,7 @@ export default function MediaForm({ media }: Props) {
                                     isLoading={isPending}
                                     disabled={isPending}
                                     loadingText="Saving..."
+                                    className="grow"
                                 >
                                     Save
                                 </LoadingButton>
@@ -99,7 +101,7 @@ export default function MediaForm({ media }: Props) {
                     </section>
 
                     <section className="container space-y-6">
-                        <section className='flex items-center space-x-6'>
+                        <section className='flex items-center gap-6 flex-wrap'>
                             <Link
                                 href={form.getValues("secure_url")}
                                 target='_blank'
