@@ -65,7 +65,7 @@ export default function CoverImageUploadBtn({ blogId, coverImage, title, onChang
                                     onSuccess={async (result) => {
                                         if (typeof result.info === "object" && "secure_url" in result.info) {
                                             field.onChange(result.info.public_id);
-                                            await uploadMedia({
+                                            await uploadMedia([{
                                                 public_id: result.info.public_id,
                                                 alt: "<No alt>",
                                                 bytes: result.info.bytes,
@@ -77,7 +77,7 @@ export default function CoverImageUploadBtn({ blogId, coverImage, title, onChang
                                                 resource_type: result.info.resource_type,
                                                 secure_url: result.info.secure_url,
                                                 width: result.info.width,
-                                            });
+                                            }]);
                                             form.handleSubmit(onSubmit)(); // save immediately
                                         }
                                     }}
@@ -86,7 +86,6 @@ export default function CoverImageUploadBtn({ blogId, coverImage, title, onChang
                                         maxFiles: 1,
                                         maxFileSize: 2 * 1024 * 1024, // 2MB
                                         clientAllowedFormats: ["image", "jpg", "png", "gif", "webp"],
-                                        folder: "blogs",
                                         tags: ["blogs", title?.replace(/\s/g, "_")],
                                     }}
                                 >

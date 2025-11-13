@@ -229,7 +229,7 @@ body {
   }
 
   .full-screen-dialog {
-    @apply h-[98vh] min-w-[98vw] !w-[98vw] lg:!p-12 sm:!p-8 !p-6;
+    @apply h-[98vh] min-w-[98vw] !w-[98vw] lg:p-12 sm:p-8 p-6;
   }
 
   #dialog-title {

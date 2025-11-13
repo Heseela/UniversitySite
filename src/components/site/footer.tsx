@@ -32,7 +32,7 @@ export default async function Footer() {
               <Image
                 width={64}
                 height={64}
-                src={siteData?.logoLight?.secure_url || `/logo.png`}
+                src={siteData?.logoLight_primary?.secure_url || `/logo.png`}
                 alt="Feature Creatify Logo"
                 className="h-16 w-auto"
               />

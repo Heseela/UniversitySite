@@ -10,7 +10,7 @@ interface DialogProps {
     className?: string;
 }
 
-export default function CustomDialog({
+export default function MediaUploadDialog({
     isOpen,
     onClose,
     title,
@@ -65,7 +65,7 @@ export default function CustomDialog({
     return (
         <div
             ref={overlayRef}
-            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center m-0 focus-visible:outline-0!"
             onClick={handleOverlayClick}
             role="dialog"
             aria-modal="true"
@@ -96,18 +96,6 @@ export default function CustomDialog({
                             <span className="sr-only">Close</span>
                         </button>
                     </div>
-                )}
-
-                {/* Close button for titleless dialogs */}
-                {!title && (
-                    <button
-                        onClick={onClose}
-                        className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
-                        aria-label="Close"
-                    >
-                        <X className="h-4 w-4" />
-                        <span className="sr-only">Close</span>
-                    </button>
                 )}
 
                 {/* Content */}

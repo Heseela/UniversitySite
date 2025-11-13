@@ -7,8 +7,10 @@ export const siteSetting = pgTable(
     {
         id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
 
-        logoLight: jsonb("logoLight").$type<TMediaSchema>(),
-        logoDark: jsonb("logoDark").$type<TMediaSchema>(),
+        logoLight_primary: jsonb("logoLight_primary").$type<TMediaSchema>(),
+        logoDark_primary: jsonb("logoDark_primary").$type<TMediaSchema>(),
+        logoLight_secondary: jsonb("logoLight_secondary").$type<TMediaSchema>(),
+        logoDark_secondary: jsonb("logoDark_secondary").$type<TMediaSchema>(),
 
         emails: text("emails").array().$type<string[]>().notNull().default([]),
         phones: text("phones").array().$type<string[]>().notNull().default([]),

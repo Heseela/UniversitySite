@@ -13,10 +13,10 @@ import ContainerLayout from '@/components/cms/container-layout';
 import { ResponsiveAlertDialog } from '@/components/ui/responsive-alert-dialog';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import CustomDialog from '@/components/ui/custom-dialog';
-import { UploadBulkMedia } from '@/components/media/media-field-multi-select';
+import MediaUploadDialog from '@/components/media/media-upload-dialog';
 import { Upload } from 'lucide-react';
 import { deleteMedia } from '@/lib/actions/media.action';
+import { UploadBulkMedia } from '@/components/media/upload-bulk-media';
 
 type Props = {
     media: TMediaResponse
@@ -104,9 +104,13 @@ export default function MediaPage__Client({ media: { meta, data } }: Props) {
                                                     width={40}
                                                     crop="auto"
                                                 />
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm group-hover:underline underline-offset-2">{m.name}</span>
-                                                    <span className="text-[11px] text-muted-foreground">{formatBytes(m.bytes)}</span>
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="text-sm font-medium group-hover:underline underline-offset-2">{m.name}</span>
+                                                    <p className="text-muted-foreground text-xs">
+                                                        <span>{formatBytes(m.bytes)} | </span>
+                                                        <span>{m.width} x {m.height} | </span>
+                                                        <span>{m.resource_type}/{m.format}</span>
+                                                    </p>
                                                 </div>
                                             </Link>
                                         </TableCell>
@@ -136,7 +140,7 @@ export default function MediaPage__Client({ media: { meta, data } }: Props) {
 
                 <DataTablePagination meta={meta} />
             </div>
-        </ContainerLayout>
+        </ContainerLayout >
     )
 }
 
@@ -193,17 +197,16 @@ function MediaActions({
                 )
             }
 
-            <CustomDialog
+            <MediaUploadDialog
                 isOpen={createNewOpen}
-                onClose={() => setCreateNewOpen(false)}
-                title='Media'
-                className="full-screen-dialog"
+                onClose={() => { }}
+                className="full-screen-dialog p-0"
             >
                 <UploadBulkMedia
                     onClose={() => setCreateNewOpen(false)}
                     onChange={() => { }} // this internally uploads the media
                 />
-            </CustomDialog>
+            </MediaUploadDialog>
 
             <Button
                 type="button"

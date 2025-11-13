@@ -53,7 +53,7 @@ export default function Header({
           <Image
             width={64}
             height={64}
-            src={siteData?.logoLight?.secure_url || `/logo.png`}
+            src={siteData?.logoLight_primary?.secure_url || `/logo.png`}
             alt="University Logo"
             className="h-16 w-auto"
           />

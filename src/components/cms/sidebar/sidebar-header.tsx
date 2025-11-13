@@ -21,11 +21,11 @@ export function AppSidebarHeader({
         <SidebarMenuItem>
           <section className="px-2">
             <Link href="/" className="flex items-center gap-4">
-              {siteData?.logoLight && (
+              {siteData?.logoLight_primary && (
                 <Image
                   width={64}
                   height={64}
-                  src={siteData?.logoLight?.secure_url}
+                  src={siteData?.logoLight_primary?.secure_url}
                   alt="Feature Creatify Logo"
                   className="max-h-28 max-auto"
                 />

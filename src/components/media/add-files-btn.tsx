@@ -48,7 +48,15 @@ export function AddFilesButton({
             }}
         >
             {({ open }) => (
-                <Button type="button" variant="secondary" size="sm" onClick={() => open()}>
+                <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        open()
+                    }}
+                >
                     Add file
                 </Button>
             )}

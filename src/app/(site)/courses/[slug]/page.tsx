@@ -52,12 +52,11 @@ export default async function SingleCoursePage({ params }: Props) {
   });
   
   if (!res.ok) {
-    console.error('Course fetch failed:', res.status, await res.text());
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold mb-4">Course Not Found</h2>
-          <p className="text-muted-foreground mb-4">The course you&apos;re looking for doesn't exist.</p>
+          <p className="text-muted-foreground mb-4">The course you&apos;re looking for doesn&apos;t exist.</p>
           <Link href="/courses" className="btn btn-primary">
             Back to Courses
           </Link>
