@@ -58,7 +58,8 @@ export function FontBackgroundToolbarPlugin() {
       icon={<PaintBucketIcon className="size-4" />}
       color={bgColor}
       onChange={onBgColorSelect}
-      title="text background color"
+      title="Background Color"
+      aria-label="Background Color"
     />
   )
 }

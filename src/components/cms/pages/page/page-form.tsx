@@ -18,6 +18,7 @@ import { toast } from 'sonner';
 import { updatePage } from '@/lib/actions/pages.action';
 import { useCustomSearchParams } from '@/hooks/useCustomSearchParams';
 import { useRouter } from 'next/navigation';
+import { TOOL_BAR_HEIGHT } from '@/CONSTANTS';
 
 type Props = {
     page: TPage,
@@ -57,8 +58,6 @@ const modes: { label: string, value: TMode }[] = [
         value: "api",
     }
 ]
-
-const TOOL_BAR_HEIGHT = "66px";
 
 export default function PageForm({ page, defaultTab, children, defaultMode }: Props) {
     const [isPending, startTransition] = useTransition();

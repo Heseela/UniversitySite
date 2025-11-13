@@ -1,15 +1,15 @@
 import CloudinaryImage from "@/components/ui/cloudinary-image";
-import { TBlog } from "../../../../types/blog.types";
 import { cn, getReadingTimeInMinutes } from "@/lib/utils";
+import { TBlogsResponse_Public } from "../../../../types/blog.types";
 
 export default async function BlogHero({
   title,
   publishedAt,
   coverImage,
-  length,
+  stats,
   categoryName,
   author
-}: TBlog) {
+}: TBlogsResponse_Public[0]) {
   return (
     <div className={cn(
       "relative flex items-end",
@@ -42,7 +42,7 @@ export default async function BlogHero({
             <div className="flex flex-col gap-1">
               <p className="text-sm">Read Time</p>
               <p className="font-medium">
-                {getReadingTimeInMinutes(length)} min
+                {getReadingTimeInMinutes(stats.characters)} min
               </p>
             </div>
             <div className="flex flex-col gap-1">

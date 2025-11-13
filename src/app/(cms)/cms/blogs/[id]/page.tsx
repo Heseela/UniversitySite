@@ -2,9 +2,10 @@ import BlogForm from "@/components/cms/blogs/blog-form";
 import { db } from "@/db";
 import { blogs } from "@/db/schema/blog";
 import { categories, CategoryType } from "@/db/schema/category";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { Info } from "lucide-react";
 import { SelectOption } from "../../../../../../types/global.types";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: {
@@ -27,7 +28,7 @@ export default async function BlogEditPage(props: {
       publishedAt: blogs.publishedAt,
       keywords: blogs.keywords,
       coverImage: blogs.coverImage,
-      length: blogs.length,
+      stats: blogs.stats,
       categoryId: blogs.categoryId,
       categoryName: categories.name,
       author: blogs.author,
@@ -39,9 +40,7 @@ export default async function BlogEditPage(props: {
     .leftJoin(categories, eq(categories.id, blogs.categoryId))
     .limit(1);
 
-  if (!blog) {
-    return <div>Blog not found</div>;
-  }
+  if (!blog) notFound();
 
   const categoriesOption: SelectOption[] = await db
     .select({ value: categories.id, label: categories.name })

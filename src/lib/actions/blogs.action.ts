@@ -2,14 +2,15 @@
 
 import { db } from "@/db";
 import { blogs } from "@/db/schema/blog";
-import { blogSchema, blogSchemaType } from "@/schemas/blog.schema";
+import { blogSchema, TBlogSchema } from "@/schemas/blog.schema";
 import { eq } from "drizzle-orm";
 import checkAuth from "../utilities/check-auth";
 import { revalidatePath } from "next/cache";
 import { generateSlug, throwZodErrorMsg } from "../utils";
 import { categories } from "@/db/schema/category";
+import { richTextDefaultValues } from "@/schemas/rich-text.schema";
 
-export async function createBlog(values: blogSchemaType) {
+export async function createBlog(values: TBlogSchema) {
   const session = await checkAuth("admin");
 
   const { success, data, error } = blogSchema.partial().safeParse(values);
@@ -20,7 +21,7 @@ export async function createBlog(values: blogSchemaType) {
     .insert(blogs)
     .values({
       ...data,
-      content: {},
+      content: richTextDefaultValues,
       slug: generateSlug(data.title || 'Untitled'),
       author: session.user.name || "",
     })
@@ -33,7 +34,7 @@ export async function createBlog(values: blogSchemaType) {
 
 export async function updateBlog(
   id: string,
-  values: Partial<blogSchemaType>,
+  values: Partial<TBlogSchema>,
   contentEdited: boolean = true
 ) {
   await checkAuth("admin");

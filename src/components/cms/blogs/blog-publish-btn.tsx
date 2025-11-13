@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ResponsiveAlertDialog } from "@/components/ui/responsive-alert-dialog";
 import { Globe, GlobeLock } from "lucide-react";
-import { TBlog } from "../../../../types/blog.types";
+import { TBlogTableSelect } from "@/db/schema/blog";
 
 type Props = {
-  blog: TBlog;
+  blog: TBlogTableSelect;
 };
 
 const schema = z.object({
@@ -23,7 +23,6 @@ const schema = z.object({
 export default function PublishButton({ blog }: Props) {
   const { id, summary = "", publishedAt, coverImage = "", categoryId } = blog;
 
-  console.log(blog)
   const [unpublishOpen, setUnpublishOpen] = useState(false);
   const [publishOpen, setpublishOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
