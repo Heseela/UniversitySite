@@ -16,3 +16,9 @@ export const mediaSchema = z.object({
 });
 
 export type TMediaSchema = z.infer<typeof mediaSchema>;
+
+export const mediaArraySchema = z.object({
+    media: z.array(mediaSchema)
+});
+
+export type TMediaArraySchema = z.infer<typeof mediaArraySchema>;

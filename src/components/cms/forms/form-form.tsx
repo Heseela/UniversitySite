@@ -113,15 +113,26 @@ export default function FormForm({ defaultValues, meta }: Props) {
                                     <span className="text-sm text-muted-foreground">Creating new Form</span>
                                 )
                             }
-                            <LoadingButton
-                                type="submit"
-                                size={'lg'}
-                                isLoading={isPending}
-                                disabled={isPending}
-                                loadingText="Saving..."
-                            >
-                                Save
-                            </LoadingButton>
+                            <section className="space-x-3">
+                                <Button
+                                    type="button"
+                                    variant={'outline'}
+                                    size={'lg'}
+                                    onClick={() => router.push("/cms/forms")}
+                                >
+                                    Cancel
+                                </Button>
+
+                                <LoadingButton
+                                    type="submit"
+                                    size={"lg"}
+                                    isLoading={isPending}
+                                    disabled={isPending}
+                                    loadingText="Saving..."
+                                >
+                                    Save
+                                </LoadingButton>
+                            </section>
                         </section>
                     </section>
 

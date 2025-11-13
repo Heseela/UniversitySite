@@ -1,0 +1,20 @@
+/* Add to your global CSS file */
+.masonry {
+  column-count: 6;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .masonry {
+    column-count: 1;
+  }
+}

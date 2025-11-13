@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { categories, CategoryType } from "@/db/schema/category";
 import { getPaginationQueryParams, paginatedResponse } from "@/lib/db-utils";
-import { and, desc, eq, ilike, SQL } from "drizzle-orm";
+import { and, asc, eq, ilike, SQL } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     .where(and(...filters));
 
   const foundCategories = await paginatedResponse({
-    orderByColumn: desc(categories.name),
+    orderByColumn: asc(categories.name),
     qb: query.$dynamic(),
     page,
     pageSize,

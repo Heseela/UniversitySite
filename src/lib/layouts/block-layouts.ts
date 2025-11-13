@@ -105,6 +105,14 @@ export const blockLayouts: {
         },
         {
             block: {
+                type: EBlock.Timeline,
+                events: [],
+            },
+            alt: "Timeline",
+            image: jumboCenter,
+        },
+        {
+            block: {
                 type: EBlock.ContactText,
             },
             alt: "Contact Text",

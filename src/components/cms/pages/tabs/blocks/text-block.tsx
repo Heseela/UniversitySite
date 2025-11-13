@@ -40,7 +40,7 @@ export default function TextBlock({
           <FormItem>
             <FormLabel>Headline</FormLabel>
             <FormControl>
-              <Input className="py-5" maxLength={50} {...field} />
+              <Input className="py-5" maxLength={100} {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

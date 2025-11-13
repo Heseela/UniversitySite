@@ -13,6 +13,7 @@ import * as categoriesSchema from "./schema/category"
 import * as eventsSchema from "./schema/event"
 import * as jobsSchema from "./schema/jobs"
 import * as coursesSchema from "./schema/courses"
+import * as galleriesSchema from "./schema/gallery"
 
 const connectionString = process.env.AUTH_DRIZZLE_URL!;
 const pool = postgres(connectionString, { max: 1 })
@@ -31,6 +32,7 @@ export const db = drizzle(pool, {
         ...categoriesSchema,
         ...eventsSchema,
         ...jobsSchema,
-        ...coursesSchema
+        ...coursesSchema,
+        ...galleriesSchema
     }
 });

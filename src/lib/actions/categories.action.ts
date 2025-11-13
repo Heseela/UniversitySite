@@ -1,12 +1,13 @@
 "use server";
 
 import { db } from "@/db";
-import { categories } from "@/db/schema/category";
+import { categories, CategoryType } from "@/db/schema/category";
 import checkAuth from "../utilities/check-auth";
 import { throwZodErrorMsg } from "../utils";
 import { categorySchema, CategorySchemaType } from "@/schemas/category.schema";
 import { revalidatePath } from "next/cache";
 import { and, eq } from "drizzle-orm";
+import { createGallery } from "./gallery.action";
 
 export async function createCategory(values: CategorySchemaType) {
   await checkAuth("admin");
@@ -31,6 +32,11 @@ export async function createCategory(values: CategorySchemaType) {
     .returning({ id: categories.id });
 
   if (inserted.length === 0) throw new Error("Failed to create category");
+
+  // if gallery category, create gallery
+  if (data.type === CategoryType.GALLERY) {
+    await createGallery(inserted[0].id);
+  }
 
   revalidatePath(`/cms/categories`);
 

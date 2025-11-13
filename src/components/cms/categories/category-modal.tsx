@@ -17,11 +17,9 @@ import {
   updateCategory,
 } from "@/lib/actions/categories.action";
 import { showServerError } from "@/lib/utils";
-
-type CategoryFormType = {
-  name: string;
-  type: CategoryType;
-};
+import { Label } from "@/components/ui/label";
+import { useQueryClient } from "@tanstack/react-query";
+import { CategorySchemaType } from "@/schemas/category.schema";
 
 const formDefaultValues = {
   name: "",
@@ -39,10 +37,12 @@ const CategoryModal = ({
 }) => {
   const isEditing = !!defaultValues;
 
-  const [values, setValues] = useState<CategoryFormType>(
+  const [values, setValues] = useState<CategorySchemaType>(
     defaultValues || formDefaultValues
   );
   const [isPending, startTransition] = useTransition();
+
+  const queryClient = useQueryClient();
 
   const handleSubmit = async () => {
     const { name, type } = values;
@@ -51,12 +51,16 @@ const CategoryModal = ({
 
     startTransition(async () => {
       try {
-        isEditing   
+        isEditing
           ? await updateCategory(defaultValues.id, values)
           : await createCategory(values);
-        toast.success("Category created successfully");
+        toast.success("Saved successfully");
         setIsModalOpen(false);
         setValues(formDefaultValues);
+
+        queryClient.invalidateQueries({
+          queryKey: ["/categories/options", ""],
+        });
       } catch (err) {
         showServerError(err);
       }
@@ -76,34 +80,37 @@ const CategoryModal = ({
       submitVariant="default"
       isLoading={isPending}
     >
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-row items-center justify-center gap-2">
+      <div className="space-y-6">
+        <div className="flex flex-col gap-2">
+          <Label>Category Name <span className="text-destructive">*</span></Label>
           <Input
-            className="w-full p-2 border rounded !bg-white !text-black"
-            placeholder="Category Name.."
+            placeholder="eg. General"
             value={values.name}
             onChange={(e) =>
               setValues((prev) => ({ ...prev, name: e.target.value }))
             }
           />
         </div>
-        <Select
-          value={values.type}
-          onValueChange={(value) =>
-            setValues((prev) => ({ ...prev, type: value as CategoryType }))
-          }
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select type" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.values(CategoryType).map((type) => (
-              <SelectItem key={type} value={type}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <div className="flex flex-col gap-2">
+          <Label>Select Type <span className="text-destructive">*</span></Label>
+          <Select
+            value={values.type}
+            onValueChange={(value) =>
+              setValues((prev) => ({ ...prev, type: value as CategoryType }))
+            }
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.values(CategoryType).map((type) => (
+                <SelectItem key={type} value={type}>
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
     </Modal>
   );

@@ -1,3 +1,5 @@
+"use server";
+
 import { courseSchema, TCourseSchema } from "@/schemas/courses.schema";
 import checkAuth from "../utilities/check-auth";
 import { generateSlug, throwZodErrorMsg } from "../utils";

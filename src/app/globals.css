@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800");
 
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -9,51 +8,53 @@
 
 :root {
   --background: oklch(1 0 0);
-  --foreground: oklch(0.1684 0 0);
+  --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.1684 0 0);
+  --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.1684 0 0);
-  --primary: oklch(0.6017 0.2568 344.0723);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9612 0 0);
-  --secondary-foreground: oklch(0.5555 0 0);
-  --muted: oklch(0.9612 0 0);
-  --muted-foreground: oklch(0.5555 0 0);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.41 0.15 265);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --pinkish: #e642a7;
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.81 0.1 252);
+  --chart-2: oklch(0.62 0.19 260);
+  --chart-3: oklch(0.55 0.22 263);
+  --chart-4: oklch(0.49 0.22 264);
+  --chart-5: oklch(0.42 0.18 266);
   --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-  --font-payfair: "Playfair Display", serif;
   --radius: 0.5rem;
 
+  /* NON SHADCN VARIABLES =======> */
+
+  --font-manrope: "Manrope", sans-serif;
   /* Warning (yellow) */
   --color-warning: #fbbf24;
   --color-warning-light: #fcd34d;
   --color-warning-dark: #f59e0b;
-
   /* Error (red) */
   --color-error: #ef4444;
   --color-error-light: #f87171;
@@ -61,52 +62,53 @@
 }
 
 .dark {
-  --background: oklch(0.1684 0 0);
-  --foreground: oklch(1 0 0);
-  --card: oklch(0.1684 0 0);
-  --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.1684 0 0);
-  --popover-foreground: oklch(1 0 0);
-  --primary: oklch(0.6017 0.2568 344.0723);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.269 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.4055 0.1544 265.8787);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.2686 0 0);
-  --secondary-foreground: oklch(0.8359 0 0);
-  --muted: oklch(0.2686 0 0);
-  --muted-foreground: oklch(0.5555 0 0);
-  --accent: oklch(0.5875 0.2395 334.0681);
-  --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.6732 0.2143 24.4654);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.2686 0 0);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.6017 0.2568 344.0723);
-  --chart-1: oklch(0.6017 0.2568 344.0723);
-  --chart-2: oklch(0.5875 0.2395 334.0681);
-  --chart-3: oklch(0.6056 0.2189 292.7172);
-  --chart-4: oklch(0.7227 0.192 149.5793);
-  --chart-5: oklch(0.8606 0.1731 91.9357);
-  --sidebar: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.371 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.275 0 0);
+  --input: oklch(0.325 0 0);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.81 0.1 252);
+  --chart-2: oklch(0.62 0.19 260);
+  --chart-3: oklch(0.55 0.22 263);
+  --chart-4: oklch(0.49 0.22 264);
+  --chart-5: oklch(0.42 0.18 266);
+  --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --sidebar-border: oklch(0.275 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
-  --font-payfair: "Playfair Display", serif;
   --radius: 0.5rem;
 
+  /* NON SHADCN VARIABLES =======> */
+
+  --font-manrope: "Playfair Display", serif;
   /* Warning (yellow) */
   --color-warning: #fbbf24;
   --color-warning-light: #fcd34d;
   --color-warning-dark: #f59e0b;
-
   /* Error (red) */
   --color-error: #ef4444;
   --color-error-light: #f87171;
@@ -146,25 +148,22 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-cream: #fff9e6;
-
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
-  --font-playfair: var(--font-payfair);
-
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --font-manrope: var(--font-manrope);
   --color-warning: var(--color-warning);
   --color-warning-light: var(--color-warning-light);
   --color-warning-dark: var(--color-warning-dark);
-
   --color-error: var(--color-error);
   --color-error: var(--color-error-light);
   --color-error: var(--color-error-dark);
+  --color-pinkish: var(--pinkish);
 }
 
 html {
@@ -174,6 +173,19 @@ html {
 
 body {
   letter-spacing: var(--tracking-normal);
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.hover\:pause-animation:hover {
+  animation-play-state: paused;
 }
 
 @layer base {
@@ -199,7 +211,7 @@ body {
   h4,
   h5,
   h6 {
-    @apply text-gray-800 dark:text-foreground font-playfair tracking-tight;
+    @apply text-gray-800 dark:text-foreground font-manrope tracking-tight;
   }
 
   .container {
@@ -217,7 +229,7 @@ body {
   }
 
   .full-screen-dialog {
-    @apply h-[98vh] min-w-[98vw] !w-[98vw] lg:!p-12 sm:!p-8 !p-6;
+    @apply h-[98vh] min-w-[98vw] !w-[98vw] lg:p-12 sm:p-8 p-6;
   }
 
   #dialog-title {
@@ -276,5 +288,5 @@ body {
 }
 
 .rich_text > p:empty, .rich_text > p:has(> br:first-child):not(:first-child):has(+ *) {
-  line-height: 8px;
+  line-height: 8px !important;
 }

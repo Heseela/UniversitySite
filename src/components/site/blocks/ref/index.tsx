@@ -3,6 +3,7 @@ import { ERefRelation } from "../../../../../types/global.types";
 import BlogsBlock from "./blogs-block";
 import TeamsBlock from "./teams-block";
 import EventsBlock from "./event-block";
+import CoursesBlock from "./courses-block";
 
 export const gridClassName = {
   1: "grid-cols-1",
@@ -19,5 +20,7 @@ export default function RenderRefItems(props: RefItemBlockDto) {
     <TeamsBlock {...props} refRelation={props.refRelation} />
   ) : props.refRelation === ERefRelation.Events ? (
     <EventsBlock {...props} refRelation={props.refRelation} />
-  ) : null;
+  ) : props.refRelation === ERefRelation.Courses ? (
+    <CoursesBlock {...props} refRelation={props.refRelation} />
+  ): null;
 }

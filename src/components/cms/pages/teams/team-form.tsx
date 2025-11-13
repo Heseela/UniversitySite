@@ -1,6 +1,6 @@
 "use client";
 
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { Button, LoadingButton } from "@/components/ui/button";
 import {
   Form,
@@ -17,6 +17,7 @@ import { createTeam, updateTeam } from "@/lib/actions/teams.action";
 import { showServerError } from "@/lib/utils";
 import { teamDefaultValue, teamSchema, TTeamDto } from "@/schemas/team.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -30,6 +31,7 @@ type Props = {
 export default function TeamForm({ defaultValues }: Props) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const form = useForm<TTeamDto>({
     resolver: zodResolver(teamSchema),
@@ -43,6 +45,9 @@ export default function TeamForm({ defaultValues }: Props) {
           ? await updateTeam(defaultValues.id, values)
           : await createTeam(values);
         toast.success("Team Saved");
+        queryClient.invalidateQueries({
+          queryKey: ['teams', 'options', '']
+        });
         router.push("/cms/teams");
       } catch (e) {
         showServerError(e);
@@ -96,15 +101,26 @@ export default function TeamForm({ defaultValues }: Props) {
                   Creating new team member
                 </span>
               )}
-              <LoadingButton
-                type="submit"
-                size={"lg"}
-                isLoading={isPending}
-                disabled={isPending}
-                loadingText="Saving..."
-              >
-                Save
-              </LoadingButton>
+              <section className="space-x-3">
+                <Button
+                  type="button"
+                  variant={'outline'}
+                  size={'lg'}
+                  onClick={() => router.push("/cms/teams")}
+                >
+                  Cancel
+                </Button>
+
+                <LoadingButton
+                  type="submit"
+                  size={"lg"}
+                  isLoading={isPending}
+                  disabled={isPending}
+                  loadingText="Saving..."
+                >
+                  Save
+                </LoadingButton>
+              </section>
             </section>
           </section>
 

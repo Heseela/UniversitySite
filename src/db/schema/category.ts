@@ -2,10 +2,13 @@ import { relations } from "drizzle-orm";
 import { index, pgTable, text } from "drizzle-orm/pg-core";
 import { blogs } from "./blog";
 import { events } from "./event";
+import { galleriesTable } from "./gallery";
 
 export enum CategoryType {
   EVENT = "event",
   BLOG = "blog",
+  COURSE = "course",
+  GALLERY = "gallery",
 }
 
 export const categories = pgTable(
@@ -29,6 +32,7 @@ export const categories = pgTable(
 export const categoriesRelations = relations(categories, ({ many }) => ({
   blogs: many(blogs),
   events: many(events),
+  galleries: many(galleriesTable),
 }));
 
 export type CategoriesSelect = typeof categories.$inferSelect;

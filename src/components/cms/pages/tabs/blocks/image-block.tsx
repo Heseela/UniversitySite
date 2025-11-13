@@ -1,4 +1,4 @@
-import { MediaInput, MediaItem } from '@/components/forms/media-field'
+import { MediaInput, MediaItem } from '@/components/media/media-field'
 import { BlockComponentProps } from './blocks'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useFormContext } from 'react-hook-form'

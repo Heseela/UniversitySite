@@ -27,23 +27,26 @@ export default function EventCard({ event }: Props) {
     <article className="@container">
       <div className="h-full card shadow-sm rounded-b-xl p-0 overflow-hidden">
         <div className="flex flex-col @2xl:flex-row h-full">
-          <div className="@2xl:w-1/3 @4xl:w-1/4">
+          <div className="@2xl:w-1/3 @4xl:w-1/4 relative">
             {event.coverImage && (
-              <CloudinaryImage
-                crop="auto"
-                src={event.coverImage?.secure_url}
-                alt={event.title}
-                width={400}
-                height={300}
-                className="w-full h-[300px] @2xl:h-full @2xl:max-w-[400px] object-cover"
-              />
+              <div className="relative h-60 @2xl:h-full w-full">
+                <CloudinaryImage
+                  crop="auto"
+                  src={event.coverImage?.secure_url}
+                  alt={event.title}
+                  width={400}
+                  height={200}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <Badge className="absolute top-4 right-4 bg-[var(--pinkish)] text-white border-none px-3 py-1 rounded-full text-xs font-bold">
+                  {event.categoryName}
+                </Badge>
+              </div>
             )}
           </div>
 
           <div className="grow flex flex-col p-6">
-            <Badge variant="outline" className="text-primary mb-1 border-primary">
-              {event.categoryName}
-            </Badge>
 
             <h3 className="text-xl font-bold mb-2">{event.title}</h3>
 
@@ -85,12 +88,10 @@ export default function EventCard({ event }: Props) {
 
             <Button
               asChild
-              variant="outline"
-              size={"lg"}
-              className="mt-auto flex w-fit py-6 px-40 bg-transparent  border-2 border-primary text-primary "
+              className="mt-auto w-full bg-primary hover:bg-blue-700 text-white py-2 transition-colors"
             >
               <Link href={"/events/" + event.slug}>
-                More Details <ExternalLink size={16} />
+                Learn More
               </Link>
             </Button>
           </div>

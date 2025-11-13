@@ -37,26 +37,30 @@ export default function RenderCardsBlock({
                             ? card.link.url
                             : `/${card.link}`
 
+                    const hasImage = card.image?.secure_url
+
                     return (
                         <Card
                             key={index}
                             className={cn(
-                                "overflow-hidden gap-4 py-8",
+                                "overflow-hidden gap-0 py-0",
                                 card.borderLess && "border-0"
                             )}
                         >
                             {
-                                card.image?.secure_url && (
+                                hasImage && card.image && (
                                     <CloudinaryImage
                                         src={card.image.secure_url}
                                         className='w-full h-64 object-cover'
-                                        {...card.image}
+                                        alt={card.image.alt || ''}
+                                        width={card.image.width}
+                                        height={card.image.height}
                                     />
                                 )
                             }
                             {card.title && (
                                 <CardHeader className='px-8'>
-                                    <CardTitle className='sm:text-2xl leading-snug font-playfair'>
+                                    <CardTitle className='sm:text-2xl leading-snug font-manrope'>
                                         {
                                             card.link?.url
                                                 ? (
@@ -69,13 +73,9 @@ export default function RenderCardsBlock({
                                     </CardTitle>
                                 </CardHeader>
                             )}
-                            <CardContent className='px-8'>
+                            <CardContent className='px-8 py-8'>
                                 <p className='text-muted-foreground'>{card.subtitle}</p>
-                                {
-                                    !isEmptyHTML(card.description.html) && (
-                                        <RichTextPreview html={card.description.html} />
-                                    )
-                                }
+                                <RichTextPreview html={card.description.html} />
                             </CardContent>
                         </Card>
                     )

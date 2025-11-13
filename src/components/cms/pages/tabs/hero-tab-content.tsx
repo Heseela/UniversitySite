@@ -18,7 +18,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import CtaAccordion from "./common/cta-accordion";
 import { Button } from "@/components/ui/button";
 import { ECtaVariant } from "../../../../../types/blocks.types";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import AddHeroSectionDialog from "./add-herosection-dialog";
 import { EHeroLayoutTypes } from "../../../../../types/page.types";
 import AlignmentSelect from "./common/alignment-select";
@@ -204,23 +204,6 @@ function SortableField({
                                                     )
                                                 }}
                                             />
-                                            {/* <FormField
-                                                                control={form.control}
-                                                                name={`heroSections.${idx}.subheadline`}
-                                                                render={({ field }) => (
-                                                                    <FormItem>
-                                                                        <FormLabel>Sub Headline</FormLabel>
-                                                                        <FormControl>
-                                                                            <Input
-                                                                                placeholder="Eg. Empowering Innovation and Growth in Nepal's Thriving Entrepreneurial Landscape"
-                                                                                className="py-5"
-                                                                                {...field}
-                                                                            />
-                                                                        </FormControl>
-                                                                        <FormMessage />
-                                                                    </FormItem>
-                                                                )}
-                                                            /> */}
                                             <CtaField heroIdx={idx} />
 
                                             <FormField

@@ -1,3 +1,5 @@
+"use server";
+
 import { jobSchema, TJobSchemaType } from "@/schemas/job.schema";
 import checkAuth from "../utilities/check-auth";
 import { generateSlug, throwZodErrorMsg } from "../utils";

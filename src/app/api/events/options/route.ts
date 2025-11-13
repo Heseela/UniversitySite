@@ -21,12 +21,12 @@ export async function GET(request: NextRequest) {
     .from(events)
     .where(and(...filters));
 
-  const foundTeams = await paginatedResponse({
+  const foundEvents = await paginatedResponse({
     orderByColumn: desc(events.eventDate),
     qb: query.$dynamic(),
     page,
     pageSize,
   });
 
-  return NextResponse.json(foundTeams);
+  return NextResponse.json(foundEvents);
 }

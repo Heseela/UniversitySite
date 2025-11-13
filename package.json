@@ -1,5 +1,5 @@
 {
-  "name": "site-builder",
+  "name": "university-site",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -54,7 +54,9 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-table": "^8.21.3",
+    "@uiw/react-json-view": "2.0.0-alpha.39",
     "@yoopta/accordion": "^4.9.9",
     "@yoopta/action-menu-list": "^4.9.9",
     "@yoopta/blockquote": "^4.9.9",
@@ -106,8 +108,10 @@
     "react-error-boundary": "^6.0.0",
     "react-hook-form": "^7.63.0",
     "react-medium-image-zoom": "^5.4.0",
+    "react-swipers": "^1.0.2",
     "sharp": "^0.34.4",
     "sonner": "^2.0.7",
+    "swiper": "^12.0.3",
     "tailwind-merge": "^3.3.1",
     "vaul": "^1.1.2",
     "zod": "^3.25.76"
@@ -121,6 +125,7 @@
     "@types/node": "^20.19.17",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "@types/swiper": "^6.0.0",
     "drizzle-kit": "^0.31.4",
     "eslint": "^9.36.0",
     "eslint-config-next": "15.3.2",

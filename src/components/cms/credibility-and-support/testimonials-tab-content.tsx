@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { testimonialDefaultvalue, TCredibilityAndSupport } from "@/schemas/credibility-and-support.schema";
 import { TMediaSchema } from "@/schemas/media.schema";
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { NUMBER_REGEX_STRING } from "@/CONSTANTS";
 
 export default function TestimonialsTabContent() {
@@ -70,7 +70,7 @@ export default function TestimonialsTabContent() {
                                                                                             <FormItem>
                                                                                                 <FormControl>
                                                                                                     <input
-                                                                                                        maxLength={50}
+                                                                                                        maxLength={100}
                                                                                                         onClick={(e) => e.stopPropagation()}
                                                                                                         className="focus:outline-0 text-sm field-sizing-content"
                                                                                                         placeholder="Untitled"
@@ -120,7 +120,7 @@ export default function TestimonialsTabContent() {
                                                                                         <FormControl>
                                                                                             <Input
                                                                                                 className='py-5'
-                                                                                                maxLength={50}
+                                                                                                maxLength={100}
                                                                                                 required
                                                                                                 {...field}
                                                                                             />

@@ -1,16 +1,18 @@
 "use client";
 
-import { MediaInput, MediaItem } from "@/components/forms/media-field";
+import { MediaInput, MediaItem } from "@/components/media/media-field";
 import { Button, LoadingButton } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import TagsInput from "@/components/ui/tags-input";
+import { Textarea } from "@/components/ui/textarea";
 import { TSiteSettingSelect } from "@/db/schema/site-setting";
 import { updateSiteSetting } from "@/lib/actions/site-setting.action";
 import { showServerError } from "@/lib/utils";
 import { siteSettingSchema, TSiteSettingSchema } from "@/schemas/site-setting.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,6 +23,7 @@ type Props = {
 
 export default function SiteSettingForm({ defaultValues }: Props) {
     const [isPending, startTransition] = useTransition();
+    const router = useRouter();
 
     const form = useForm<TSiteSettingSchema>({
         resolver: zodResolver(siteSettingSchema),
@@ -67,28 +70,39 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                                     <time className="font-medium">{defaultValues.updatedAt.toLocaleString()}</time>
                                 </p>
                             </section>
-                            <LoadingButton
-                                type="submit"
-                                size={'lg'}
-                                isLoading={isPending}
-                                disabled={isPending}
-                                loadingText="Saving..."
-                            >
-                                Save
-                            </LoadingButton>
+                            <section className="space-x-3">
+                                <Button
+                                    type="button"
+                                    variant={'outline'}
+                                    size={'lg'}
+                                    onClick={() => router.push("/cms/site-settings")}
+                                >
+                                    Cancel
+                                </Button>
+
+                                <LoadingButton
+                                    type="submit"
+                                    size={"lg"}
+                                    isLoading={isPending}
+                                    disabled={isPending}
+                                    loadingText="Saving..."
+                                >
+                                    Save Changes
+                                </LoadingButton>
+                            </section>
                         </section>
                     </section>
 
                     <section className="container space-y-6">
                         <FormField
                             control={form.control}
-                            name="logoLight"
+                            name="logoLight_primary"
                             render={({ field }) => {
                                 const value = field.value;
 
                                 return (
                                     <FormItem>
-                                        <FormLabel>Logo Light</FormLabel>
+                                        <FormLabel>Logo Light (Primary)</FormLabel>
                                         <FormControl>
                                             {
                                                 value ? (
@@ -112,13 +126,74 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                         />
                         <FormField
                             control={form.control}
-                            name="logoDark"
+                            name="logoDark_primary"
                             render={({ field }) => {
                                 const value = field.value;
 
                                 return (
                                     <FormItem>
-                                        <FormLabel>Logo Dark</FormLabel>
+                                        <FormLabel>Logo Dark (Primary)</FormLabel>
+                                        <FormControl>
+                                            {
+                                                value ? (
+                                                    <MediaItem
+                                                        media={value}
+                                                        onRemove={() => {
+                                                            field.onChange(null)
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <MediaInput onChange={(value) => {
+                                                        field.onChange(value)
+                                                    }} />
+                                                )
+
+                                            }
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )
+                            }}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="logoLight_secondary"
+                            render={({ field }) => {
+                                const value = field.value;
+
+                                return (
+                                    <FormItem>
+                                        <FormLabel>Logo Light (Secondary)</FormLabel>
+                                        <FormControl>
+                                            {
+                                                value ? (
+                                                    <MediaItem
+                                                        media={value}
+                                                        onRemove={() => {
+                                                            field.onChange(null)
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <MediaInput onChange={(value) => {
+                                                        field.onChange(value)
+                                                    }} />
+                                                )
+                                            }
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )
+                            }}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="logoDark_secondary"
+                            render={({ field }) => {
+                                const value = field.value;
+
+                                return (
+                                    <FormItem>
+                                        <FormLabel>Logo Dark (Secondary)</FormLabel>
                                         <FormControl>
                                             {
                                                 value ? (
@@ -221,6 +296,23 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                                             type="url"
                                             className="min-h-10"
                                             placeholder="Eg. https://maps.app.goo.gl....."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="highlightAnnouncement"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Highlight Announcement</FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            rows={2}
+                                            className="field-sizing-content resize-none"
                                             {...field}
                                         />
                                     </FormControl>

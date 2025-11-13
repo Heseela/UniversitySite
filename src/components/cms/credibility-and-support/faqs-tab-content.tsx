@@ -95,7 +95,7 @@ function FaqsForm() {
                                                                                     <FormItem>
                                                                                         <FormControl>
                                                                                             <input
-                                                                                                maxLength={50}
+                                                                                                maxLength={100}
                                                                                                 onClick={(e) => e.stopPropagation()}
                                                                                                 className="focus:outline-0 text-sm field-sizing-content"
                                                                                                 placeholder="Untitled"
@@ -145,7 +145,7 @@ function FaqsForm() {
                                                                                 <FormControl>
                                                                                     <Input
                                                                                         className='py-5'
-                                                                                        maxLength={50}
+                                                                                        maxLength={100}
                                                                                         required
                                                                                         {...field}
                                                                                     />

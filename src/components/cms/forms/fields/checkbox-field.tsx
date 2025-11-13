@@ -22,7 +22,7 @@ export default function CheckboxField({ idx }: FormFieldComponentProps) {
                                     className="py-5"
                                     required
                                     minLength={3}
-                                    maxLength={50}
+                                    maxLength={100}
                                     {...field}
                                 />
                             </FormControl>
@@ -40,7 +40,7 @@ export default function CheckboxField({ idx }: FormFieldComponentProps) {
                             <FormControl>
                                 <Input
                                     className="py-5"
-                                    maxLength={50}
+                                    maxLength={100}
                                     {...field}
                                 />
                             </FormControl>

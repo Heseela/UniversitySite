@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { asc, desc, eq, ilike, inArray, SQL } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, SQL } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { type NextRequest } from "next/server";
 import { EOrder } from "../../../../types/global.types";
@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
             updatedAt: coursesTable.updatedAt,
         })
         .from(coursesTable)
+        .where(and(...filters))
         .orderBy(
             order === EOrder.Asc ? asc(coursesTable.createdAt) : desc(coursesTable.createdAt)
         )

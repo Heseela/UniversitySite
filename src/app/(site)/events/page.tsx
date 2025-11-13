@@ -29,7 +29,7 @@ export default async function EventsPage() {
 
   return (
     <>
-      <RenderHero hero={page.heroSections[0]} />
+      <RenderHero heroSections={page.heroSections} />
 
       <section className="container py-12">
         <Suspense fallback={<Skeleton className="h-12" />}>
