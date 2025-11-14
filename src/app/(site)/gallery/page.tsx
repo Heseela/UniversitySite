@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { GALLERY_SLUG } from "@/app/slugs";
 import GalleryContainer from "@/components/site/gallery/gallery-container";
+import { TGalleryResponse } from "../../../../types/gallery.types";
 
 export const revalidate = 60;
 
@@ -21,11 +22,16 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function GalleryPage() {
   const page = await fetchPage(GALLERY_SLUG);
+  const res = await serverFetch("/gallery", {
+    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) }
+  });
+  if (!res.ok) return <div>Failed to fetch gallery</div>;
+  const galleries = await res.json() as TGalleryResponse;
 
   return (
     <>
       <RenderHero heroSections={page.heroSections} />
-      
+
       <section className="container py-16">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-primary mb-4">
@@ -36,30 +42,8 @@ export default async function GalleryPage() {
           </p>
         </div>
 
-        <Suspense fallback={<GallerySkeleton />}>
-          <GalleryContainer />
-        </Suspense>
+        <GalleryContainer galleries={galleries} />
       </section>
     </>
-  );
-}
-
-function GallerySkeleton() {
-  return (
-    <div className="space-y-8">
-      {/* Filter skeleton */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
-        {Array.from({ length: 5 }, (_, index) => (
-          <Skeleton key={index} className="h-10 w-20 rounded-full" />
-        ))}
-      </div>
-      
-      {/* Images skeleton */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {Array.from({ length: 8 }, (_, index) => (
-          <Skeleton key={index} className="aspect-[4/3] rounded-xl" />
-        ))}
-      </div>
-    </div>
   );
 }

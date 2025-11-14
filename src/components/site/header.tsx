@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { RefinedSiteNavLinks } from "./navbar";
@@ -14,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import CloudinaryImage from "../ui/cloudinary-image";
 
 export default function Header({
   navLinks,
@@ -51,7 +51,7 @@ export default function Header({
       <div className="container mx-auto flex items-center justify-between">
        <div className="flex gap-4">
        <Link href="/" className="flex items-center">
-          <Image
+          <CloudinaryImage
             width={64}
             height={64}
             src={siteData?.logoLight_primary?.secure_url || `/logo.png`}
@@ -62,7 +62,7 @@ export default function Header({
           />
         </Link>
         <Link href="/" className="flex items-center">
-          <Image
+          <CloudinaryImage
             width={64}
             height={64}
             src={siteData?.logoLight_secondary?.secure_url || `/logo.png`}
