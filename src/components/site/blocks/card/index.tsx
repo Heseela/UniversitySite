@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { ELinkType } from '../../../../../types/global.types'
 import CloudinaryImage from '@/components/ui/cloudinary-image'
 import { RichTextPreview } from '@/components/editor/blocks/editor-x/rich-text-preview'
-import isEmptyHTML from '@/lib/utilities/rich-text.utils'
 
 export default function RenderCardsBlock({
     cards,

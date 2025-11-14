@@ -17,15 +17,16 @@ import { Checkbox } from '../ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 import { UploadBulkMedia } from './upload-bulk-media';
 
-export type MediaFieldProps = {
+export type MultiMediaFieldProps = {
     media: TMediaSchema;
     onChange: (value: TMedia[]) => void;
     onClose: () => void;
     onRemove: () => void;
     defaultSelected?: TMedia[]
+    allowedFormats?: ("image" | "video" | "audio" | "document")[];
 }
 
-export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldProps, 'onChange' | 'defaultSelected'>) {
+export function MediaInput__Bulk({ onChange, defaultSelected, allowedFormats = [] }: Pick<MultiMediaFieldProps, 'onChange' | 'defaultSelected' | 'allowedFormats'>) {
     const [createNewOpen, setCreateNewOpen] = useState(false);
     const [selectorOpen, setSelectorOpen] = useState(false);
 
@@ -39,6 +40,7 @@ export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldP
                 <UploadBulkMedia
                     onClose={() => setCreateNewOpen(false)}
                     onChange={onChange}
+                    allowedFormats={allowedFormats}
                 />
             </MediaUploadDialog>
 
@@ -85,7 +87,7 @@ export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldP
     )
 }
 
-export default function MediaSelector({ onClose, onChange, defaultSelected }: Pick<MediaFieldProps, 'onClose' | 'onChange' | 'defaultSelected'>) {
+export default function MediaSelector({ onClose, onChange, defaultSelected }: Pick<MultiMediaFieldProps, 'onClose' | 'onChange' | 'defaultSelected'>) {
     const [search, setSearch] = useState("");
     const [queryParams, setQueryParams] = useState<Record<string, string | undefined>>({
         resource_type: "image",

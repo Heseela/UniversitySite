@@ -24,11 +24,12 @@ import { MediaSelectDataTablePagination } from './media-select-data-table-patina
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DataTable } from '../data-table/data-table';
 
-type MediaFieldProps = {
+export type MediaFieldProps = {
   media: TMediaSchema;
   onChange: (value: TMediaSchema) => void;
   onClose: () => void;
   onRemove: () => void;
+  allowedFormats?: ("image" | "video" | "audio" | "document")[];
 }
 
 export function MediaItem({ media, onRemove }: Pick<MediaFieldProps, 'media' | 'onRemove'>) {
@@ -66,7 +67,7 @@ export function MediaItem({ media, onRemove }: Pick<MediaFieldProps, 'media' | '
   )
 }
 
-export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
+export function MediaInput({ onChange, allowedFormats }: Pick<MediaFieldProps, 'onChange' | 'allowedFormats'>) {
   const [createNewOpen, setCreateNewOpen] = useState(false);
   const [selectorOpen, setSelectorOpen] = useState(false);
 
@@ -81,6 +82,7 @@ export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
         <CreateNew
           onClose={() => setCreateNewOpen(false)}
           onChange={onChange}
+          allowedFormats={allowedFormats}
         />
       </CustomDialog>
 
@@ -126,7 +128,7 @@ export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
   )
 }
 
-function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
+function CreateNew({ onClose, onChange, allowedFormats = [] }: Pick<MediaFieldProps, 'onClose' | 'onChange' | 'allowedFormats'>) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<TMediaSchema>({
@@ -240,6 +242,7 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
                               cropping: true,
                               maxFiles: 1,
                               maxFileSize: 5 * 1024 * 1024, // 5MB
+                              clientAllowedFormats: allowedFormats,
                             }}
                           >
                             {({ open }) => {

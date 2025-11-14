@@ -1,19 +1,13 @@
 import RenderHero from "@/components/site/heros/render-hero";
-import { Skeleton } from "@/components/ui/skeleton";
-import { CategoryType } from "@/db/schema/category";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
 import { fetchPage } from "@/lib/utilities/fetchPage";
 import { Metadata } from "next";
-import { Suspense } from "react";
-import { TPaginatedOptions } from "../../../../types/global.types";
 import { JOBS_SLUG, APPLY_FOR_JOB_SLUG } from "@/app/slugs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { JobCardSkeleton } from "@/components/site/jobs/job-card";
-import JobsContainer from "@/components/site/jobs/jobs-container";
-
-export const revalidate = 60;
+import JobCard from "@/components/site/jobs/job-card";
+import { TJobResponse_Public } from "../../../../types/job.types";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const page = await fetchPage(JOBS_SLUG);
@@ -27,6 +21,15 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function JobsPage() {
   const page = await fetchPage(JOBS_SLUG);
+  const res = await serverFetch("/jobs", {
+    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) }
+  });
+
+  if (!res.ok) return <NoJobs />;
+
+  const jobs = await res.json() as TJobResponse_Public;
+
+  if (jobs.length === 0) return <NoJobs />;
 
   return (
     <>
@@ -40,7 +43,7 @@ export default async function JobsPage() {
               Join our team and make a difference in education
             </p>
           </div>
-          
+
           <Button
             asChild
             className="bg-[var(--pinkish)] hover:bg-pink-500 text-white px-6 py-2 transition-colors shadow-sm"
@@ -53,30 +56,25 @@ export default async function JobsPage() {
         </div>
 
         <div className="space-y-8 mt-8">
-          <Suspense
-            fallback={Array.from({ length: 3 }, (_, index) => (
-              <JobCardSkeleton key={index} />
+          <div className="space-y-6">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job} />
             ))}
-          >
-            <JobsContainer />
-          </Suspense>
+          </div>
         </div>
       </section>
     </>
   );
 }
 
-export async function fetchCategories(type: CategoryType) {
-  const res = await serverFetch(`/categories/options?type=${type}`, {
-    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
-    cache: "force-cache",
-  });
-
-  if (!res.ok) {
-    return null;
-  }
-
-  const categories: TPaginatedOptions = await res.json();
-
-  return categories;
+function NoJobs() {
+  return (
+    <div className="text-center py-12">
+      <div className="text-slate-400 text-lg mb-2">No job openings found</div>
+      <p className="text-slate-500">
+        We don't have any open positions matching your criteria at the moment.
+        Please check back later or try different filters.
+      </p>
+    </div>
+  )
 }
