@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import MediaUploadDialog from '@/components/media/media-upload-dialog';
 import { Upload } from 'lucide-react';
-import { deleteMedia } from '@/lib/actions/media.action';
 import { UploadBulkMedia } from '@/components/media/upload-bulk-media';
+import { deleteMedia } from '@/lib/actions/media.action';
 
 type Props = {
     media: TMediaResponse
@@ -163,6 +163,7 @@ function MediaActions({
             try {
                 await deleteMedia(Array.from(selectedMap.keys()));
                 setSelectedMap(new Map());
+                toast.success("Media deleted successfully");
             } catch (e) {
                 toast.error("An unexpected error occurred");
             }

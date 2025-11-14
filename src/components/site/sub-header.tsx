@@ -8,18 +8,17 @@ interface CompanyInfo {
 }
 
 interface SubHeaderProps {
-    companyInfo: CompanyInfo;
+    siteData: CompanyInfo;
 }
 
-function SubHeader({ companyInfo }: SubHeaderProps) {
-    const phoneNumbers = companyInfo?.phones || [];
-    const emailAddresses = companyInfo?.emails || [];
-    const announcement = companyInfo?.highlightAnnouncement ||
-        'Admissions Open: 2025-26 : B.Com | B.Sc | BCA | B.Tech | D.Pharm | B.Pharm | LLB | Diploma | MBA | MCA | MA';
+function SubHeader({ siteData }: SubHeaderProps) {
+    const phoneNumbers = siteData?.phones || [];
+    const emailAddresses = siteData?.emails || [];
+    const announcement = siteData?.highlightAnnouncement;
 
     return (
         <div className="bg-primary text-white">
-            <div className="w-10/12 mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0 py-3">
+            <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0 py-3">
                 {/* Announcement Section */}
                 <div className="flex items-center overflow-hidden whitespace-nowrap flex-1 mr-4 w-full">
                     <span className="bg-[var(--pinkish)] font-bold mr-4 text-sm px-4 py-2 rounded-full">

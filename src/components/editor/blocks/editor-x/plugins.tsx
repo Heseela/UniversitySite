@@ -234,7 +234,7 @@ export function Plugins({
                 <ContentEditable
                   placeholder={placeholder}
                   className={cn(
-                    "ContentEditable__root relative block overflow-auto px-8 py-4 min-h-24 focus:outline-none",
+                    "rich_text ContentEditable__root relative block overflow-auto px-8 py-4 min-h-24 focus:outline-none",
                     className?.contentEditable
                   )}
                 />

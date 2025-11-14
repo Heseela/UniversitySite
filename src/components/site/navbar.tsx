@@ -52,7 +52,7 @@ export default async function Navbar({
 
   return (
     <div className="sticky top-0 left-0 z-50">
-      {siteData && <SubHeader companyInfo={siteData} />}
+      {siteData && <SubHeader siteData={siteData} />}
       <Header hasHero={hasHero} navLinks={navLinks} siteData={siteData} />
     </div>
   );
