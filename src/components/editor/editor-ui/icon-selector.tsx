@@ -14,7 +14,7 @@ export function IconSelector({ onSelect }: { onSelect: (name: string) => void })
     return (
         <Popover>
             <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" title="Select an icon"><LucideIcons.Puzzle /></Button>
+                <Button variant="outline" size="sm" title="Icon"><LucideIcons.Puzzle /></Button>
             </PopoverTrigger>
             <PopoverContent className="w-72 max-h-80 overflow-auto">
                 <Input

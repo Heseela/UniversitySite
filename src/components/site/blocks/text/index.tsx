@@ -3,7 +3,7 @@ import { TextBlockDto } from "@/schemas/page.schema";
 import { EAlignment } from "../../../../../types/global.types";
 import CMSLink from "@/components/ui/cms-link";
 import { RichTextPreview } from "@/components/editor/blocks/editor-x/rich-text-preview";
-import isEmptyHTML from "@/lib/utilities/isEmptyHTML";
+import isEmptyHTML from "@/lib/utilities/rich-text.utils";
 
 export default function RenderTextBlock({
   align,

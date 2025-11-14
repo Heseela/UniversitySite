@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { TForm } from "../../../../types/form.types";
+import { ExternalLinkIcon } from "lucide-react";
 
 export default async function FormSubmissionsList({ params, searchParams, form }: SubmissionsPageProps & { form: TForm }) {
     const [paramProps, searchParamProps] = await Promise.all([params, searchParams]);
@@ -39,7 +40,24 @@ export default async function FormSubmissionsList({ params, searchParams, form }
                                     <TableRow key={submission.id}>
                                         <TableCell>{ind + 1}</TableCell>
                                         {
-                                            fieldNames.map(fieldName => <TableCell key={fieldName}>{submission.data[fieldName] as string}</TableCell>)
+                                            fieldNames.map(fieldName => {
+                                                const value = submission.data[fieldName] as string;
+                                                
+                                                if (value.startsWith("http")) {
+                                                    return (
+                                                        <TableCell key={fieldName}>
+                                                            <a href={value} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-500">
+                                                                <ExternalLinkIcon className="size-4" />
+                                                                <span className="text-sm">File</span>
+                                                            </a>
+                                                        </TableCell>
+                                                    )
+                                                }
+                                                
+                                                return (
+                                                    <TableCell key={fieldName}>{value}</TableCell>
+                                                )
+                                            })
                                         }
                                         <TableCell>{new Date(submission.createdAt).toLocaleString()}</TableCell>
                                     </TableRow>

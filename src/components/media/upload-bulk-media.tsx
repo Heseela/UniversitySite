@@ -1,6 +1,6 @@
 import { useState, useTransition } from 'react';
 import { Button } from '../ui/button'
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronUp, X } from 'lucide-react';
 import CloudinaryImage from '../ui/cloudinary-image';
 import { Input } from '../ui/input';
 import { cn, formatBytes, showServerError } from '@/lib/utils';
@@ -9,11 +9,11 @@ import { uploadMedia } from '@/lib/actions/media.action';
 import { Textarea } from '../ui/textarea';
 import LoadingButton from '../forms/loading-button';
 import { AddFilesButton } from './add-files-btn';
-import { MediaFieldProps } from './media-field-multi-select';
+import { MultiMediaFieldProps } from './media-field-multi-select';
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer"
 import { ResponsiveAlertDialog } from '../ui/responsive-alert-dialog';
 
-export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
+export function UploadBulkMedia({ onClose, onChange, allowedFormats }: Pick<MultiMediaFieldProps, 'onClose' | 'onChange' | 'allowedFormats'>) {
     const [files, setFiles] = useState<TMediaSchema[]>([]);
     const [activeIdx, setActiveIdx] = useState<number>(0);
     const [isSaving, startTransition] = useTransition();
@@ -87,6 +87,7 @@ export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'on
                                 return next;
                             });
                         }}
+                        allowedFormats={allowedFormats}
                     />
 
                     <p className="text-sm">Select images to begin.</p>
@@ -122,6 +123,7 @@ export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'on
                                 return next;
                             });
                         }}
+                        allowedFormats={allowedFormats}
                     />
                 </div>
 
@@ -253,6 +255,7 @@ export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'on
                                             return next;
                                         });
                                     }}
+                                    allowedFormats={allowedFormats}
                                 />
                                 <span className="text-xs font-medium">
                                     {filesCount ? `${filesCount} Files to Upload` : 'No files yet'}

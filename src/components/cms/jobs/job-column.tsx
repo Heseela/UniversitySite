@@ -20,9 +20,17 @@ import Link from "next/link"
 import { deleteJob } from "@/lib/actions/jobs.action"
 import { Badge } from "@/components/ui/badge"
 import { EJobStatus, EJobType } from "@/schemas/job.schema"
-import { TJobResponse } from "../../../../types/job.types"
 
-export const jobsColumns: ColumnDef<TJobResponse[0]>[] = [
+// Define the exact type that matches your DataTable expectation
+type JobTableData = {
+  id: string;
+  title: string;
+  department: string;
+  type: EJobType;
+  status: EJobStatus;
+}
+
+export const jobsColumns: ColumnDef<JobTableData>[] = [
     {
         header: "S.N",
         cell: ({ row }) => <p className="text-14 font-medium"> {row.index + 1} </p>,
@@ -79,7 +87,7 @@ export const jobsColumns: ColumnDef<TJobResponse[0]>[] = [
     },
 ]
 
-function JobsColumnActions({ job }: { job: TJobResponse[0] }) {
+function JobsColumnActions({ job }: { job: JobTableData }) {
     const router = useRouter();
     const [isDeleting, startTransition] = useTransition();
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);

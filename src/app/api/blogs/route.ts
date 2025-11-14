@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
             publishedAt: blogs.publishedAt,
             keywords: blogs.keywords,
             coverImage: blogs.coverImage,
-            length: blogs.length,
+            stats: blogs.stats,
             categoryName: categories.name,
             author: blogs.author,
             updatedAt: blogs.updatedAt,

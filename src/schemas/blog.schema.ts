@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { richTextDefaultValues, richTextSchema } from "./rich-text.schema";
 
 export const blogSummarySchema = z
   .string({ required_error: "Summary is required" })
@@ -13,24 +14,30 @@ export const blogKeywordsSchema = z
 export const blogSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }).trim(),
   summary: z.string().trim(), // before publishing, no need to validate length
-  content: z.any(),
+  content: richTextSchema,
   coverImage: z.string().nullish(),
   keywords: blogKeywordsSchema,
   isFavourite: z.boolean(),
   publishedAt: z.date().nullish(),
-  length: z.number().min(0),
+  stats: z.object({
+    characters: z.number().min(0),
+    words: z.number().min(0),
+  }),
   categoryId: z.string().uuid().nullish(),
 });
 
-export type blogSchemaType = z.infer<typeof blogSchema>;
+export type TBlogSchema = z.infer<typeof blogSchema>;
 
-export const blogFormDefaultValues: blogSchemaType = {
+export const blogFormDefaultValues: TBlogSchema = {
   title: "Untitled",
   summary: "",
-  content: {},
+  content: richTextDefaultValues,
   coverImage: undefined,
   keywords: [],
   isFavourite: false,
   publishedAt: null,
-  length: 0,
+  stats: {
+    characters: 0,
+    words: 0,
+  },
 };

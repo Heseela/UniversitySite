@@ -1,23 +1,9 @@
-import { db } from "@/db";
-import { header } from "@/db/schema/globals";
-import { cache } from "react";
 import Header from "./header";
+import SubHeader from "./sub-header";
 import { ENavLinkType } from "@/schemas/globals.schema";
 import { ECtaVariant } from "../../../types/blocks.types";
-import { serverFetch } from "@/lib/data-access.ts/server-fetch";
-import { TSiteSettingSchema } from "@/schemas/site-setting.schema";
 import { HOME_SLUG } from "@/app/slugs";
-
-const getHeader = cache(async () => {
-  const [existing] = await db
-    .select({
-      navLinks: header.navLinks,
-    })
-    .from(header)
-    .limit(1);
-
-  return existing;
-});
+import { getHeader, getSiteSettings } from "@/lib/data-access.ts/site-settings.data";
 
 export interface RefinedSiteNavLinks {
   label: string;
@@ -40,10 +26,7 @@ export default async function Navbar({
   hasHero?: boolean;
 }) {
   const header = await getHeader();
-  const siteResponse = await serverFetch(`/site-settings`);
-  const siteData = siteResponse.ok
-    ? ((await siteResponse.json()) as TSiteSettingSchema)
-    : null;
+  const siteData = await getSiteSettings();
 
   if (!header) return null;
 
@@ -67,5 +50,10 @@ export default async function Navbar({
     };
   });
 
-  return <Header hasHero={hasHero} navLinks={navLinks} siteData={siteData} />;
+  return (
+    <div className="sticky top-0 left-0 z-50">
+      {siteData && <SubHeader companyInfo={siteData} />}
+      <Header hasHero={hasHero} navLinks={navLinks} siteData={siteData} />
+    </div>
+  );
 }

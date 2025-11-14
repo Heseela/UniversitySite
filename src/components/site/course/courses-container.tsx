@@ -37,7 +37,6 @@ export default function CoursesContainer() {
     );
   }
 
-  // No courses at all
   if (data.length === 0 && !searchQuery) {
     return (
       <div className="text-center py-12">
@@ -49,7 +48,6 @@ export default function CoursesContainer() {
     );
   }
 
-  // Search returned no results
   if (searchQuery && data.length === 0) {
     return (
       <div className="text-center py-12">

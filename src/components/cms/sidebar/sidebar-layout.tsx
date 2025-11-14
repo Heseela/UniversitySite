@@ -5,20 +5,17 @@ import { Suspense } from "react";
 import { Skeleton } from "../../ui/skeleton";
 import AppBreadCrumb from "./app-bread-crumb";
 import { ThemeToggleBtn } from "@/components/ui/theme-toggle";
-import { serverFetch } from "@/lib/data-access.ts/server-fetch";
-import { TSiteSettingSchema } from "@/schemas/site-setting.schema";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Globe } from "lucide-react";
+import { getSiteSettings } from "@/lib/data-access.ts/site-settings.data";
 
 type AppRootLayoutProps = {
     children: React.ReactNode,
 }
 
 export default async function SidebarLayout({ children }: AppRootLayoutProps) {
-    const response = await serverFetch(`/site-settings`);
-
-    const siteData = response.ok ? ((await response.json()) as TSiteSettingSchema) : null;
+    const siteData = await getSiteSettings();
 
     return (
         <SidebarProvider>

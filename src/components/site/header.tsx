@@ -45,19 +45,34 @@ export default function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 left-0 py-2 w-full z-50 bg-white/80 backdrop-blur-2xl border-b"
+        "py-2 w-full bg-white/80 backdrop-blur-2xl border-b"
       )}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <Link href="/" className="flex items-center">
+       <div className="flex gap-4">
+       <Link href="/" className="flex items-center">
           <Image
             width={64}
             height={64}
             src={siteData?.logoLight_primary?.secure_url || `/logo.png`}
-            alt="University Logo"
-            className="h-16 w-auto"
+            alt="Primary Logo"
+            className={cn(
+              "h-14 w-auto transition-all duration-300",
+            )}
           />
         </Link>
+        <Link href="/" className="flex items-center">
+          <Image
+            width={64}
+            height={64}
+            src={siteData?.logoLight_secondary?.secure_url || `/logo.png`}
+            alt="Secondary Logo"
+            className={cn(
+              "h-14 w-auto transition-all duration-300",
+            )}
+          />
+        </Link>
+       </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">

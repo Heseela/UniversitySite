@@ -1,29 +1,12 @@
-import { YooptaContentValue } from "@yoopta/editor";
-
-export type TBlog = {
-  id: string;
-  title: string;
-  content: YooptaContentValue;
-  summary: string;
-  slug: string;
-  coverImage: string | null;
-  publishedAt: Date | null;
-  keywords: string[];
-  updatedAt: Date;
-  isFavourite: boolean;
-  length: number;
-  categoryName?: string | null;
-  categoryId?: string | null;
-  author: string;
-};
+import { TBlogTableSelect } from "@/db/schema/blog";
 
 export type TBlogsResponse = Pick<
-  TBlog,
+  TBlogTableSelect,
   "id" | "title" | "slug" | "updatedAt" | "publishedAt" | "isFavourite"
 >[];
 
 export type TBlogsResponse_Public = (Pick<
-  TBlog,
+  TBlogTableSelect,
   | "id"
   | "title"
   | "slug"
@@ -31,9 +14,10 @@ export type TBlogsResponse_Public = (Pick<
   | "publishedAt"
   | "keywords"
   | "coverImage"
-  | "length"
+  | "stats"
   | "author"
   | "updatedAt"
+  | "content"
 > & {
   categoryName: string;
 })[];

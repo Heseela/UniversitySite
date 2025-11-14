@@ -52,7 +52,8 @@ export function FontColorToolbarPlugin() {
       icon={<BaselineIcon className="size-4" />}
       color={fontColor}
       onChange={onFontColorSelect}
-      title="text color"
+      title="Text Color"
+      aria-label="Text Color"
     />
   )
 }

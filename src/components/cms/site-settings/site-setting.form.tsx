@@ -27,14 +27,17 @@ export default function SiteSettingForm({ defaultValues }: Props) {
 
     const form = useForm<TSiteSettingSchema>({
         resolver: zodResolver(siteSettingSchema),
-        defaultValues: defaultValues ?? {
-            address: "",
-            emails: [],
-            phones: [],
-            headerLogo: null,
-            footerLogo: null,
-            socialLinks: [],
-            mapLink: ""
+        defaultValues: {
+            logoLight_primary: defaultValues.logoLight_primary || null,
+            logoDark_primary: defaultValues.logoDark_primary || null,
+            logoLight_secondary: defaultValues.logoLight_secondary || null,
+            logoDark_secondary: defaultValues.logoDark_secondary || null,
+            address: defaultValues.address || "",
+            emails: defaultValues.emails || [],
+            phones: defaultValues.phones || [],
+            socialLinks: defaultValues.socialLinks || [],
+            mapLink: defaultValues.mapLink || "",
+            highlightAnnouncement: defaultValues.highlightAnnouncement || ""
         }
     });
 

@@ -19,7 +19,7 @@ export function BlockInsertPlugin({ children }: { children: React.ReactNode }) {
       <Select value={""}>
         <SelectTrigger className="!h-8 w-min gap-1">
           <PlusIcon className="size-4" />
-          <span>Insert</span>
+          <span className="text-foreground!">Insert</span>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>{children}</SelectGroup>

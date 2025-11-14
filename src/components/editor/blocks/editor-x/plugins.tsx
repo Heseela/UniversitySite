@@ -108,9 +108,11 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { cn } from "@/lib/utils"
 import { ElementFormatToolbarPlugin } from "../../plugins/toolbar/element-format-toolbar-plugin"
 import { IconSelectorToolbarPlugin } from "../../plugins/toolbar/icon-selector-toolbar-plugin"
-import { IconPickerPlugin } from "../../plugins/picker/icon-picker/icon-picker-plugin"
 import { useActiveIconNode } from "../../editor-hooks/use-active-icon-node"
 import { IconStyleEditor } from "../../plugins/picker/icon-picker/icon-style-editor"
+import { IconPickerPlugin } from "../../plugins/picker/icon-picker/icon-picker-plugin"
+import { ActionsPlugin } from "../../plugins/actions/actions-plugin"
+import { CounterCharacterPlugin } from "../../plugins/actions/counter-character-plugin"
 
 export type EditorPluginProps = {
   placeholder?: string
@@ -130,11 +132,13 @@ export type EditorPluginProps = {
     contentEditable?: string
     root?: string
   }
+  onStatsChange?: (stats: { characters: number, words: number }) => void
 }
 
 export function Plugins({
   placeholder = "Write something...",
   className,
+  onStatsChange,
   ...props
 }: EditorPluginProps) {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null)
@@ -230,7 +234,7 @@ export function Plugins({
                 <ContentEditable
                   placeholder={placeholder}
                   className={cn(
-                    "rich_text ContentEditable__root relative block overflow-auto px-8 py-4 min-h-24 focus:outline-none",
+                    "ContentEditable__root relative block overflow-auto px-8 py-4 min-h-24 focus:outline-none",
                     className?.contentEditable
                   )}
                 />
@@ -249,12 +253,12 @@ export function Plugins({
         <TabIndentationPlugin />
         <HashtagPlugin />
         <HistoryPlugin />
+
         <MentionsPlugin />
         <PageBreakPlugin />
         <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
         <KeywordsPlugin />
         <EmojisPlugin />
-        <EmojiPickerPlugin />
         <ImagesPlugin />
         <InlineImagePlugin />
         <TableCellResizerPlugin />
@@ -326,26 +330,20 @@ export function Plugins({
 
         <ContextMenuPlugin />
         <DragDropPastePlugin />
+        <EmojiPickerPlugin />
 
         <FloatingLinkEditorPlugin anchorElem={floatingAnchorElem} />
         <FloatingTextFormatToolbarPlugin anchorElem={floatingAnchorElem} />
 
         <ListMaxIndentLevelPlugin />
       </div>
-      {/* <ActionsPlugin>
-        <div className="clear-both flex items-center justify-between gap-2 overflow-auto border-t p-1">
-          <div className="flex flex-1 justify-start pl-2">
-            <div className="flex items-center">
-              <span className="text-xs text-muted-foreground">Max:</span>
-              <MaxLengthPlugin maxLength={maxLength} />
-            </div>
-            <CharacterLimitPlugin maxLength={maxLength} charset="UTF-16" />
-          </div>
+      <ActionsPlugin>
+        <div className="clear-both flex items-center justify-end gap-2 overflow-auto p-1">
           <div>
-            <CounterCharacterPlugin charset="UTF-16" />
+            <CounterCharacterPlugin charset="UTF-16" onStatsChange={onStatsChange} />
           </div>
         </div>
-      </ActionsPlugin> */}
+      </ActionsPlugin>
     </div>
   )
 }
