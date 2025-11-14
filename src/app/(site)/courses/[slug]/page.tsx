@@ -9,7 +9,6 @@ import { RichTextPreview } from "@/components/editor/blocks/editor-x/rich-text-p
 import { cn } from "@/lib/utils";
 import { TCoursesResponse_Public } from "../../../../../types/course.types";
 import CourseHero from "@/components/site/course/course-hero";
-import RelatedCourses from "@/components/site/course/related-courses";
 
 type Props = {
   params: Promise<{
@@ -66,11 +65,6 @@ export default async function SingleCoursePage({ params }: Props) {
   }
 
   const course: TCourseTableSelect & { categoryName?: string } = await res.json();
-
-  const relatedRes = await serverFetch(`/courses?faculty=${course.faculty}&limit=4`, {
-    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
-  });
-  const relatedCourses: TCoursesResponse_Public = relatedRes.ok ? await relatedRes.json() : [];
 
   return (
     <>
@@ -153,8 +147,6 @@ export default async function SingleCoursePage({ params }: Props) {
           </div>
         </div>
       </section>
-
-      <RelatedCourses courses={relatedCourses} currentCourseSlug={course.slug} />
     </>
   );
 }

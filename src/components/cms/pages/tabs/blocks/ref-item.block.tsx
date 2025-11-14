@@ -28,7 +28,7 @@ export default function RefItemBlock({ blockIdx, sectionIdx }: BlockComponentPro
                         <Select
                             onValueChange={val => {
                                 field.onChange(val);
-                                form.setValue(`${blockName}.selected`, []); // reset selected on ref change
+                                form.setValue(`${blockName}.selected`, []);
                             }}
                             defaultValue={field.value}
                             required

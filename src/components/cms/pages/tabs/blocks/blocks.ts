@@ -19,7 +19,7 @@ export const blocks: Partial<Record<EBlock, FC<BlockComponentProps>>> = {
   [EBlock.Cards]: CardsBlock,
   [EBlock.RefItem]: RefItemBlock,
   [EBlock.Form]: FormBlock,
-  [EBlock.Faq]: FaqBlock, // FaqBlock means no setting block
+  [EBlock.Faq]: FaqBlock,
   [EBlock.Testimonial]: FaqBlock,
   [EBlock.Alumni]: FaqBlock,
   [EBlock.Partner]: FaqBlock,

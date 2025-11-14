@@ -6,14 +6,14 @@ export const jobTypeEnum = pgEnum('job_type', EJobType);
 export const jobStatusEnum = pgEnum('job_status', EJobStatus);
 
 export const jobsTable = pgTable('jobs', {
-    id: text("id").primaryKey().notNull().$defaultFn(() => crypto.randomUUID()), // Add .notNull()
+    id: text("id").primaryKey().notNull().$defaultFn(() => crypto.randomUUID()), 
     slug: text("slug").notNull(),
 
     title: text('title').notNull(),
     department: text('department').notNull(),
     type: jobTypeEnum('type').notNull(),
     description: jsonb("description").$type<IRichTextSchema>().notNull(),
-    status: jobStatusEnum('status').default(EJobStatus.Open).notNull(), // Already has default
+    status: jobStatusEnum('status').default(EJobStatus.Open).notNull(),
 
     createdAt: timestamp("createdAt").notNull().defaultNow(),
     updatedAt: timestamp("updatedAt").notNull().defaultNow().$onUpdate(() => new Date()),

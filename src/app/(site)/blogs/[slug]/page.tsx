@@ -1,8 +1,4 @@
-import { BlogCardSkeleton } from "@/components/site/blogs/blog-card";
-import RelatedBlogs from "@/components/site/blogs/related-blogs";
 import { Metadata } from "next";
-import Link from "next/link";
-import { Suspense } from "react";
 import { db } from "@/db";
 import { blogs, TBlogTableSelect } from "@/db/schema/blog";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
@@ -74,7 +70,7 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
       {/* Blog Content */}
       <section className="py-8 md:py-12 md:mt-0 mt-[200px] bg-white">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <div className="">
             <div className="mb-10"></div>
 
             <p className="text-lg leading-relaxed mb-6">{blog.summary}</p>
@@ -83,15 +79,6 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
           </div>
         </div>
       </section>
-
-      {/* Related Posts */}
-      <Suspense
-        fallback={Array.from({ length: 3 }, (_, index) => (
-          <BlogCardSkeleton key={index} />
-        ))}
-      >
-        <RelatedBlogs slug={slug} />
-      </Suspense>
     </>
   );
 }

@@ -8,7 +8,7 @@ export default function CourseHero({
   return (
     <div className="relative -mt-[10.4rem] flex items-end">
       <div className="container z-10 relative pb-8">
-        <div className="max-w-4xl mx-auto">
+        <div className="">
           <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl font-medium text-shadow-md">
             {name}
           </h1>
