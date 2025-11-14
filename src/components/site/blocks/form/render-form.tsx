@@ -72,7 +72,6 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                                 {field.required && <span className="text-destructive"> *</span>}
                             </Label>
 
-                            {/* Field type rendering with proper validation */}
                             {field.type === "text" && (
                                 <Input
                                     type="text"
@@ -180,6 +179,17 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                                     {...field.validation}
                                 />
                             )}
+                            {field.type === "file" && (
+                                <Textarea
+                                    className={cn("max-h-24 overflow-y-auto resize-none field-sizing-content whitespace-pre-wrap break-words")}
+                                    placeholder={field.placeholder}
+                                    rows={4}
+                                    name={field.name}
+                                    required={field.required}
+                                    {...field.validation}
+                                />
+                            )}
+                             
                         </div>
                     ))}
                     <LoadingButton

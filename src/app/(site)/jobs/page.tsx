@@ -33,10 +33,9 @@ export default async function JobsPage() {
       <RenderHero heroSections={page.heroSections} />
 
       <section className="container py-12">
-        {/* Header with Apply Button */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Career Opportunities</h1>
+            <h1 className="text-3xl font-bold text-primary">Career Opportunities</h1>
             <p className="text-gray-600 mt-2">
               Join our team and make a difference in education
             </p>
@@ -53,7 +52,6 @@ export default async function JobsPage() {
           </Button>
         </div>
 
-        {/* Jobs Container */}
         <div className="space-y-8 mt-8">
           <Suspense
             fallback={Array.from({ length: 3 }, (_, index) => (
