@@ -60,7 +60,7 @@ export default function GalleryContainer() {
       <div className="text-center py-12">
         <div className="text-slate-400 text-lg mb-2">No images found</div>
         <p className="text-slate-500">
-          We're currently updating our gallery. Please check back later.
+          We&apos;re currently updating our gallery. Please check back later.
         </p>
       </div>
     );

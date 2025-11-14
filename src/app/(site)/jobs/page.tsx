@@ -72,7 +72,7 @@ function NoJobs() {
     <div className="text-center py-12">
       <div className="text-slate-400 text-lg mb-2">No job openings found</div>
       <p className="text-slate-500">
-        We don't have any open positions matching your criteria at the moment.
+        We don&apos;t have any open positions matching your criteria at the moment.
         Please check back later or try different filters.
       </p>
     </div>

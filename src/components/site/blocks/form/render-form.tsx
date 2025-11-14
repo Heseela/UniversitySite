@@ -51,8 +51,10 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
         
         const data: Record<string, unknown> = { ...formData };
 
-        if (media) {
-            data[fields.find(f => f.type === FormFieldType.File)?.name!] = media.secure_url;
+        const mediaFieldName = fields.find(f => f.type === FormFieldType.File)?.name;
+        
+        if (media && mediaFieldName) {
+            data[mediaFieldName] = media.secure_url;
         }
 
         startTransition(async () => {
