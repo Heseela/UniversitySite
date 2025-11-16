@@ -14,42 +14,50 @@ export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
   const imageUrl = hero.image?.secure_url;
 
   return (
-    <section className={cn("relative py-20 overflow-hidden")}>
-      <div
-        className={cn(
-          "mx-auto container flex flex-col xl:flex-row items-center gap-10",
-        )}
-      >
+    <section className={cn("w-full h-full flex items-center py-12 md:py-20")}>
+      <div className={cn(
+        "mx-auto container flex flex-col xl:flex-row items-center gap-8 md:gap-12 h-full",
+        imageUrl ? "min-h-[500px]" : "min-h-[300px]"
+      )}>
         {imageUrl && (
           <div className={cn(
-            "flex justify-center items-center w-full md:flex-1 mb-6 md:mb-0",
-            imagePosition === EAlignmentExcludeCenter.Right && "order-2"
+            "flex justify-center items-center w-full xl:flex-1 mb-6 xl:mb-0",
+            imagePosition === EAlignmentExcludeCenter.Right && "xl:order-2"
           )}>
             <CloudinaryImage
-              className="w-full rounded-2xl h-auto object-cover"
+              className="w-full max-w-2xl rounded-2xl h-auto object-cover shadow-2xl"
               src={imageUrl}
-              width={500}
-              height={300}
-              alt={hero.image?.alt || "Image"}
+              width={600}
+              height={400}
+              alt={hero.image?.alt || "Hero image"}
             />
           </div>
         )}
 
-        <div className="w-full space-y-12 md:flex-1">
+        <div className={cn(
+          "w-full space-y-8",
+          imageUrl ? "xl:flex-1" : "max-w-4xl mx-auto text-center"
+        )}>
           <section className="[&_h1]:text-shadow-md [&_h1]:text-balance [&_p]:text-balance">
-            <RichTextPreview className="mb-8" html={hero.headline.html} />
+            <RichTextPreview 
+              className="mb-6 [&_h1]:text-4xl md:[&_h1]:text-5xl [&_h1]:font-bold [&_h1]:leading-tight [&_p]:text-lg md:[&_p]:text-xl"
+              html={hero.headline.html} 
+            />
           </section>
           {Array.isArray(hero.cta) && hero.cta.length > 0 && (
-            <ul className="flex gap-4">
+            <ul className={cn(
+              "flex flex-wrap gap-4",
+              !imageUrl && "justify-center"
+            )}>
               {hero.cta.map((cta, index) => (
                 <li key={index}>
                   <CMSLink
                     size={"lg"}
                     {...cta}
                     className={cn(
-                      "!px-8 py-6 text-base border-2",
-                      cta.variant === "outline" && "bg-transparent border-primary text-primary",
-                      cta.variant === "default" && "border-primary"
+                      "px-8 py-4 text-base font-semibold transition-all duration-300 hover:scale-105",
+                      cta.variant === "outline" && "bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white",
+                      cta.variant === "default" && "border-2 border-primary"
                     )}
                   />
                 </li>

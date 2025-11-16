@@ -35,27 +35,28 @@ const blockToRender: Record<EBlock, FC<any>> = {
   [EBlock.Certification]: RenderCertificationBlock,
   [EBlock.Map]: RenderMapBlock,
   [EBlock.Timeline]: RenderTimelineBlock
-  
 }
 
 export default function RenderSections({ sections }: Props) {
   return (
     <section>
       {sections.map((s, idx) => {
-        const blocksLayoutClassName =
-          s.blocks?.direction === "horizontal"
-            ? "grid grid-cols-1 md:grid-cols-[repeat(var(--cols),_minmax(0,1fr))] gap-12"
-            : "space-y-4";
+        const blocksLayoutClassName = getBlocksLayoutClassName(s);
+        const hasImageBlock = s.blocks?.items.some(item => item.type === EBlock.Image);
+        const imageBlock = s.blocks?.items.find(item => item.type === EBlock.Image) as any;
+        const imageCount = imageBlock?.images?.length || 0;
 
         return (
           <section
             key={idx}
             className={cn(
               "py-20 relative even:bg-gray-50 first:!pt-20",
+              hasImageBlock && "overflow-hidden"
             )}
             style={
               {
                 "--cols": s.blocks?.items.length,
+                "--image-count": imageCount,
               } as React.CSSProperties
             }
           >
@@ -78,7 +79,7 @@ export default function RenderSections({ sections }: Props) {
                   </div>
                 )
               }
-              <section className={cn(blocksLayoutClassName)}>
+              <section className={cn(blocksLayoutClassName, "items-start")}>
                 {
                   s.blocks?.items?.map((b, idx) => {
                     const BlockToRender = blockToRender[b.type];
@@ -93,7 +94,21 @@ export default function RenderSections({ sections }: Props) {
                       )
                     }
 
-                    return <BlockToRender key={idx} {...b} />
+                    return (
+                      <div 
+                        key={idx} 
+                        className={cn(
+                          "w-full",
+                          // When there are 2 blocks (text + images) and images have 2 images
+                          s.blocks?.items.length === 2 && 
+                          b.type === EBlock.Image && 
+                          (b as any).images?.length === 2 && 
+                          "flex justify-center items-center"
+                        )}
+                      >
+                        <BlockToRender key={idx} {...b} />
+                      </div>
+                    )
                   })
                 }
               </section>
@@ -103,6 +118,22 @@ export default function RenderSections({ sections }: Props) {
       })}
     </section>
   );
+}
+
+function getBlocksLayoutClassName(s: TPageDto["sections"][0]) {
+  if (s.blocks?.direction === "horizontal") {
+    const imageBlock = s.blocks.items.find(item => item.type === EBlock.Image) as any;
+    const imageCount = imageBlock?.images?.length || 0;
+    const totalBlocks = s.blocks.items.length;
+    
+    if (totalBlocks === 2 && imageCount === 2) {
+      return "grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start";
+    }
+    
+    return "grid grid-cols-1 md:grid-cols-[repeat(var(--cols),_minmax(0,1fr))] gap-8 lg:gap-12 items-start";
+  }
+  
+  return "space-y-8 lg:space-y-12";
 }
 
 function SectionTagline(s: TPageDto["sections"][0]) {

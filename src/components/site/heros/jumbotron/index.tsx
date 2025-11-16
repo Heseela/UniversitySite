@@ -14,8 +14,8 @@ export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
   return (
     <section
       className={cn(
-        " h-[80vh] max-h-[400px]",
-        hero.image?.secure_url && "h-[80vh] max-h-[600px]",
+        "w-full h-full flex items-center",
+        hero.image?.secure_url ? "min-h-[600px]" : "min-h-[400px]"
       )}
       style={{
         background: hero.image?.secure_url
@@ -25,22 +25,36 @@ export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
     >
       <section
         className={cn(
-          "h-full container mx-auto flex flex-col justify-center mb-12",
+          "w-full container mx-auto flex flex-col justify-center mb-12 px-4 md:px-6",
           alignment === EAlignment.Left
-            ? "items-start"
+            ? "items-start text-left"
             : alignment === EAlignment.Center
-              ? "items-center"
-              : "items-end"
+              ? "items-center text-center"
+              : "items-end text-right"
         )}
       >
-        <section className="[&_h1]:text-shadow-md [&_h1]:text-balance [&_p]:text-balance">
-          <RichTextPreview className="mb-6" html={hero.headline.html} />
+        <section className="[&_h1]:text-shadow-md [&_h1]:text-balance [&_p]:text-balance max-w-4xl">
+          <RichTextPreview 
+            className="mb-6 [&_h1]:text-4xl md:[&_h1]:text-6xl [&_h1]:font-bold [&_h1]:leading-tight [&_p]:text-lg md:[&_p]:text-xl [&_p]:text-gray-100"
+            html={hero.headline.html} 
+          />
         </section>
         {Array.isArray(hero.cta) && hero.cta.length > 0 && (
-          <ul className="flex md:justify-center gap-4">
+          <ul className={cn(
+            "flex gap-4 mt-6",
+            alignment === EAlignment.Center && "justify-center",
+            alignment === EAlignment.Right && "justify-end"
+          )}>
             {hero.cta.map((cta, index) => (
               <li key={index}>
-                <CMSLink size={"lg"} {...cta} />
+                <CMSLink 
+                  size={"lg"} 
+                  {...cta}
+                  className={cn(
+                    "px-8 py-4 text-base font-semibold transition-all duration-300 hover:scale-105",
+                    cta.variant === "outline" && "border-2 border-white text-white bg-transparent hover:bg-white hover:text-gray-900"
+                  )}
+                />
               </li>
             ))}
           </ul>
