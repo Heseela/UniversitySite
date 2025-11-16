@@ -8,9 +8,10 @@ import { media, TMediaSelect } from "@/db/schema/media";
 import z from "zod";
 import { revalidatePath } from "next/cache";
 import { eq, inArray } from "drizzle-orm";
+import cloudinary from "../cloudinary.config";
 
 export async function uploadMedia(values: TMediaSchema[]): Promise<TMediaSelect[]> {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = z.array(mediaSchema).safeParse(values);
 
@@ -19,12 +20,12 @@ export async function uploadMedia(values: TMediaSchema[]): Promise<TMediaSelect[
     const result = await db.insert(media).values(data).returning();
 
     revalidatePath("/cms/globals/media");
-    
+
     return result;
 }
 
 export async function updateMedia(id: string, values: TMediaSchema) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = mediaSchema.safeParse(values);
 
@@ -36,12 +37,19 @@ export async function updateMedia(id: string, values: TMediaSchema) {
 }
 
 /**
- * @params mediaIds - public_id not primary key `id`
+ * @params public_ids - public_id not primary key `id`
  */
-export async function deleteMedia(mediaIds: string[]) {
-    await checkAuth("admin");
+export async function deleteMedia(public_ids: string[]) {
+    await checkAuth(["admin", "moderator"]);
 
-    await db.delete(media).where(inArray(media.public_id, mediaIds));
+    await db.delete(media).where(inArray(media.public_id, public_ids));
+
+    Promise.all(public_ids.map(async (public_id) => {
+        await cloudinary.uploader.destroy(public_id, {
+            resource_type: "image",
+            invalidate: true,
+        });
+    }));
 
     revalidatePath(`/cms/globals/media`);
 }

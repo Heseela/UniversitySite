@@ -68,15 +68,10 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
       <BlogHero {...blog} />
 
       {/* Blog Content */}
-      <section className="py-8 md:py-12 md:mt-0 mt-[200px] bg-white">
-        <div className="container">
-          <div className="">
-            <div className="mb-10"></div>
-
-            <p className="text-lg leading-relaxed mb-6">{blog.summary}</p>
-
-            <RichTextPreview html={blog.content.html} />
-          </div>
+      <section className="md:mt-0 mt-[180px]">
+        <div className="max-w-6xl mx-auto p-6 my-10">
+          <p className="text-lg leading-relaxed mb-6">{blog.summary}</p>
+          <RichTextPreview html={blog.content.html} />
         </div>
       </section>
     </>

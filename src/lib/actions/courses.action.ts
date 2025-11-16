@@ -8,7 +8,7 @@ import { coursesTable } from "@/db/schema/courses";
 import { and, eq, not } from "drizzle-orm";
 
 export async function createCourse(values: TCourseSchema) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = courseSchema.safeParse(values);
 
@@ -28,7 +28,7 @@ export async function createCourse(values: TCourseSchema) {
 }
 
 export async function updateCourse(id: string, values: TCourseSchema) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = courseSchema.safeParse(values);
 
@@ -51,7 +51,7 @@ export async function updateCourse(id: string, values: TCourseSchema) {
 }
 
 export async function deleteCourse(id: string) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     await db.delete(coursesTable).where(eq(coursesTable.id, id));
 }

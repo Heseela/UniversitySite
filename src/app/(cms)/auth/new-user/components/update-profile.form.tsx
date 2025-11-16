@@ -12,9 +12,11 @@ import { Camera, User, X } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { updateProfileFormSchema, UpdateProfileFormSchemaType } from '@/schemas/updateProfile-form.schema'
 import { CLOUDINARY_SIGNATURE_ENDPOINT } from '@/CONSTANTS'
+import { useTransition } from 'react'
 
 export const UpdateProfileForm = ({ defaultValues }: { defaultValues?: UpdateProfileFormSchemaType }) => {
     const router = useRouter();
+    const [isPending, startTransition] = useTransition();
 
     const form = useForm<UpdateProfileFormSchemaType>({
         resolver: zodResolver(updateProfileFormSchema),
@@ -24,24 +26,24 @@ export const UpdateProfileForm = ({ defaultValues }: { defaultValues?: UpdatePro
         },
     });
 
-    async function onSubmit(values: UpdateProfileFormSchemaType) {
-        try {
-            await updateProfile(values);
-
-            router.push('/profile');
-            router.refresh();
-        } catch (e) {
-            if (e instanceof Error) {
-                form.setError("name", { type: "manual", message: e.message });
-            } else {
-                form.setError("name", { type: "manual", message: "An unexpected error occurred" });
+    function onSubmit(values: UpdateProfileFormSchemaType) {
+        startTransition(async () => {
+            try {
+                await updateProfile(values);
+                router.refresh();
+            } catch (e) {
+                if (e instanceof Error) {
+                    form.setError("name", { type: "manual", message: e.message });
+                } else {
+                    form.setError("name", { type: "manual", message: "An unexpected error occurred" });
+                }
             }
-        }
+        })
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 min-w-[400px]">
                 <FormField
                     control={form.control}
                     name="name"
@@ -135,13 +137,13 @@ export const UpdateProfileForm = ({ defaultValues }: { defaultValues?: UpdatePro
                                     </CldUploadWidget>
                                 </div>
                             </FormControl>
-                            <FormDescription>Upload a profile photo. This will be visible to other users.</FormDescription>
+                            <FormDescription>Upload a profile photo.</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
                 <LoadingButton
-                    isLoading={form.formState.isSubmitting}
+                    isLoading={isPending}
                     type="submit"
                     loadingText='Saving...'
                     className="w-full"

@@ -15,7 +15,7 @@ export default async function BlogHero({
       "relative flex items-end",
       // "-mt-[10.4rem]"
     )}>
-      <div className="container z-10 relative pb-8">
+      <div className="max-w-6xl mx-auto z-10 relative p-6 pb-8">
         <div className="md:translate-y-0 translate-y-[200px]">
           <h1 className="mb-6 text-3xl md:text-5xl lg:text-6xl font-medium text-shadow-md">
             {title}

@@ -8,7 +8,7 @@ import { siteSetting } from "@/db/schema/site-setting";
 import { eq } from "drizzle-orm";
 
 export async function updateSiteSetting(id: string, values: TSiteSettingSchema) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = siteSettingSchema.safeParse(values);
 

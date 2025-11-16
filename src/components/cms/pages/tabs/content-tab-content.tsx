@@ -24,7 +24,7 @@ import { EAlignment } from "../../../../../types/global.types";
 import FieldArraySortableContext from "@/components/dnd/field-array-sortable-context";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
-import { BLOGS_SLUG, COURSES_SLUG, EVENTS_SLUG } from "@/app/slugs";
+import { BLOGS_SLUG, COURSES_SLUG, EVENTS_SLUG, APPLY_FOR_JOB_SLUG, GALLERY_SLUG, JOBS_SLUG } from "@/app/slugs";
 
 const sectionDefaultValue: TPageSection = {
     tagline: "",
@@ -46,9 +46,9 @@ export default function ContentTabContent({ slug }: { slug: string }) {
         name: "sections",
     });
 
-     if (([BLOGS_SLUG, EVENTS_SLUG, COURSES_SLUG] as string[]).includes(slug)) {
-        return <div className="py-12 max-w-2xl flex justify-center">
-            <p>{`You cannot update the content of ${slug} page.`}</p>
+    if (([BLOGS_SLUG, EVENTS_SLUG, COURSES_SLUG, APPLY_FOR_JOB_SLUG, GALLERY_SLUG, JOBS_SLUG] as string[]).includes(slug)) {
+        return <div className="px-4 text-muted-foreground">
+            Cannot update the content of {slug} page.
         </div>
     }
 

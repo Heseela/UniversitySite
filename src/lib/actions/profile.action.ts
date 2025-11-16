@@ -5,6 +5,7 @@ import getSession from "../getSession";
 import { users } from "@/db/schema/auth";
 import { eq } from "drizzle-orm";
 import { updateProfileFormSchema, UpdateProfileFormSchemaType } from "@/schemas/updateProfile-form.schema";
+import { revalidatePath } from "next/cache";
 
 export async function updateProfile(values: UpdateProfileFormSchemaType, newUser: boolean = false) {
     const session = await getSession();
@@ -31,4 +32,6 @@ export async function updateProfile(values: UpdateProfileFormSchemaType, newUser
             profileCompleted: true,
         })
         .where(eq(users.id, session.user.id));
+
+    revalidatePath("/profile");
 }

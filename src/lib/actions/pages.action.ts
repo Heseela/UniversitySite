@@ -11,7 +11,7 @@ import { PageDtoSchema, TPageDto } from "@/schemas/page.schema";
 import { HOME_SLUG } from "@/app/slugs";
 
 export async function createNewPage() {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const [page] = await db.insert(pages).values({
         name: "Untitled",
@@ -33,7 +33,7 @@ export async function createNewPage() {
 }
 
 export async function updatePage(id: string, values: TPageDto) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = PageDtoSchema.safeParse(values);
 
@@ -58,7 +58,7 @@ export async function updatePage(id: string, values: TPageDto) {
 }
 
 export async function deletePage(id: string) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     await db.delete(pages).where(eq(pages.id, id));
 

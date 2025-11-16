@@ -1,3 +1,4 @@
+import { signOut } from '@/auth';
 import SidebarLayout from '@/components/cms/sidebar/sidebar-layout';
 import getSession from '@/lib/getSession';
 import { Metadata } from 'next';
@@ -19,8 +20,12 @@ export default async function CMSLayout({ children }: Props) {
     }
 
     // allow only admin users
-    if (session.user.role !== 'admin') {
-        redirect('/profile');
+    if (!["admin", "moderator"].includes(session.user.role)) {
+        await signOut();
+    }
+
+    if (!session.user.profileCompleted) {
+        redirect('/auth/new-user');
     }
 
     return (

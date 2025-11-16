@@ -13,6 +13,7 @@ import type { AdapterAccountType } from "next-auth/adapters";
 export const role = pgEnum("role", [
     "admin",
     "user",
+    "moderator"
 ]);
 
 export const users = pgTable("user", {

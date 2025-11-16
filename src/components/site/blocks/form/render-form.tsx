@@ -91,7 +91,7 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
     }
 
     return (
-        <Card className="w-10/12 mx-auto h-fit">
+        <Card className="w-full  mx-auto h-fit">
             <CardHeader>
                 <RichTextPreview html={introContent?.html || ""} />
             </CardHeader>
@@ -130,7 +130,7 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                     <LoadingButton
                         type="submit"
                         isLoading={isPending}
-                        className="w-full mb-6"
+                        className="w-full"
                         disabled={isPending}
                         loadingText="Submitting..."
                     >
