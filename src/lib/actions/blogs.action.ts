@@ -11,7 +11,7 @@ import { categories } from "@/db/schema/category";
 import { richTextDefaultValues } from "@/schemas/rich-text.schema";
 
 export async function createBlog(values: TBlogSchema) {
-  const session = await checkAuth("admin");
+  const session = await checkAuth(["admin", "moderator"]);
 
   const { success, data, error } = blogSchema.partial().safeParse(values);
 
@@ -37,7 +37,7 @@ export async function updateBlog(
   values: Partial<TBlogSchema>,
   contentEdited: boolean = true
 ) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   const { success, data, error } = blogSchema.partial().safeParse(values);
 
@@ -99,7 +99,7 @@ export async function updateBlog(
 }
 
 export async function deleteBlog(id: string) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   await db.delete(blogs).where(eq(blogs.id, id));
 
@@ -108,7 +108,7 @@ export async function deleteBlog(id: string) {
 }
 
 export async function publishBlog({ id }: { id: string }) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   await db
     .update(blogs)
@@ -122,7 +122,7 @@ export async function publishBlog({ id }: { id: string }) {
 }
 
 export async function unpublishBlog(id: string) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   await db.update(blogs).set({ publishedAt: null }).where(eq(blogs.id, id));
 

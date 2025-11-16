@@ -10,7 +10,7 @@ import { generateSlug, throwZodErrorMsg } from "../utils";
 import { buildFormValidator, formatZodErrors } from "../utilities/zod-schema-builder";
 
 export async function createForm(values: TFormDto) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = FormDtoSchema.safeParse(values);
 
@@ -24,7 +24,7 @@ export async function createForm(values: TFormDto) {
 }
 
 export async function updateForm(id: string, values: TFormDto) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = FormDtoSchema.safeParse(values);
 
@@ -44,7 +44,7 @@ export async function updateForm(id: string, values: TFormDto) {
 }
 
 export async function deleteForm(id: string) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     await db.delete(forms).where(eq(forms.id, id));
 

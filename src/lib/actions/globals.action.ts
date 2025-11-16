@@ -8,7 +8,7 @@ import { footer, header } from "@/db/schema/globals";
 import { eq } from "drizzle-orm";
 
 export async function updateHeader(id: string, values: THeaderDto) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = headerSchema.safeParse(values);
 
@@ -23,7 +23,7 @@ export async function updateHeader(id: string, values: THeaderDto) {
 }
 
 export async function updateFooter(id: string, values: TFooterDto) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = footerSchema.safeParse(values);
 

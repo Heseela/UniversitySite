@@ -10,7 +10,7 @@ import { and, eq } from "drizzle-orm";
 import { createGallery } from "./gallery.action";
 
 export async function createCategory(values: CategorySchemaType) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   const { success, data, error } = categorySchema.safeParse(values);
 
@@ -44,7 +44,7 @@ export async function createCategory(values: CategorySchemaType) {
 }
 
 export async function deleteCategory(id: string) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   await db.delete(categories).where(eq(categories.id, id));
 
@@ -55,7 +55,7 @@ export async function updateCategory(
   id: string,
   values: Partial<CategorySchemaType>
 ) {
-  await checkAuth("admin");
+  await checkAuth(["admin", "moderator"]);
 
   const { success, data, error } = categorySchema.partial().safeParse(values);
 

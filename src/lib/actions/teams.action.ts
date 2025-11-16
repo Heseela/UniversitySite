@@ -9,7 +9,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export const createTeam = async (values: TTeamDto) => {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = teamSchema.safeParse(values);
 
@@ -20,7 +20,7 @@ export const createTeam = async (values: TTeamDto) => {
 };
 
 export const updateTeam = async (id: string, values: TTeamDto) => {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = teamSchema.safeParse(values);
 
@@ -33,7 +33,7 @@ export const updateTeam = async (id: string, values: TTeamDto) => {
 };
 
 export const deleteTeam = async (id: string) => {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
     await db.delete(teamTable).where(eq(teamTable.id, id));
     revalidatePath(`/cms/teams`);
 };

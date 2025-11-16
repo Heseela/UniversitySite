@@ -11,7 +11,7 @@ import { eq, inArray } from "drizzle-orm";
 import cloudinary from "../cloudinary.config";
 
 export async function uploadMedia(values: TMediaSchema[]): Promise<TMediaSelect[]> {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = z.array(mediaSchema).safeParse(values);
 
@@ -25,7 +25,7 @@ export async function uploadMedia(values: TMediaSchema[]): Promise<TMediaSelect[
 }
 
 export async function updateMedia(id: string, values: TMediaSchema) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = mediaSchema.safeParse(values);
 
@@ -40,7 +40,7 @@ export async function updateMedia(id: string, values: TMediaSchema) {
  * @params public_ids - public_id not primary key `id`
  */
 export async function deleteMedia(public_ids: string[]) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     await db.delete(media).where(inArray(media.public_id, public_ids));
 

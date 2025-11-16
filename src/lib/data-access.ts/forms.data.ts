@@ -9,7 +9,7 @@ import { TDataSearchParams } from "../../../types/global.types";
 
 export const getForms = cache(async (searchParamsProps: FormsPageProps["searchParams"]) => {
     try {
-        await checkAuth('admin');
+        await checkAuth(["admin", "moderator"]);
 
         const searchParams = await searchParamsProps;
         const { page, pageSize } = getPaginationQueryParams(new URLSearchParams(searchParams));
@@ -44,7 +44,7 @@ export const getForms = cache(async (searchParamsProps: FormsPageProps["searchPa
 
 export const getFormById = cache(async (id: string) => {
     try {
-        await checkAuth('admin');
+        await checkAuth(["admin", "moderator"]);
 
         const [form] = await db.select({
             id: forms.id,
@@ -66,7 +66,7 @@ export const getFormById = cache(async (id: string) => {
 
 export const getFormSubmissions = cache(async (formId: string, searchParamsProps: TDataSearchParams) => {
     try {
-        await checkAuth('admin');
+        await checkAuth(["admin", "moderator"]);
 
         const searchParams = await searchParamsProps;
         const { page, pageSize } = getPaginationQueryParams(new URLSearchParams(searchParams));
