@@ -226,7 +226,6 @@ export function Plugins({
         )}
       </ToolbarPlugin>
       <div className="relative">
-        <AutoFocusPlugin />
         <RichTextPlugin
           contentEditable={
             <div className="mt-3 border-l">
