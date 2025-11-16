@@ -1,12 +1,6 @@
 import { cn } from "@/lib/utils";
 import { CardsBlockDto } from "@/schemas/page.schema";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { ELinkType } from "../../../../../types/global.types";
 import CloudinaryImage from "@/components/ui/cloudinary-image";
@@ -16,11 +10,11 @@ import isEmptyHTML from "@/lib/utilities/rich-text.utils";
 
 export default function RenderCardsBlock({
     cards,
-    columns,
+    colWidthLimit,
     layout,
 }: CardsBlockDto) {
     return layout === ECardsBlockLayout.Grid ? (
-        <GridLayout columns={columns}>
+        <GridLayout colWidthLimit={colWidthLimit}>
             <Cards cards={cards} />
         </GridLayout>
     ) : (
@@ -93,31 +87,19 @@ export function Cards({ cards }: { cards: CardsBlockDto["cards"] }) {
 
 export function GridLayout({
     children,
-    columns,
+    colWidthLimit,
 }: {
     children: React.ReactNode;
-    columns: CardsBlockDto["columns"];
+    colWidthLimit: CardsBlockDto["colWidthLimit"];
 }) {
     return (
         <section
             className={cn(
                 "grid gap-6",
-                // "sm:grid-cols-[repeat(var(--cols-sm),_minmax(0,1fr))]",
-                // "md:grid-cols-[repeat(var(--cols-md),_minmax(0,1fr))]",
-                // "lg:grid-cols-[repeat(var(--cols-lg),_minmax(0,1fr))]",
-                // "xl:grid-cols-[repeat(var(--cols-xl),_minmax(0,1fr))]"
             )}
-            style={
-                {
-                    gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, 600px), 1fr))`
-                }
-                // {
-                //     "--cols-sm": columns.sm,
-                //     "--cols-md": columns.md,
-                //     "--cols-lg": columns.lg,
-                //     "--cols-xl": columns.xl,
-                // } as React.CSSProperties
-            }
+            style={{
+                gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${colWidthLimit}px), 1fr))`
+            }}
         >
             {children}
         </section>
@@ -125,5 +107,5 @@ export function GridLayout({
 }
 
 export function MassionaryLayout({ children }: { children: React.ReactNode }) {
-    return <section className="masonry-grid gap-2 w-fit">{children}</section>;
+    return <section className="xl:columns-4 md:columns-3 sm:columns-2 columns-1 gap-2 w-fit">{children}</section>;
 }

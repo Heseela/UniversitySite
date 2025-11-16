@@ -35,12 +35,7 @@ export const blockLayouts: {
                 type: EBlock.Cards,
                 layout: ECardsBlockLayout.Grid,
                 cards: [],
-                columns: {
-                    sm: 1,
-                    md: 2,
-                    lg: 3,
-                    xl: 4,
-                },
+                colWidthLimit: 300,
             },
             alt: "Cards",
             image: jumboCenter,

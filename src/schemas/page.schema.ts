@@ -76,29 +76,12 @@ export const CardSchema = z.object({
   newTab: z.boolean(),
 });
 
-export const MAX_CARD_BLOCK_CARDS = 4;
-
-const maxColsSchema = z.coerce
-  .number()
-  .int()
-  .min(1, { message: "At least 1 column is required" })
-  .max(MAX_CARD_BLOCK_CARDS, {
-    message: `Max ${MAX_CARD_BLOCK_CARDS} columns allowed`,
-  });
-
 // ---- CardsBlockDto ----
 export const CardsBlockSchema = BaseBlockSchema.extend({
   type: z.literal(EBlock.Cards),
   layout: z.nativeEnum(ECardsBlockLayout),
-  columns: z.object({
-    sm: maxColsSchema.optional(),
-    md: maxColsSchema.optional(),
-    lg: maxColsSchema.optional(),
-    xl: maxColsSchema.optional(),
-  }),
-  cards: z
-    .array(CardSchema)
-    .min(1, { message: "At least one card is required" }),
+  colWidthLimit: z.coerce.number().int().min(100, { message: "At least 100px is required" }),
+  cards: z.array(CardSchema).min(1, { message: "At least one card is required" }),
 });
 export type CardsBlockDto = z.infer<typeof CardsBlockSchema>;
 // ---- RefItemBlockDto ----
