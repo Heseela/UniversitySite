@@ -27,7 +27,7 @@ export default function BlogCard({ blog, imgHeight = 300 }: Props) {
                 sizes="500px"
                 alt="Blog Cover Image"
                 crop="auto"
-                className="w-full h-[300px] @2xl:h-full @2xl:max-w-[400px] object-cover"
+                className="w-auto h-[300px] @2xl:h-full @2xl:max-w-[400px] object-cover"
               />
             )}
           </div>
@@ -57,7 +57,7 @@ export default function BlogCard({ blog, imgHeight = 300 }: Props) {
                 <div>
                   <span className="mr-4">|</span>
                   <span>
-                    {getReadingTimeInMinutes(blog.length)} minutes read
+                    {getReadingTimeInMinutes(blog.stats.characters)} minutes read
                   </span>
                 </div>
               </div>

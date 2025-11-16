@@ -5,7 +5,7 @@ import { getMedia } from "@/lib/data-access.ts/media.data";
 
 export async function GET(request: NextRequest) {
     try {
-        await checkAuth('admin');
+        await checkAuth(["admin", "moderator"]);
 
         const searchParams = request.nextUrl.searchParams;
         const resource_type = searchParams.get('resource_type') || undefined;

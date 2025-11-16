@@ -6,3 +6,4 @@ export const CLOUDINARY_SIGNATURE_ENDPOINT =
   "/api/cloudinary/sign-params" as const;
 
 export const SITE_TITLE = "University";
+export const TOOL_BAR_HEIGHT = "66px";

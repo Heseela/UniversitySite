@@ -1,6 +1,6 @@
 "use client";
 
-import isEmptyHTML from "@/lib/utilities/isEmptyHTML";
+import isEmptyHTML from "@/lib/utilities/rich-text.utils";
 import { cn } from "@/lib/utils";
 
 type Props = {

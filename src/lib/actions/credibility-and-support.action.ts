@@ -8,7 +8,7 @@ import { credibilityAndSupportTable } from "@/db/schema/credibility-and-support"
 import { eq } from "drizzle-orm";
 
 export async function updateCredibilityAndSupport(id: string, values: TCredibilityAndSupport) {
-    await checkAuth('admin');
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = credibilityAndSupportSchema.safeParse(values);
 

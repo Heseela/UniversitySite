@@ -1,42 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { X, ZoomIn } from "lucide-react";
+import { Cloud, X, ZoomIn } from "lucide-react";
 import { TGalleryResponse, TMediaSelect } from "../../../../types/gallery.types";
+import CloudinaryImage from "@/components/ui/cloudinary-image";
 
 type GalleryImage = TMediaSelect & {
   category: string;
 };
 
-export default function GalleryContainer() {
-  const [galleries, setGalleries] = useState<TGalleryResponse>([]);
+export default function GalleryContainer({ galleries }: { galleries: TGalleryResponse }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchGalleries = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch('/api/gallery');
-        
-        if (res.ok) {
-          const data = await res.json();
-          setGalleries(data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch gallery:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGalleries();
-  }, []);
 
   const categories = ["All", ...new Set(galleries.map(gallery => gallery.category.name))];
 
@@ -51,16 +30,12 @@ export default function GalleryContainer() {
     ? allImages 
     : allImages.filter(img => img.category === selectedCategory);
 
-  if (loading) {
-    return <GallerySkeleton />;
-  }
-
   if (allImages.length === 0) {
     return (
       <div className="text-center py-12">
         <div className="text-slate-400 text-lg mb-2">No images found</div>
         <p className="text-slate-500">
-          We're currently updating our gallery. Please check back later.
+          We&apos;re currently updating our gallery. Please check back later.
         </p>
       </div>
     );
@@ -107,7 +82,7 @@ export default function GalleryContainer() {
               className="relative group aspect-[4/3] rounded-xl overflow-hidden shadow-lg hover:shadow-xl cursor-pointer bg-gray-100"
               onClick={() => setSelectedImage(image)}
             >
-              <Image
+              <CloudinaryImage
                 src={image.secure_url}
                 alt={image.alt || `Gallery image - ${image.category}`}
                 fill
@@ -136,11 +111,11 @@ export default function GalleryContainer() {
 
       {/* Image Modal */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="max-w-6xl max-h-[90vh] p-0 bg-transparent border-none">
+        <DialogContent className="max-w-6xl max-h-[90vh] p-0 bg-transparent border-none [&>button]:hidden">
           {selectedImage && (
             <div className="relative w-full h-full flex items-center justify-center">
               <div className="relative w-full max-w-5xl max-h-[80vh] bg-white rounded-lg overflow-hidden">
-                <Image
+                <CloudinaryImage
                   src={selectedImage.secure_url}
                   alt={selectedImage.alt || `Gallery image - ${selectedImage.category}`}
                   width={selectedImage.width || 1200}

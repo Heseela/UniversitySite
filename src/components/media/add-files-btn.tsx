@@ -22,7 +22,9 @@ function toMedia(info: any) {
 
 export function AddFilesButton({
     onFiles,
+    allowedFormats = [],
 }: {
+    allowedFormats?: ("image" | "video" | "audio" | "document")[];
     onFiles: (files: ReturnType<typeof toMedia>[]) => void;
 }) {
     const bufferRef = useRef<ReturnType<typeof toMedia>[]>([]);
@@ -35,6 +37,7 @@ export function AddFilesButton({
                 maxFiles: 50,
                 maxFileSize: 5 * 1024 * 1024,
                 resourceType: "image",
+                clientAllowedFormats: allowedFormats,
             }}
             onSuccess={(result) => {
                 if (result?.info) bufferRef.current.push(toMedia(result.info));
@@ -48,7 +51,15 @@ export function AddFilesButton({
             }}
         >
             {({ open }) => (
-                <Button type="button" variant="secondary" size="sm" onClick={() => open()}>
+                <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        open()
+                    }}
+                >
                     Add file
                 </Button>
             )}

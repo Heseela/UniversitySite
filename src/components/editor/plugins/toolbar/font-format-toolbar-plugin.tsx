@@ -45,9 +45,12 @@ export function FontFormatToolbarPlugin({
 
   const Icon = Icons[format as TextFormatType] as React.ElementType
 
+  const formatTitle = format.charAt(0).toUpperCase() + format.slice(1)
+
   return (
     <Toggle
-      aria-label="Toggle bold"
+      aria-label={`Toggle ${formatTitle}`}
+      title={formatTitle}
       variant="outline"
       size="sm"
       defaultPressed={isSelected}

@@ -1,50 +1,48 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { useFetchData } from '@/hooks/useFetchData';
 import { LoaderCircle, Search, X } from 'lucide-react';
 import CloudinaryImage from '../ui/cloudinary-image';
 import { Input } from '../ui/input';
-import { cn, createQueryString, formatBytes, showServerError } from '@/lib/utils';
+import { cn, createQueryString, formatBytes } from '@/lib/utils';
 import { TMediaSchema } from '@/schemas/media.schema';
-import { uploadMedia } from '@/lib/actions/media.action';
-import { Textarea } from '../ui/textarea';
-import CustomDialog from '../ui/custom-dialog';
-import LoadingButton from '../forms/loading-button';
+import MediaUploadDialog from './media-upload-dialog';
 import { TMedia, TMediaResponse } from '../../../types/media.types';
 import { MediaSelectDataTablePagination } from './media-select-data-table-patination';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { AddFilesButton } from './add-files-btn';
 import { Checkbox } from '../ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { UploadBulkMedia } from './upload-bulk-media';
 
-type MediaFieldProps = {
+export type MultiMediaFieldProps = {
     media: TMediaSchema;
     onChange: (value: TMedia[]) => void;
     onClose: () => void;
     onRemove: () => void;
     defaultSelected?: TMedia[]
+    allowedFormats?: ("image" | "video" | "audio" | "document")[];
 }
 
-export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldProps, 'onChange' | 'defaultSelected'>) {
+export function MediaInput__Bulk({ onChange, defaultSelected, allowedFormats = [] }: Pick<MultiMediaFieldProps, 'onChange' | 'defaultSelected' | 'allowedFormats'>) {
     const [createNewOpen, setCreateNewOpen] = useState(false);
     const [selectorOpen, setSelectorOpen] = useState(false);
 
     return (
         <section className='border rounded-md p-4 flex items-center gap-4'>
-            <CustomDialog
+            <MediaUploadDialog
                 isOpen={createNewOpen}
-                onClose={() => setCreateNewOpen(false)}
-                title='Media'
-                className="full-screen-dialog"
+                onClose={() => { }}
+                className="full-screen-dialog p-0"
             >
                 <UploadBulkMedia
                     onClose={() => setCreateNewOpen(false)}
                     onChange={onChange}
+                    allowedFormats={allowedFormats}
                 />
-            </CustomDialog>
+            </MediaUploadDialog>
 
             <Button
                 type="button"
@@ -89,197 +87,7 @@ export function MediaInput__Bulk({ onChange, defaultSelected }: Pick<MediaFieldP
     )
 }
 
-export function UploadBulkMedia({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
-    const [files, setFiles] = useState<TMediaSchema[]>([]);
-    const [activeIdx, setActiveIdx] = useState<number>(0);
-    const [isSaving, startTransition] = useTransition();
-
-    function updateActive<K extends keyof TMediaSchema>(key: K, val: TMediaSchema[K]) {
-        setFiles(prev => {
-            const copy = [...prev];
-            copy[activeIdx] = { ...copy[activeIdx], [key]: val };
-            return copy;
-        });
-    }
-
-    function removeAt(index: number) {
-        setFiles(prev => {
-            const copy = prev.filter((_, i) => i !== index);
-            // fix active index
-            if (copy.length === 0) {
-                setActiveIdx(0);
-            } else if (activeIdx >= copy.length) {
-                setActiveIdx(copy.length - 1);
-            }
-            return copy;
-        });
-    }
-
-    function onSave() {
-        if (!files.length) return onClose();
-
-        startTransition(async () => {
-            try {
-                const inserted = await uploadMedia(files);
-                onChange(inserted);
-                onClose();
-            } catch (e) {
-                showServerError(e);
-            }
-        });
-    }
-
-    if (files.length === 0) {
-        return (
-            <div className="h-full flex flex-col items-center justify-center text-muted-foreground space-y-2">
-                <AddFilesButton
-                    onFiles={(batch) => {
-                        setFiles((prev) => {
-                            const startIdx = prev.length;          // index of the first new item
-                            const next = [...prev, ...batch];
-                            setActiveIdx(startIdx);
-                            return next;
-                        });
-                    }}
-                />
-
-                <p className="text-sm">Select images to begin.</p>
-            </div>
-        )
-    }
-
-    return (
-        <section className="h-full flex">
-            {/* LEFT: sidebar list */}
-            <aside className="w-[280px] border-r shrink-0 p-3 space-y-3">
-                <div className="flex items-center justify-between">
-                    <span className="text-xs text-muted-foreground">
-                        {files.length ? `${files.length} Files to Upload` : 'No files yet'}
-                    </span>
-                    <AddFilesButton
-                        onFiles={(batch) => {
-                            setFiles((prev) => {
-                                const startIdx = prev.length;
-                                const next = [...prev, ...batch];
-                                setActiveIdx(startIdx);
-                                return next;
-                            });
-                        }}
-                    />
-                </div>
-
-                <div className="space-y-1 overflow-auto h-[calc(100%-3.5rem)] pr-1">
-                    {files.map((f, i) => (
-                        <div
-                            key={f.public_id ?? `${f.name}-${i}`}
-                            role="button"
-                            onClick={() => setActiveIdx(i)}
-                            className={cn(
-                                'flex items-center gap-2 px-2 py-1 rounded hover:bg-accent/40 cursor-pointer',
-                                i === activeIdx && 'bg-accent/60'
-                            )}
-                        >
-                            <CloudinaryImage
-                                src={f.secure_url}
-                                alt={f.name}
-                                width={30}
-                                height={30}
-                                sizes="30px"
-                                crop='fill'
-                            />
-                            <div className="truncate">
-                                <div className="truncate text-xs">{f.name}</div>
-                                <div className="text-[11px] text-muted-foreground">
-                                    {formatBytes(f.bytes || 0)}
-                                </div>
-                            </div>
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                size="icon"
-                                className="size-6 ml-auto"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeAt(i);
-                                }}
-                                aria-label="Remove"
-                                title="Remove"
-                            >
-                                <X className="size-3.5" />
-                            </Button>
-                        </div>
-                    ))}
-                </div>
-            </aside>
-
-            {/* RIGHT: editor panel */}
-            <main className="flex-1 h-full p-6">
-                <div className="flex items-center justify-between mb-6">
-                    <div className="text-sm text-muted-foreground">
-                        {files.length ? `1 of ${files.length}` : ''}
-                    </div>
-                    <LoadingButton
-                        isLoading={isSaving}
-                        loadingText="Saving..."
-                        onClick={onSave}
-                    >
-                        Save
-                    </LoadingButton>
-                </div>
-
-                <div className="space-y-6">
-                    {/* preview + filename row */}
-                    <div className="border rounded-sm overflow-hidden">
-                        <div className="flex items-center">
-                            <CloudinaryImage
-                                src={files[activeIdx]?.secure_url || ''}
-                                alt={files[activeIdx]?.alt || 'preview'}
-                                width={300}
-                                height={180}
-                            />
-                            <div className="flex-1 p-6 flex items-center justify-between gap-6">
-                                <div className="min-w-[320px]">
-                                    <label className="text-sm font-medium">Name <span className="text-destructive">*</span></label>
-                                    <Input
-                                        className="py-5 mt-1"
-                                        value={files[activeIdx]?.name || ''}
-                                        onChange={(e) => updateActive('name', e.target.value)}
-                                        placeholder="Eg. brandLogo"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Alt */}
-                    <div>
-                        <label className="text-sm font-medium">Alt</label>
-                        <Input
-                            className="py-5 mt-1"
-                            value={files[activeIdx]?.alt || ''}
-                            onChange={(e) => updateActive('alt', e.target.value)}
-                            placeholder="Eg. an alternative text to describe the media"
-                        />
-                    </div>
-
-                    {/* Caption */}
-                    <div>
-                        <label className="text-sm font-medium">Caption</label>
-                        <Textarea
-                            className="field-sizing-content overflow-y-hidden resize-none mt-1"
-                            placeholder="Title"
-                            value={files[activeIdx]?.caption || ''}
-                            onChange={(e) => updateActive('caption', e.target.value)}
-                        />
-                    </div>
-                </div>
-            </main>
-        </section>
-    );
-}
-
-
-export default function MediaSelector({ onClose, onChange, defaultSelected }: Pick<MediaFieldProps, 'onClose' | 'onChange' | 'defaultSelected'>) {
+export default function MediaSelector({ onClose, onChange, defaultSelected }: Pick<MultiMediaFieldProps, 'onClose' | 'onChange' | 'defaultSelected'>) {
     const [search, setSearch] = useState("");
     const [queryParams, setQueryParams] = useState<Record<string, string | undefined>>({
         resource_type: "image",

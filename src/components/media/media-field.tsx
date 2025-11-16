@@ -17,18 +17,19 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Textarea } from '../ui/textarea';
 import { CldUploadWidget } from 'next-cloudinary';
 import { CLOUDINARY_SIGNATURE_ENDPOINT } from '@/CONSTANTS';
-import CustomDialog from '../ui/custom-dialog';
+import CustomDialog from './media-upload-dialog';
 import LoadingButton from '../forms/loading-button';
 import { TMedia, TMediaResponse } from '../../../types/media.types';
 import { MediaSelectDataTablePagination } from './media-select-data-table-patination';
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { DataTable } from '../data-table/data-table';
 
-type MediaFieldProps = {
+export type MediaFieldProps = {
   media: TMediaSchema;
   onChange: (value: TMediaSchema) => void;
   onClose: () => void;
   onRemove: () => void;
+  allowedFormats?: ("image" | "video" | "audio" | "document")[];
 }
 
 export function MediaItem({ media, onRemove }: Pick<MediaFieldProps, 'media' | 'onRemove'>) {
@@ -66,7 +67,7 @@ export function MediaItem({ media, onRemove }: Pick<MediaFieldProps, 'media' | '
   )
 }
 
-export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
+export function MediaInput({ onChange, allowedFormats }: Pick<MediaFieldProps, 'onChange' | 'allowedFormats'>) {
   const [createNewOpen, setCreateNewOpen] = useState(false);
   const [selectorOpen, setSelectorOpen] = useState(false);
 
@@ -81,6 +82,7 @@ export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
         <CreateNew
           onClose={() => setCreateNewOpen(false)}
           onChange={onChange}
+          allowedFormats={allowedFormats}
         />
       </CustomDialog>
 
@@ -126,7 +128,7 @@ export function MediaInput({ onChange }: Pick<MediaFieldProps, 'onChange'>) {
   )
 }
 
-function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onChange'>) {
+function CreateNew({ onClose, onChange, allowedFormats = [] }: Pick<MediaFieldProps, 'onClose' | 'onChange' | 'allowedFormats'>) {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<TMediaSchema>({
@@ -149,6 +151,23 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
     })
   }
 
+  function RemoveButton({ className }: { className?: string }) {
+    return (
+      <Button
+        type='button'
+        size={"icon"}
+        variant={'outline'}
+        onClick={() => form.reset({
+          alt: form.getValues("alt"),
+          caption: form.getValues("caption")
+        })}
+        className={className}
+      >
+        <X />
+      </Button>
+    )
+  }
+
   return (
     <Form {...form}>
       <section className='space-y-6'>
@@ -165,24 +184,27 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
                   <FormControl>
                     {
                       !!field.value && !Array.isArray(field.value) ? (
-                        <section className='flex items-center'>
-                          <CloudinaryImage
-                            src={form.getValues("secure_url")}
-                            alt='alt'
-                            width={150}
-                            height={150}
-                          />
+                        <section className='flex md:items-center md:flex-row flex-col'>
+                          <div className='flex justify-between'>
+                            <CloudinaryImage
+                              src={form.getValues("secure_url")}
+                              alt='alt'
+                              width={250}
+                              height={250}
+                            />
+                            <RemoveButton className='md:hidden flex m-4' />
+                          </div>
 
-                          <section className='flex-1 p-6 flex items-center justify-between gap-6'>
+                          <section className='flex-1 md:p-6 p-4 flex items-center justify-between gap-6 w-full'>
                             <FormField
                               control={form.control}
                               name="name"
                               render={({ field }) => (
-                                <FormItem>
+                                <FormItem className='grow'>
                                   <FormLabel>Name <span className='text-destructive'>*</span></FormLabel>
                                   <FormControl>
                                     <Input
-                                      className='py-5 min-w-[300px]'
+                                      className='py-5 max-w-[600px] w-full'
                                       placeholder="Eg. brandLogo"
                                       {...field}
                                     />
@@ -192,17 +214,7 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
                               )}
                             />
 
-                            <Button
-                              type='button'
-                              size={"icon"}
-                              variant={'outline'}
-                              onClick={() => form.reset({
-                                alt: form.getValues("alt"),
-                                caption: form.getValues("caption")
-                              })}
-                            >
-                              <X />
-                            </Button>
+                            <RemoveButton className='md:flex hidden' />
                           </section>
                         </section>
                       ) : (
@@ -230,6 +242,7 @@ function CreateNew({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 'onC
                               cropping: true,
                               maxFiles: 1,
                               maxFileSize: 5 * 1024 * 1024, // 5MB
+                              clientAllowedFormats: allowedFormats,
                             }}
                           >
                             {({ open }) => {
@@ -362,7 +375,14 @@ function MediaSelector({ onClose, onChange }: Pick<MediaFieldProps, 'onClose' | 
               width={40}
               crop='auto'
             />
-            <span className='text-sm underline underline-offset-2'>{row.original.name}</span>
+            <div className='space-y-1'>
+              <p className='text-sm underline underline-offset-2'>{row.original.name}</p>
+              <p className="text-muted-foreground text-xs">
+                <span>{formatBytes(row.original.bytes)} | </span>
+                <span>{row.original.width} x {row.original.height} | </span>
+                <span>{row.original.resource_type}/{row.original.format}</span>
+              </p>
+            </div>
           </section>
         )
       }

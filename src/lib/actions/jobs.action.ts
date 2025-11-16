@@ -8,7 +8,7 @@ import { and, eq, not } from "drizzle-orm";
 import { jobsTable } from "@/db/schema/jobs";
 
 export async function createJob(values: TJobSchemaType) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = jobSchema.safeParse(values);
 
@@ -28,7 +28,7 @@ export async function createJob(values: TJobSchemaType) {
 }
 
 export async function updateJob(id: string, values: TJobSchemaType) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     const { success, data, error } = jobSchema.safeParse(values);
 
@@ -51,7 +51,7 @@ export async function updateJob(id: string, values: TJobSchemaType) {
 }
 
 export async function deleteJob(id: string) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     await db.delete(jobsTable).where(eq(jobsTable.id, id));
 }

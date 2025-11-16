@@ -1,4 +1,5 @@
 import SignInForm from '@/components/auth/signIn-form'
+import { getSiteSettings } from '@/lib/data-access.ts/site-settings.data';
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -6,8 +7,10 @@ export const metadata: Metadata = {
     description: "Sign in to your account",
 }
 
-export default function SignInPage() {
+export default async function SignInPage() {
+    const setting = await getSiteSettings();
+
     return (
-        <SignInForm />
+        <SignInForm logo={setting?.logoLight_primary} />
     )
 }

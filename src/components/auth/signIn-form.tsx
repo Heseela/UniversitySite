@@ -21,17 +21,18 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import Image from "next/image";
 import Link from "next/link";
 import { signInAction } from "@/app/(cms)/auth/signin/action";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { TMediaSchema } from "@/schemas/media.schema";
+import CloudinaryImage from "../ui/cloudinary-image";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid email address" }).trim(),
 });
 
-export default function SignInForm() {
+export default function SignInForm({ logo }: { logo?: TMediaSchema | null }) {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
 
@@ -62,17 +63,17 @@ export default function SignInForm() {
 
     return (
         <>
-            <Card className="min-w-[400px] mt-auto shadow-sm">
+            <Card className="min-w-[400px] mt-auto shadow-none border-none bg-transparent">
                 <CardHeader>
-                    <Link href={"/"}>
-                        <Image
-                            src={"/logo.png"}
+                    {logo && <Link href={"/"}>
+                        <CloudinaryImage
+                            src={logo.secure_url}
                             alt="Feature Creatify Logo"
                             width={64}
                             height={64}
                             className="h-16 w-auto block mx-auto"
                         />
-                    </Link>
+                    </Link>}
                     <CardTitle>
                         <h1 className="text-2xl font-bold text-center">Welcome</h1>
                     </CardTitle>

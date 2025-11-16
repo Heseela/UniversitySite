@@ -1,3 +1,4 @@
+import CloudinaryImage from "@/components/ui/cloudinary-image";
 import {
   SidebarHeader,
   SidebarMenu,
@@ -5,7 +6,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { TSiteSettingSchema } from "@/schemas/site-setting.schema";
-import Image from "next/image";
 import Link from "next/link";
 
 export function AppSidebarHeader({
@@ -22,7 +22,7 @@ export function AppSidebarHeader({
           <section className="px-2">
             <Link href="/" className="flex items-center gap-4">
               {siteData?.logoLight_primary && (
-                <Image
+                <CloudinaryImage
                   width={64}
                   height={64}
                   src={siteData?.logoLight_primary?.secure_url}

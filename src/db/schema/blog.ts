@@ -1,9 +1,7 @@
-import { YooptaContentValue } from "@yoopta/editor";
 import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
-  integer,
   jsonb,
   pgTable,
   text,
@@ -11,6 +9,8 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { categories } from "./category";
+import { TBlogSchema } from "@/schemas/blog.schema";
+import { IRichTextSchema } from "@/schemas/rich-text.schema";
 
 export const blogs = pgTable(
   "blogs",
@@ -19,7 +19,7 @@ export const blogs = pgTable(
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
     title: text("title").default("Untitled").notNull(),
-    content: jsonb("content").$type<YooptaContentValue>().notNull(),
+    content: jsonb("content").$type<IRichTextSchema>().notNull(),
     summary: text("summary").default("").notNull(),
     slug: text("slug").unique().notNull(),
     coverImage: text("coverImage"),
@@ -29,7 +29,10 @@ export const blogs = pgTable(
       .default(new Date()),
     publishedAt: timestamp("publishedAt", { mode: "date" }),
     isFavourite: boolean("isFavourite").default(false).notNull(),
-    length: integer("length").default(0).notNull(),
+    stats: jsonb("stats").$type<TBlogSchema["stats"]>().default({
+      characters: 0,
+      words: 0,
+    }).notNull(),
     keywords: text("keywords")
       .array()
       .default(sql`ARRAY[]::text[]`)

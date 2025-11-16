@@ -46,16 +46,16 @@ export const AppSidebarFooter = () => {
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
                                 onClick={() => {
-                                    router.push(`/settings`)
+                                    router.push(`/profile`)
                                 }}
                             >
-                                <span>Settings</span>
+                                <span>Profile</span>
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <button
                                 type="button"
-                                onClick={async () => {
-                                    await handleLogout();
+                                onClick={() => {
+                                    handleLogout();
                                 }}
                                 disabled={isPending}
                                 className="text-left flex gap-2 items-center w-full px-2 py-1.5 text-sm hover:bg-secondary transition-colors select-none rounded-sm disabled:opacity-70"

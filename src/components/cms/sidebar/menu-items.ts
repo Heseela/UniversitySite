@@ -88,6 +88,16 @@ import {
       ],
     },
     {
+      groupLabel: "Admin",
+      menuItems: [
+        {
+          title: "Users",
+          url: "/cms/users",
+          icon: Users,
+        },
+      ],
+    },
+    {
       groupLabel: "Settings",
       menuItems: [
         {

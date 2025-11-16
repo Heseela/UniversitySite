@@ -8,7 +8,7 @@ export const contentType = "image/png";
 export default async function Icon() {
     try {
         const [setting] = await db.select({
-            logoLight: siteSetting.logoLight,
+            logoLight: siteSetting.logoLight_primary,
         }).from(siteSetting).limit(1);
 
         if (!setting) {

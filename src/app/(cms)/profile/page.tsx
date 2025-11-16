@@ -8,14 +8,13 @@ import { UpdateProfileForm } from '../auth/new-user/components/update-profile.fo
 
 export default async function ProfilePage() {
     const session = await getSession();
-    const isAdmin = session?.user?.role === 'admin';
 
     return (
-        <div>
-            <section className='mb-4'>
+        <div className='space-y-8'>
+            <section>
                 <h1 className='text-2xl'>Profile</h1>
                 <p>Email: {session?.user?.email}</p>
-                <p>Role: {session?.user?.role}</p>
+                <p className='capitalize'>Role: {session?.user?.role}</p>
             </section>
 
             <UpdateProfileForm
@@ -25,22 +24,19 @@ export default async function ProfilePage() {
                 }}
             />
 
-            {
-                isAdmin && (
-                    <Button>
-                        <Link href="/cms">Go to CMS</Link>
-                    </Button>
-                )
-            }
+            <section className='space-x-4'>
+                <Button>
+                    <Link href="/cms">Go to CMS</Link>
+                </Button>
 
-
-            <Button className='mt-4' type="button" onClick={async () => {
-                "use server"
-                await signOut()
-            }}>
-                <LogOut />
-                Logout
-            </Button>
+                <Button type="button" onClick={async () => {
+                    "use server"
+                    await signOut()
+                }}>
+                    <LogOut />
+                    Logout
+                </Button>
+            </section>
         </div>
     )
 }

@@ -18,6 +18,7 @@ export function ResponsiveAlertDialog({
     className,
     action,
     actionLabel = "Sure",
+    cancelLabel = "Cancel",
     isLoading = false,
     loadingText = "Deleting...",
     loadingButtonProps
@@ -28,6 +29,7 @@ export function ResponsiveAlertDialog({
     description?: string;
     className?: string;
     action: () => void;
+    cancelLabel?: string;
     actionLabel?: string;
     isLoading?: boolean;
     loadingText?: string;
@@ -45,7 +47,7 @@ export function ResponsiveAlertDialog({
                     }
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
                     <LoadingButton
                         isLoading={isLoading}
                         loadingText={loadingText}

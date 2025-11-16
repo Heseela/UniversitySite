@@ -1,15 +1,12 @@
-import { BlogCardSkeleton } from "@/components/site/blogs/blog-card";
-import { Button } from "@/components/ui/button";
-import YooptaEditorReadonly from "@/components/yoopta-editor/readonly";
 import { Metadata } from "next";
-import Link from "next/link";
-import { Suspense } from "react";
-import { TBlog } from "../../../../../types/blog.types";
 import { db } from "@/db";
-import { blogs } from "@/db/schema/blog";
+import { blogs, TBlogTableSelect } from "@/db/schema/blog";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
 import BlogHero from "@/components/site/blogs/blog-hero";
 import { isNull, not } from "drizzle-orm";
+import { RichTextPreview } from "@/components/editor/blocks/editor-x/rich-text-preview";
+import { notFound } from "next/navigation";
+import { TBlogsResponse_Public } from "../../../../../types/blog.types";
 
 type BlogPostProps = {
   params: Promise<{
@@ -34,7 +31,7 @@ export async function generateMetadata({
     };
   }
 
-  const blog: TBlog = await res.json();
+  const blog: TBlogTableSelect | null = await res.json();
 
   if (!blog) {
     return {
@@ -60,54 +57,21 @@ export default async function SingleBlogPage({ params }: BlogPostProps) {
     next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
   });
 
-  if (!res.ok) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Blog Post Not Found</h2>
-          <Link href="/blogs" className="btn btn-primary">
-            Back to Blogs
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  if (!res.ok) notFound();
 
-  const blog: TBlog = await res.json();
+  const blog: TBlogsResponse_Public[0] | null = await res.json();
 
-  if (!blog) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Blog Post Not Found</h2>
-          <p>
-            This can also happen if the author has updated the blog. You can
-            checkout later.
-          </p>
-          <Button type="button" asChild variant={"link"}>
-            <Link href="/blogs">Back to Blogs</Link>
-          </Button>
-        </div>
-      </div>
-    );
-  }
+  if (!blog) notFound();
 
   return (
     <>
       <BlogHero {...blog} />
 
       {/* Blog Content */}
-      <section className="py-8 md:py-12 md:mt-0 mt-[200px] bg-white">
-        <div className="container">
-          <div className="">
-            <div className="mb-10"></div>
-
-            <div className="prose prose-lg max-w-none">
-              <p className="text-lg leading-relaxed mb-6">{blog.summary}</p>
-
-              <YooptaEditorReadonly value={blog.content} />
-            </div>
-          </div>
+      <section className="md:mt-0 mt-[180px]">
+        <div className="max-w-6xl mx-auto p-6 my-10">
+          <p className="text-lg leading-relaxed mb-6">{blog.summary}</p>
+          <RichTextPreview html={blog.content.html} />
         </div>
       </section>
     </>

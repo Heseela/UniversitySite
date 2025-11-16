@@ -1,8 +1,6 @@
 import RenderHero from "@/components/site/heros/render-hero";
-import { Skeleton } from "@/components/ui/skeleton";
 import { fetchPage } from "@/lib/utilities/fetchPage";
 import { Metadata } from "next";
-import { Suspense } from "react";
 import { APPLY_FOR_JOB_SLUG } from "@/app/slugs";
 import RenderSections from "@/components/site/blocks/render-sections";
 
@@ -24,30 +22,7 @@ export default async function ApplyForJobPage() {
   return (
     <>
       <RenderHero heroSections={page.heroSections} />
-
-      <section className="container">
-        <Suspense fallback={<PageSkeleton />}>
-          <RenderSections sections={page.sections} />
-        </Suspense>
-      </section>
+      <RenderSections sections={page.sections} />
     </>
-  );
-}
-
-function PageSkeleton() {
-  return (
-    <div className="space-y-8">
-      <div className="space-y-4">
-        <Skeleton className="h-8 w-1/3" />
-        <Skeleton className="h-4 w-2/3" />
-      </div>
-      <div className="grid gap-6">
-        <Skeleton className="h-12 w-full" />
-        <Skeleton className="h-12 w-full" />
-        <Skeleton className="h-24 w-full" />
-        <Skeleton className="h-12 w-full" />
-        <Skeleton className="h-10 w-32" />
-      </div>
-    </div>
   );
 }

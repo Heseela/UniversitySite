@@ -32,6 +32,7 @@ function utf8Length(text: string) {
 
 interface CounterCharacterPluginProps {
   charset?: "UTF-8" | "UTF-16"
+  onStatsChange?: (stats: { characters: number, words: number }) => void
 }
 
 const strlen = (text: string, charset: "UTF-8" | "UTF-16") => {
@@ -48,6 +49,7 @@ const countWords = (text: string) => {
 
 export function CounterCharacterPlugin({
   charset = "UTF-16",
+  onStatsChange,
 }: CounterCharacterPluginProps) {
   const [editor] = useLexicalComposerContext()
   const [stats, setStats] = useState(() => {
@@ -60,10 +62,13 @@ export function CounterCharacterPlugin({
 
   useEffect(() => {
     return editor.registerTextContentListener((currentText: string) => {
-      setStats({
-        characters: strlen(currentText, charset),
-        words: countWords(currentText),
-      })
+      const newStats = {
+        characters: strlen(currentText, charset) || 0,
+        words: countWords(currentText) || 0,
+      };
+
+      setStats(newStats)
+      onStatsChange?.(newStats)
     })
   }, [editor, charset])
 

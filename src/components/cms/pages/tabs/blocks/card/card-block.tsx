@@ -1,4 +1,4 @@
-import { FieldArrayWithId, useFieldArray, useFormContext } from "react-hook-form"
+import { useFieldArray, useFormContext } from "react-hook-form"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -6,12 +6,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { BlockComponentProps } from "../blocks";
 import { ECardsBlockLayout } from "../../../../../../../types/blocks.types";
 import CardAccordion from "./card-accordion";
-import { MAX_CARD_BLOCK_CARDS, TPageDto } from "@/schemas/page.schema";
 import { richTextDefaultValues } from "@/schemas/rich-text.schema";
 import { Input } from "@/components/ui/input";
 import { NUMBER_REGEX_STRING } from "@/CONSTANTS";
 import FieldArraySortableContext from "@/components/dnd/field-array-sortable-context";
-import { useSortable } from "@dnd-kit/sortable";
+import { TPageDto } from "@/schemas/page.schema";
 
 export default function CardsBlock({ sectionIdx, blockIdx }: BlockComponentProps) {
     const form = useFormContext<TPageDto>();
@@ -57,88 +56,20 @@ export default function CardsBlock({ sectionIdx, blockIdx }: BlockComponentProps
 
             <FormField
                 control={form.control}
-                name={`${blockName}.columns`}
-                render={() => (
+                name={`${blockName}.colWidthLimit`}
+                render={({ field }) => (
                     <FormItem>
-                        <FormLabel>Columns</FormLabel>
-                        <section className="grid grid-cols-4 gap-2">
-                            <FormField
-                                control={form.control}
-                                name={`${blockName}.columns.sm`}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Small</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                className="py-5"
-                                                type="number"
-                                                pattern={NUMBER_REGEX_STRING}
-                                                max={MAX_CARD_BLOCK_CARDS}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
+                        <FormLabel>Column Width Limit (px) <span className="text-destructive">*</span></FormLabel>
+                        <FormControl>
+                            <Input
+                                className="py-5"
+                                type="number"
+                                pattern={NUMBER_REGEX_STRING}
+                                min={100}
+                                required
+                                {...field}
                             />
-                            <FormField
-                                control={form.control}
-                                name={`${blockName}.columns.md`}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Medium</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                className="py-5"
-                                                type="number"
-                                                pattern={NUMBER_REGEX_STRING}
-                                                max={MAX_CARD_BLOCK_CARDS}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={`${blockName}.columns.lg`}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Large</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                className="py-5"
-                                                type="number"
-                                                pattern={NUMBER_REGEX_STRING}
-                                                max={MAX_CARD_BLOCK_CARDS}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name={`${blockName}.columns.xl`}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Extra Large</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                className="py-5"
-                                                type="number"
-                                                pattern={NUMBER_REGEX_STRING}
-                                                max={MAX_CARD_BLOCK_CARDS}
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </section>
+                        </FormControl>
                         <FormMessage />
                     </FormItem>
                 )}

@@ -8,7 +8,7 @@ import { media } from "@/db/schema/media";
 import { revalidatePath } from "next/cache";
 
 export async function createGallery(categoryId: string) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     // check if gallery exists
     const [existing] = await db.select({ id: galleriesTable.id }).from(galleriesTable).where(eq(galleriesTable.categoryId, categoryId)).limit(1);
@@ -20,7 +20,7 @@ export async function createGallery(categoryId: string) {
 
 export async function addMediaToGallery(galleryId: string, mediaIds: string[]) {
     console.log(1)
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     await db.update(media).set({ galleryId }).where(inArray(media.id, mediaIds));
 
@@ -28,7 +28,7 @@ export async function addMediaToGallery(galleryId: string, mediaIds: string[]) {
 }
 
 export async function removeMediaFromGallery(mediaIds: string[]) {
-    await checkAuth("admin");
+    await checkAuth(["admin", "moderator"]);
 
     await db.update(media).set({ galleryId: null }).where(inArray(media.id, mediaIds));
 

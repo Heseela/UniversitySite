@@ -1,26 +1,17 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { serverFetch } from "@/lib/data-access.ts/server-fetch";
-import { TFooterDto } from "@/schemas/globals.schema";
-import { TSiteSettingSelect } from "@/db/schema/site-setting";
 import { cn, getSocialIcon } from "@/lib/utils";
+import { getFooter, getSiteSettings } from "@/lib/data-access.ts/site-settings.data";
+import CloudinaryImage from "../ui/cloudinary-image";
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
-  const [footerResponse, siteResponse] = await Promise.all([
-    serverFetch(`/footer`),
-    serverFetch("/site-settings"),
+  const [footer, siteSetting] = await Promise.all([
+    getFooter(),
+    getSiteSettings(),
   ]);
-
-  const footerData = footerResponse.ok
-    ? ((await footerResponse.json()) as TFooterDto)
-    : null;
-  const siteData = siteResponse.ok
-    ? ((await siteResponse.json()) as TSiteSettingSelect)
-    : null;
 
   return (
     <footer className="bg-primary text-white pt-16 pb-8">
@@ -28,45 +19,53 @@ export default async function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About Section */}
           <div className="space-y-4">
-           <div className="flex gap-4">
-           <Link href="/" className="flex items-center">
-              <Image
-                width={64}
-                height={64}
-                src={siteData?.logoDark_primary?.secure_url || `/logo.png`}
-                alt="Primary Logo"
-                className="h-16 w-auto"
-              />
-            </Link>
-            <Link href="/" className="flex items-center">
-              <Image
-                width={64}
-                height={64}
-                src={siteData?.logoDark_secondary?.secure_url || `/logo.png`}
-                alt="Secondary Logo"
-                className="h-16 w-auto"
-              />
-              </Link>
-           </div>
+            <div className="flex gap-4">
+              {
+                siteSetting.logoDark_primary && (
+                  <Link href="/" className="flex items-center">
+                    <CloudinaryImage
+                      width={64}
+                      height={64}
+                      src={siteSetting.logoDark_primary.secure_url}
+                      alt="Primary Logo"
+                      className="h-16 w-auto"
+                    />
+                  </Link>
+                )
+              }
+              {
+                siteSetting.logoDark_secondary && (
+                  <Link href="/" className="flex items-center">
+                    <CloudinaryImage
+                      width={64}
+                      height={64}
+                      src={siteSetting.logoDark_secondary.secure_url}
+                      alt="Secondary Logo"
+                      className="h-16 w-auto"
+                    />
+                  </Link>
+                )
+              }
+            </div>
             <p className="mb-4">
-              {footerData?.footerText || ""}
+              {footer?.footerText || ""}
             </p>
             <div className="flex space-x-4">
-              {siteData?.socialLinks?.map(
+              {siteSetting?.socialLinks?.map(
                 (social: { link: string }, index: number) => {
                   const Icon = getSocialIcon(social.link);
 
                   return (
                     <a
-                    key={index}
-                    href={social.link}
-                    aria-label={`Social Link ${index + 1}`}
-                    className="hover:text-secondary transition-transform duration-200 hover:scale-110"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon className="size-6" />
-                  </a>
+                      key={index}
+                      href={social.link}
+                      aria-label={`Social Link ${index + 1}`}
+                      className="hover:text-secondary transition-transform duration-200 hover:scale-110"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icon className="size-6" />
+                    </a>
                   )
                 }
               )}
@@ -78,7 +77,7 @@ export default async function Footer() {
             <h4 className="text-white text-xl font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {
-                footerData?.navLinks?.map((link) => (
+                footer?.navLinks?.map((link) => (
                   <Link key={link.text} href={link.url} className="block">
                     {link.text}
                   </Link>
@@ -92,26 +91,26 @@ export default async function Footer() {
             <h4 className="text-white text-xl font-bold mb-4">Contact Info</h4>
             <ul className="space-y-3">
               {
-                siteData?.address && (
+                siteSetting?.address && (
                   <li className="flex gap-x-2">
                     <MapPin size={20} className="flex-shrink-0" />
-                    <span>{siteData.address}</span>
+                    <span>{siteSetting.address}</span>
                   </li>
                 )
               }
               {
-                (siteData?.phones && siteData.phones.length > 0) && (
+                (siteSetting?.phones && siteSetting.phones.length > 0) && (
                   <li className="flex gap-x-2">
                     <Phone size={20} className="flex-shrink-0" />
                     <span className="flex flex-wrap gap-x-2">
-                      {siteData.phones.map((phone: string, index: number) => (
+                      {siteSetting.phones.map((phone: string, index: number) => (
                         <a
                           key={index}
                           href={`tel:${phone.replace(/\s/g, "")}`}
                           className="hover:underline decoration-accent"
                         >
                           {phone}
-                          {index < siteData.phones.length - 1 && ","}
+                          {index < siteSetting.phones.length - 1 && ","}
                         </a>
                       ))}
                     </span>
@@ -119,21 +118,21 @@ export default async function Footer() {
                 )
               }
               {
-                (siteData?.emails && siteData.emails.length > 0) && (
+                (siteSetting?.emails && siteSetting.emails.length > 0) && (
                   <li className="flex gap-x-2">
                     <Mail size={20} className="flex-shrink-0" />
                     <span className="flex flex-wrap gap-x-1">
-                      {siteData.emails.map((email: string, index: number) => (
+                      {siteSetting.emails.map((email: string, index: number) => (
                         <a
                           key={email}
                           href={`mailto:${email}`}
                           className={cn(
                             "hover:underline decoration-accent",
-                            siteData.emails.length > 1 ? "text-sm" : ""
+                            siteSetting.emails.length > 1 ? "text-sm" : ""
                           )}
                         >
                           {email}
-                          {index < siteData.emails.length - 1 && ","}
+                          {index < siteSetting.emails.length - 1 && ","}
                         </a>
                       ))}
                     </span>
