@@ -1,4 +1,3 @@
-import React from "react";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
 import { TCredibilityAndSupport } from "@/schemas/credibility-and-support.schema";
 import { FaqClient } from "./faq-client";
@@ -9,37 +8,15 @@ interface FaqResponse {
 }
 
 export const RenderFaqBlock = async () => {
-  try {
-    const faqResponse = await serverFetch(
-      "/credibility-and-support?col=faqs,faqCategories"
-    );
+  const faqResponse = await serverFetch("/credibility-and-support?col=faqs,faqCategories", {
+    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
+  });
 
-    if (!faqResponse.ok) {
-      console.error("Failed to fetch FAQs");
-      return (
-        <div className="text-center py-12">
-          <p className="text-gray-500">Failed to load FAQs. Please try again later.</p>
-        </div>
-      );
-    }
+  if (!faqResponse.ok) return null;
 
-    const faqData = await faqResponse.json() as FaqResponse;
+  const faqData: FaqResponse = await faqResponse.json();
 
-    if (!faqData?.faqs?.length) {
-      return (
-        <div className="text-center py-12">
-          <p className="text-gray-500">No FAQs available at the moment.</p>
-        </div>
-      );
-    }
+  if (!faqData.faqs.length) return null;
 
-    return <FaqClient faqData={faqData} />;
-  } catch (error) {
-    console.error("Error fetching FAQs:", error);
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500">Error loading FAQs. Please try again later.</p>
-      </div>
-    );
-  }
+  return <FaqClient faqData={faqData} />;
 };

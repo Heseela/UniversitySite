@@ -4,8 +4,6 @@ import { Metadata } from "next";
 import { APPLY_FOR_JOB_SLUG } from "@/app/slugs";
 import RenderSections from "@/components/site/blocks/render-sections";
 
-export const revalidate = 60;
-
 export const generateMetadata = async (): Promise<Metadata> => {
   const page = await fetchPage(APPLY_FOR_JOB_SLUG);
 

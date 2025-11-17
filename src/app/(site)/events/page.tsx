@@ -11,8 +11,6 @@ import { TPaginatedOptions } from "../../../../types/global.types";
 import { EventCardSkeleton } from "@/components/site/events/event-card";
 import { EVENTS_SLUG } from "@/app/slugs";
 
-export const revalidate = 60;
-
 export const generateMetadata = async (): Promise<Metadata> => {
   const page = await fetchPage(EVENTS_SLUG);
 

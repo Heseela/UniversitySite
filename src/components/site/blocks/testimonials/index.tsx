@@ -2,7 +2,6 @@ import CloudinaryImage from "@/components/ui/cloudinary-image";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
 import { TCredibilityAndSupport } from "@/schemas/credibility-and-support.schema";
 import { Quote, Star } from "lucide-react";
-import React from "react";
 
 interface TestimonialCardProps {
   testimonial: TCredibilityAndSupport["testimonials"][0];
@@ -14,13 +13,15 @@ interface testimonialResponse {
 }
 
 export const RenderTestimonialBlock = async () => {
-  const testimonialResponse = await serverFetch(
-    "/credibility-and-support?col=testimonials"
-  );
+  const testimonialResponse = await serverFetch("/credibility-and-support?col=testimonials", {
+    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
+  });
 
-  const testimonials = testimonialResponse.ok
-    ? ((await testimonialResponse.json()) as testimonialResponse)
-    : null;
+  if (!testimonialResponse.ok) return null;
+
+  const testimonials: testimonialResponse = await testimonialResponse.json();
+
+  if (!testimonials.testimonials.length) return null;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -8,8 +8,6 @@ import { CourseCardSkeleton } from "@/components/site/course/course-card";
 import CoursesContainer from "@/components/site/course/courses-container";
 import CoursesSearchFilters_Public from "@/components/site/course/courses-search-filters";
 
-export const revalidate = 60;
-
 export const generateMetadata = async (): Promise<Metadata> => {
   const page = await fetchPage(COURSES_SLUG);
   return {

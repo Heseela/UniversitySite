@@ -1,14 +1,10 @@
 import RenderHero from "@/components/site/heros/render-hero";
-import { Skeleton } from "@/components/ui/skeleton";
 import { serverFetch } from "@/lib/data-access.ts/server-fetch";
 import { fetchPage } from "@/lib/utilities/fetchPage";
 import { Metadata } from "next";
-import { Suspense } from "react";
 import { GALLERY_SLUG } from "@/app/slugs";
 import GalleryContainer from "@/components/site/gallery/gallery-container";
 import { TGalleryResponse } from "../../../../types/gallery.types";
-
-export const revalidate = 60;
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const page = await fetchPage(GALLERY_SLUG);

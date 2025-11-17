@@ -8,29 +8,23 @@ interface PartnerResponse {
 }
 
 export const RenderPartnerBlock = async () => {
-  const partnerResponse = await serverFetch(
-    "/credibility-and-support?col=partners"
-  );
+  const partnerResponse = await serverFetch("/credibility-and-support?col=partners", {
+    next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
+  });
 
-  const partners = partnerResponse.ok
-    ? ((await partnerResponse.json()) as PartnerResponse)
-    : null;
+  if (!partnerResponse.ok) return null;
 
-  if (!partners?.partners?.length) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-gray-500">No partners available at the moment.</p>
-      </div>
-    );
-  }
+  const partners: PartnerResponse = await partnerResponse.json();
+
+  if (!partners.partners.length) return null;
 
   return (
     <div className="relative">
       <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
       <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
-      
+
       <div className="flex overflow-hidden">
-        <div 
+        <div
           className="flex items-center py-4 hover:pause-animation"
           style={{
             animation: 'infinite-scroll 30s linear infinite',
@@ -82,9 +76,9 @@ const PartnerCard: React.FC<PartnerCardProps> = ({ partner }) => {
 
   if (partner.link) {
     return (
-      <Link 
-        href={partner.link} 
-        target="_blank" 
+      <Link
+        href={partner.link}
+        target="_blank"
         rel="noopener noreferrer"
         className="block"
       >

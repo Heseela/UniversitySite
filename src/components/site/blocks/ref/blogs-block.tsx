@@ -19,8 +19,10 @@ export default async function BlogsBlock({
     order: order,
   });
 
-  if (selected?.length)
+  if (selected?.length) {
     urlSearchParams.set("slugs", selected.map((s) => s.value)?.join(","));
+  }
+  
   const res = await serverFetch("/blogs" + `?${urlSearchParams.toString()}`, {
     next: { revalidate: parseInt(process.env.NEXT_PUBLIC_DATA_REVALIDATE_SEC!) },
   });
