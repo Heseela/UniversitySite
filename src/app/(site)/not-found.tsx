@@ -44,33 +44,6 @@ export default function NotFound() {
                     </Button>
                 </div>
 
-                {/* Helpful links */}
-                <div className="pt-8 border-t border-border/50 mt-12">
-                    <p className="text-sm text-muted-foreground mb-4">Looking for something specific?</p>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                        <Link
-                            href="/"
-                            className="text-sm text-foreground hover:text-primary transition-colors underline underline-offset-4"
-                        >
-                            Home
-                        </Link>
-                        <span className="text-muted-foreground">•</span>
-                        <Link
-                            href="/about"
-                            className="text-sm text-foreground hover:text-primary transition-colors underline underline-offset-4"
-                        >
-                            About
-                        </Link>
-                        <span className="text-muted-foreground">•</span>
-                        <Link
-                            href="/#contact"
-                            className="text-sm text-foreground hover:text-primary transition-colors underline underline-offset-4"
-                        >
-                            Contact
-                        </Link>
-                    </div>
-                </div>
-
                 {/* Decorative accent */}
                 <div className="pt-8">
                     <div className="w-16 h-1 bg-accent rounded-full mx-auto" />

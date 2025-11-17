@@ -62,20 +62,22 @@ export default function RenderTextBlock({
         <RichTextPreview html={body.html} />
       </section>
       {Array.isArray(cta) && cta.length > 0 && (
-        <ul
-          className={cn(
-            "flex gap-4 mt-10",
-            align === EAlignment.Center
-              ? "justify-center"
-              : align === EAlignment.Right && "justify-end"
-          )}
-        >
-          {cta.map((cta, index) => (
-            <li key={index}>
-              <CMSLink size={"lg"} {...cta} />
-            </li>
-          ))}
-        </ul>
+        <div className="@container">
+          <ul
+            className={cn(
+              "mt-10 flex gap-4 @xs:flex-row flex-col",
+              align === EAlignment.Center
+                ? "justify-center"
+                : align === EAlignment.Right && "justify-end"
+            )}
+          >
+            {cta.map((cta, index) => (
+              <li key={index}>
+                <CMSLink size={"lg"} {...cta} />
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </section>
   );

@@ -14,8 +14,8 @@ export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
   return (
     <section
       className={cn(
-        " h-[80vh] max-h-[400px]",
-        hero.image?.secure_url && "h-[80vh] max-h-[600px]",
+        "h-[80vh] max-h-[400px]",
+        hero.image?.secure_url && "h-[80vh] max-h-[800px]",
       )}
       style={{
         background: hero.image?.secure_url

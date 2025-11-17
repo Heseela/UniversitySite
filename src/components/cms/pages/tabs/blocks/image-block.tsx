@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form'
 import { TMediaSchema } from '@/schemas/media.schema'
 import { TPageDto } from '@/schemas/page.schema'
 
-const MAX_IMAGES = 3;
+const MAX_IMAGES = 4;
 
 export default function ImageBlock({ blockIdx, sectionIdx }: BlockComponentProps) {
     const form = useFormContext<TPageDto>();
