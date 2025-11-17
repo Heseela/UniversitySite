@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  reactCompiler: true,
+  cacheComponents: true,
   async headers() {
     return [
       {
@@ -19,10 +21,6 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.pexels.com",
       },
     ]
   }

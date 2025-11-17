@@ -7,11 +7,13 @@ import { getFooter, getSiteSettings } from "@/lib/data-access.ts/site-settings.d
 import CloudinaryImage from "../ui/cloudinary-image";
 
 export default async function Footer() {
-  const currentYear = new Date().getFullYear();
   const [footer, siteSetting] = await Promise.all([
     getFooter(),
     getSiteSettings(),
   ]);
+  // Note: new Date() must be called AFTER accessing uncached data (fetch, cookies, headers, etc.)
+  // This is a Next.js requirement for Server Components to ensure proper rendering
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-primary text-white pt-16 pb-8">
