@@ -11,7 +11,7 @@ export default function RenderImageBlock({
     return (
       <div className="flex justify-center">
         <CloudinaryImage
-          className="w-full h-auto rounded-2xl shadow-lg"
+          className="w-full h-auto rounded-2xl shadow-lg object-cover"
           src={images[0].secure_url}
           width={images[0].width}
           height={images[0].height}

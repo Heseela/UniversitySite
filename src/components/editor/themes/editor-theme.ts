@@ -13,7 +13,7 @@ export const editorTheme: EditorThemeClasses = {
     h5: "scroll-m-20 text-lg font-semibold tracking-tight",
     h6: "scroll-m-20 text-base font-semibold tracking-tight",
   },
-  paragraph: "leading-6",
+  paragraph: "leading-6 font-normal [&>span]:font-normal",
   quote: "mt-6 border-l-2 pl-6 italic",
   link: "text-blue-600 hover:underline hover:cursor-pointer",
   list: {
@@ -26,7 +26,7 @@ export const editorTheme: EditorThemeClasses = {
     nested: {
       listitem: "list-none before:hidden after:hidden",
     },
-    ol: "my-6 ml-6 list-decimal [&>li]:mt-2",
+    ol: "my-6 ml-6 list-decimal [&>li]:mt-1",
     olDepth: [
       "list-outside !list-decimal",
       "list-outside !list-[upper-roman]",
@@ -34,7 +34,7 @@ export const editorTheme: EditorThemeClasses = {
       "list-outside !list-[upper-alpha]",
       "list-outside !list-[lower-alpha]",
     ],
-    ul: "m-0 p-0 list-disc [&>li]:mt-2",
+    ul: "m-0 p-0 list-disc [&>li]:mt-1",
   },
   hashtag: "text-blue-600 bg-blue-100 rounded-md px-1",
   text: {

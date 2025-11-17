@@ -12,7 +12,6 @@ import { showServerError } from "@/lib/utils";
 import { siteSettingSchema, TSiteSettingSchema } from "@/schemas/site-setting.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -23,7 +22,6 @@ type Props = {
 
 export default function SiteSettingForm({ defaultValues }: Props) {
     const [isPending, startTransition] = useTransition();
-    const router = useRouter();
 
     const form = useForm<TSiteSettingSchema>({
         resolver: zodResolver(siteSettingSchema),
@@ -74,15 +72,6 @@ export default function SiteSettingForm({ defaultValues }: Props) {
                                 </p>
                             </section>
                             <section className="space-x-3">
-                                <Button
-                                    type="button"
-                                    variant={'outline'}
-                                    size={'lg'}
-                                    onClick={() => router.push("/cms/site-settings")}
-                                >
-                                    Cancel
-                                </Button>
-
                                 <LoadingButton
                                     type="submit"
                                     size={"lg"}

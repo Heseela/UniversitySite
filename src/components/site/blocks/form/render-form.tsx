@@ -23,19 +23,20 @@ import { useState, useTransition } from "react";
 import { FormFieldType } from "@/schemas/forms.schema";
 import { MediaInput__Public, MediaItem__Public } from "@/components/media/media-field-public";
 import { TMediaSchema } from "@/schemas/media.schema";
+import isEmptyHTML from "@/lib/utilities/rich-text.utils";
 
 export default function RenderFormFields({ fields, introContent, id, submitBtnLabel }: FormBlockDto & TForm) {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string[]>([]);
     const [media, setMedia] = useState<TMediaSchema | null>(null);
-    
+
     // Initialize form data state with default values
     const [formData, setFormData] = useState<Record<string, unknown>>(() => {
         const initialData: Record<string, unknown> = {};
         fields?.forEach((field) => {
             if (field.type === FormFieldType.Checkbox) {
-                initialData[field.name] = typeof field.defaultValue === "boolean" 
-                    ? field.defaultValue 
+                initialData[field.name] = typeof field.defaultValue === "boolean"
+                    ? field.defaultValue
                     : field.defaultValue === "true";
             } else if (field.type === FormFieldType.File) {
                 initialData[field.name] = "";
@@ -48,11 +49,11 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
 
     function handleFormSubmission(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        
+
         const data: Record<string, unknown> = { ...formData };
 
         const mediaFieldName = fields.find(f => f.type === FormFieldType.File)?.name;
-        
+
         if (media && mediaFieldName) {
             data[mediaFieldName] = media.secure_url;
         }
@@ -67,8 +68,8 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                     const resetData: Record<string, unknown> = {};
                     fields?.forEach((field) => {
                         if (field.type === FormFieldType.Checkbox) {
-                            resetData[field.name] = typeof field.defaultValue === "boolean" 
-                                ? field.defaultValue 
+                            resetData[field.name] = typeof field.defaultValue === "boolean"
+                                ? field.defaultValue
                                 : field.defaultValue === "true";
                         } else if (field.type === FormFieldType.File) {
                             resetData[field.name] = "";
@@ -91,10 +92,14 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
     }
 
     return (
-        <Card className="w-full  mx-auto h-fit">
-            <CardHeader>
-                <RichTextPreview html={introContent?.html || ""} />
-            </CardHeader>
+        <Card className="w-full max-w-6xl mx-auto h-fit">
+            {
+                !isEmptyHTML(introContent?.html || "") && (
+                    <CardHeader>
+                        <RichTextPreview html={introContent?.html || ""} />
+                    </CardHeader>
+                )
+            }
             <CardContent>
                 <form onSubmit={handleFormSubmission} className="space-y-6">
                     {fields?.map((field, idx) => (
@@ -119,8 +124,8 @@ export default function RenderFormFields({ fields, introContent, id, submitBtnLa
                                     }
                                 </>
                             ) : (
-                                <RenderField 
-                                    field={field} 
+                                <RenderField
+                                    field={field}
                                     value={formData[field.name]}
                                     onChange={(value) => setFormData(prev => ({ ...prev, [field.name]: value }))}
                                 />
@@ -165,11 +170,11 @@ const Label = ({ field }: { field: TForm["fields"][0] }) => {
     );
 };
 
-const RenderField = ({ 
-    field, 
-    value, 
-    onChange 
-}: { 
+const RenderField = ({
+    field,
+    value,
+    onChange
+}: {
     field: TForm["fields"][0];
     value: unknown;
     onChange: (value: unknown) => void;

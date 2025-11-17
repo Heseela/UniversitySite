@@ -19,6 +19,7 @@ import {
 
 const FONT_FAMILY_OPTIONS = [
   "Arial",
+  "Manrope",
   "Verdana",
   "Times New Roman",
   "Georgia",
