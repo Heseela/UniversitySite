@@ -14,7 +14,7 @@ export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
   const imageUrl = hero.image?.secure_url;
 
   return (
-    <section className={cn("relative py-20 overflow-hidden")}>
+    <section className={cn("relative py-20 overflow-hidden h-[80vh] max-h-[700px] bg-gray-50")}>
       <div
         className={cn(
           "mx-auto container flex flex-col xl:flex-row items-center gap-10",

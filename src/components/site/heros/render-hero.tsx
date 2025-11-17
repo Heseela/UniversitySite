@@ -24,34 +24,32 @@ export default function RenderHero({ heroSections }: RenderHeroProps) {
   if (heroSections.length === 1) return <Hero hero={heroSections[0]} />;
 
   return (
-    <div className="relative w-full">
-      <Swiper
-        modules={[Autoplay, EffectFade, Pagination, A11y]}
-        spaceBetween={0}
-        slidesPerView={1}
-        loop={true}
-        speed={1000}
-        effect="fade"
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
-        pagination={{
-          clickable: true,
-          bulletClass: "swiper-pagination-bullet",
-          bulletActiveClass: "swiper-pagination-bullet-active",
-          renderBullet: (index, className) => {
-            return `<span class="${className} custom-bullet" aria-label="Go to slide ${index + 1}"></span>`;
-          },
-        }}
-      >
-        {heroSections.map((hero, index) => (
-          <SwiperSlide key={index}>
-            <Hero hero={hero} />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
+    <Swiper
+      modules={[Autoplay, EffectFade, Pagination, A11y]}
+      spaceBetween={0}
+      slidesPerView={1}
+      loop={true}
+      speed={1000}
+      effect="fade"
+      autoplay={{
+        delay: 5000,
+        disableOnInteraction: false,
+      }}
+      pagination={{
+        clickable: true,
+        bulletClass: "swiper-pagination-bullet",
+        bulletActiveClass: "swiper-pagination-bullet-active",
+        renderBullet: (index, className) => {
+          return `<span class="${className} custom-bullet" aria-label="Go to slide ${index + 1}"></span>`;
+        },
+      }}
+    >
+      {heroSections.map((hero, index) => (
+        <SwiperSlide key={index}>
+          <Hero hero={hero} />
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 }
 
