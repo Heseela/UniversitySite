@@ -82,9 +82,11 @@ export default async function Footer() {
             <ul className="space-y-2">
               {
                 footer?.navLinks?.map((link) => (
-                  <Link key={link.text} href={link.url} className="block">
-                    {link.text}
-                  </Link>
+                  <li key={link.text}>
+                    <Link href={link.url} className="flex items-center py-1 min-h-[44px]">
+                      {link.text}
+                    </Link>
+                  </li>
                 ))
               }
             </ul>
@@ -131,9 +133,10 @@ export default async function Footer() {
                           key={email}
                           href={`mailto:${email}`}
                           className={cn(
-                            "hover:underline decoration-accent",
-                            siteSetting.emails.length > 1 ? "text-sm" : ""
+                            "hover:underline decoration-accent min-h-[44px] min-w-[44px] flex items-center px-2 -mx-2",
+                            siteSetting.emails.length > 1 ? "text-base" : "text-base"
                           )}
+                          aria-label={`Send email to ${email}`}
                         >
                           {email}
                           {index < siteSetting.emails.length - 1 && ","}
