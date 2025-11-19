@@ -16,6 +16,7 @@ export default function RenderImageBlock({
           width={images[0].width}
           height={images[0].height}
           alt={images[0].alt || "Image"}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 80vw"
         />
       </div>
     )
@@ -63,6 +64,7 @@ function ImageItem({ image, className }: { image: TMediaSchema; className?: stri
       width={image.width}
       height={image.height}
       alt={image.alt || "Image"}
+      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
     />
   )
 }

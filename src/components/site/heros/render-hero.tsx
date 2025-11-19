@@ -3,11 +3,15 @@
 import { THeroSectionDto } from "@/schemas/hero-section.schema";
 import SplitHero from "./split-hero";
 import JumboTron from "./jumbotron";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade, Pagination, A11y } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/effect-fade";
-import "swiper/css/pagination";
+import dynamic from "next/dynamic";
+
+const SwiperWithModules = dynamic(
+  () => import("./swiper-hero").then((mod) => mod.default),
+  { 
+    ssr: false,
+    loading: () => <div className="h-[80vh] max-h-[700px] bg-gray-100 animate-pulse" aria-label="Loading hero section" />
+  }
+);
 
 export type RenderHeroProps = {
   heroSections: THeroSectionDto[];
@@ -23,41 +27,14 @@ export default function RenderHero({ heroSections }: RenderHeroProps) {
 
   if (heroSections.length === 1) return <Hero hero={heroSections[0]} />;
 
-  return (
-    <Swiper
-      modules={[Autoplay, EffectFade, Pagination, A11y]}
-      spaceBetween={0}
-      slidesPerView={1}
-      loop={true}
-      speed={1000}
-      effect="fade"
-      autoplay={{
-        delay: 5000,
-        disableOnInteraction: false,
-      }}
-      pagination={{
-        clickable: true,
-        bulletClass: "swiper-pagination-bullet",
-        bulletActiveClass: "swiper-pagination-bullet-active",
-        renderBullet: (index, className) => {
-          return `<span class="${className} custom-bullet" aria-label="Go to slide ${index + 1}"></span>`;
-        },
-      }}
-    >
-      {heroSections.map((hero, index) => (
-        <SwiperSlide key={index}>
-          <Hero hero={hero} />
-        </SwiperSlide>
-      ))}
-    </Swiper>
-  );
+  return <SwiperWithModules heroSections={heroSections} />;
 }
 
 function Hero({ hero }: { hero: THeroSectionDto }) {
   const type = hero.layout.type;
   if (!type) return null;
 
-  const HeroToRender = heros[type];
+  const HeroToRender = heros[type as keyof typeof heros];
   if (!HeroToRender) return null;
 
   return <HeroToRender hero={hero} />;

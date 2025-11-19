@@ -9,6 +9,9 @@ import { QCProvider } from "@/context/query-client-provider";
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
@@ -29,7 +32,7 @@ export default function SiteLayout({ children }: Props) {
         <body className={`${manrope.variable} antialiased`}>
           <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-grow">{children}</main>
+            <div className="flex-grow">{children}</div>
             <Footer />
           </div>
           <Toaster richColors />

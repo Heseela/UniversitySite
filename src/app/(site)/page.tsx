@@ -33,10 +33,10 @@ export default async function Page() {
   const page = await fetchPage(HOME_SLUG);
 
   return (
-    <div>
+    <main>
       <RenderHero heroSections={page.heroSections} />
       <RenderSections sections={page.sections} />
-    </div>
+    </main>
   );
 }
 

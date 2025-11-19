@@ -13,15 +13,26 @@ interface Props extends ImageProps {
     width?: number,
     height?: number,
     sizes?: string,
+    priority?: boolean,
+    loading?: "lazy" | "eager",
     crop?: "crop" | "fill" | "auto" | "fill_pad" | "fit" | "imagga_crop" | "imagga_scale" | "lfill" | "limit" | "lpad" | "mfit" | "mpad" | "pad" | "scale" | "thumb",
     blurDataURL?: string
 }
 
-export default function CloudinaryImage(props: Props) {
+export default function CloudinaryImage({ 
+    sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+    loading = "lazy",
+    priority = false,
+    ...props 
+}: Props) {
     return (
         <CldImage
             placeholder="blur"
             blurDataURL={placeholderBlur}
+            sizes={sizes}
+            loading={priority ? "eager" : loading}
+            preload={priority}
+            quality={85}
             {...props}
         />
     )
