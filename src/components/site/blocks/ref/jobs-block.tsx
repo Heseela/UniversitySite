@@ -125,9 +125,9 @@ function JobCard({ job, className }: JobCardProps) {
             <div className="p-6 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-4">
                     <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+                        <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-primary transition-colors">
                             {job.title}
-                        </h3>
+                        </h2>
 
                         <div className="flex items-center text-gray-600 mb-3">
                             <Building size={16} className="mr-2 flex-shrink-0" />
@@ -140,7 +140,7 @@ function JobCard({ job, className }: JobCardProps) {
                     <Badge className={cn("capitalize border", getJobTypeColor(job.type))}>
                         {job.type.replace('-', ' ')}
                     </Badge>
-                    <Badge className="capitalize bg-pink-100 border border-pink-200 text-[var(--pinkish)]">
+                    <Badge className="capitalize bg-pink-100 border border-pink-200 text-pinkish">
                         {job.status}
                     </Badge>
                 </div>

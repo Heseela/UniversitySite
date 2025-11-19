@@ -21,7 +21,7 @@ function SubHeader({ siteData }: SubHeaderProps) {
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0 py-3">
                 {/* Announcement Section */}
                 <div className="flex items-center overflow-hidden whitespace-nowrap flex-1 mr-4 w-full">
-                    <span className="bg-[var(--pinkish)] font-bold mr-4 text-sm px-4 py-2 rounded-full">
+                    <span className="bg-pinkish font-bold mr-4 text-base px-4 py-2 rounded-full text-white">
                         ANNOUNCEMENT
                     </span>
                     <div className="relative w-full max-w-[500px] overflow-hidden">

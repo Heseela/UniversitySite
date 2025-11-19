@@ -2,7 +2,6 @@ import { TEventsResponse_Public } from "../../../../types/event.types";
 import {
   Calendar,
   Clock,
-  ExternalLink,
   Globe,
   MapPin,
   User,
@@ -39,7 +38,7 @@ export default function EventCard({ event }: Props) {
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <Badge className="absolute top-4 right-4 bg-[var(--pinkish)] text-white border-none px-3 py-1 rounded-full text-xs font-bold">
+                <Badge className="absolute top-4 right-4 bg-pinkish text-white border-none px-3 py-1 rounded-full text-xs font-bold">
                   {event.categoryName}
                 </Badge>
               </div>
@@ -48,7 +47,7 @@ export default function EventCard({ event }: Props) {
 
           <div className="grow flex flex-col p-6">
 
-            <h3 className="text-xl font-bold mb-2">{event.title}</h3>
+            <h2 className="text-xl font-bold mb-2">{event.title}</h2>
 
             <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm text-slate-600 mb-4">
               <div className="flex items-center">
@@ -90,8 +89,8 @@ export default function EventCard({ event }: Props) {
               asChild
               className="mt-auto w-full bg-primary hover:bg-blue-700 text-white py-2 transition-colors"
             >
-              <Link href={"/events/" + event.slug}>
-                Learn More
+              <Link href={"/events/" + event.slug} aria-label={`Learn more about ${event.title} event`}>
+                Learn More About {event.title}
               </Link>
             </Button>
           </div>

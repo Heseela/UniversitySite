@@ -45,7 +45,7 @@ export default function CourseCard({ course, className }: Props) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
 
         {course.duration && (
-          <Badge className="absolute bottom-4 left-4 bg-[var(--pinkish)] text-white px-3 py-1 rounded-full text-sm font-medium border-0">
+          <Badge className="absolute bottom-4 left-4 bg-pinkish text-white px-3 py-1 rounded-full text-sm font-medium border-0">
             <Clock size={14} className="mr-1" />
             {course.duration} years
           </Badge>
@@ -59,9 +59,9 @@ export default function CourseCard({ course, className }: Props) {
           </Badge>
         )}
 
-        <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
+        <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
           {course.name}
-        </h3>
+        </h2>
 
         {course.summary && (
           <p className="text-gray-600 mb-5 line-clamp-3 flex-grow">
@@ -86,9 +86,9 @@ export default function CourseCard({ course, className }: Props) {
 
         {features.length > 0 && (
           <div className="border-t border-gray-100 pt-4 mt-auto">
-            <h4 className="text-sm font-semibold text-gray-500 uppercase mb-3">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase mb-3">
               Program Features
-            </h4>
+            </h3>
             <ul className="space-y-2">
               {features.slice(0, 3).map((feature, index) => (
                 <li key={index} className="flex items-end gap-2">
@@ -104,8 +104,8 @@ export default function CourseCard({ course, className }: Props) {
           asChild
           className="mt-6 w-full bg-primary hover:bg-blue-700 text-white py-2 transition-colors"
         >
-          <Link href={`/courses/${course.slug}`}>
-            Learn More
+          <Link href={`/courses/${course.slug}`} aria-label={`Learn more about ${course.name}`}>
+            Learn More About {course.name}
           </Link>
         </Button>
       </div>

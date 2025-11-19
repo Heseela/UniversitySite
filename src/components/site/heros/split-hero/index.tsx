@@ -11,7 +11,7 @@ export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
   if (layoutType !== EHeroLayoutTypes.Split_Hero) return null;
 
   const imagePosition = hero.layout.imagePosition;
-  const imageUrl = hero.image?.secure_url;
+  const heroImage = hero.image;
 
   return (
     <section className={cn("relative py-20 overflow-hidden h-[80vh] max-h-[700px] bg-gray-50")}>
@@ -20,19 +20,20 @@ export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
           "mx-auto container flex flex-col xl:flex-row items-center gap-10",
         )}
       >
-        {imageUrl && (
+        {heroImage && (
           <div className={cn(
             "flex justify-center items-center w-full md:flex-1 mb-6 md:mb-0",
             imagePosition === EAlignmentExcludeCenter.Right && "order-2"
           )}>
             <CloudinaryImage
+              src={heroImage.secure_url}
+              width={heroImage.width}
+              height={heroImage.height}
+              alt={heroImage.alt || "Hero background"}
               className="w-full rounded-2xl h-auto object-cover"
-              src={imageUrl}
-              width={500}
-              height={300}
-              alt={hero.image?.alt || "Hero image"}
+              loading="eager"
               priority
-              sizes="(max-width: 768px) 100vw, 50vw"
+              fetchPriority="high"
             />
           </div>
         )}
