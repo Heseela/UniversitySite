@@ -27,6 +27,7 @@ export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
             priority
+            fetchPriority="high"
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
