@@ -30,7 +30,9 @@ export default function SplitHero({ hero }: { hero: THeroSectionDto }) {
               src={imageUrl}
               width={500}
               height={300}
-              alt={hero.image?.alt || "Image"}
+              alt={hero.image?.alt || "Hero image"}
+              priority
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         )}

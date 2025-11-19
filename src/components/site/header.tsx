@@ -30,8 +30,17 @@ export default function Header({
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 5);
-    window.addEventListener("scroll", handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 5);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -50,23 +59,29 @@ export default function Header({
     >
       <div className="container mx-auto flex items-center justify-between">
        <div className="flex gap-4">
-       <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center" aria-label="Home">
           <CloudinaryImage
             width={64}
             height={64}
             src={siteData?.logoLight_primary?.secure_url || `/logo.png`}
             alt="Primary Logo"
+            priority
+            loading="eager"
+            sizes="64px"
             className={cn(
               "h-14 w-auto transition-all duration-300",
             )}
           />
         </Link>
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center" aria-label="Home">
           <CloudinaryImage
             width={64}
             height={64}
             src={siteData?.logoLight_secondary?.secure_url || `/logo.png`}
             alt="Secondary Logo"
+            priority
+            loading="eager"
+            sizes="64px"
             className={cn(
               "h-14 w-auto transition-all duration-300",
             )}

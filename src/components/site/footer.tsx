@@ -24,12 +24,13 @@ export default async function Footer() {
             <div className="flex gap-4">
               {
                 siteSetting.logoDark_primary && (
-                  <Link href="/" className="flex items-center">
+                  <Link href="/" className="flex items-center" aria-label="Home">
                     <CloudinaryImage
                       width={64}
                       height={64}
                       src={siteSetting.logoDark_primary.secure_url}
                       alt="Primary Logo"
+                      sizes="64px"
                       className="h-16 w-auto"
                     />
                   </Link>
@@ -37,12 +38,13 @@ export default async function Footer() {
               }
               {
                 siteSetting.logoDark_secondary && (
-                  <Link href="/" className="flex items-center">
+                  <Link href="/" className="flex items-center" aria-label="Home">
                     <CloudinaryImage
                       width={64}
                       height={64}
                       src={siteSetting.logoDark_secondary.secure_url}
                       alt="Secondary Logo"
+                      sizes="64px"
                       className="h-16 w-auto"
                     />
                   </Link>
@@ -61,12 +63,12 @@ export default async function Footer() {
                     <a
                       key={index}
                       href={social.link}
-                      aria-label={`Social Link ${index + 1}`}
+                      aria-label={`Visit our social media page`}
                       className="hover:text-secondary transition-transform duration-200 hover:scale-110"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Icon className="size-6" />
+                      <Icon className="size-6" aria-hidden="true" />
                     </a>
                   )
                 }
