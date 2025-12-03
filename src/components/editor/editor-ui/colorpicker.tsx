@@ -8,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { EDITOR_COLORS } from "./colors-config"
+import { PRESET_COLORS } from "./colors-config"
 
 type Props = {
   disabled?: boolean
@@ -58,7 +58,7 @@ export default function ColorPicker({
         />
         <section className="flex p-1 gap-1 flex-wrap">
           {
-            EDITOR_COLORS.map(({ name, value }) => (
+            PRESET_COLORS.map(({ name, value }) => (
               <button
                 key={value}
                 type="button"

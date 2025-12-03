@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   async headers() {
+    if (process.env.NODE_ENV === 'development') {
+      return []; // No custom headers in development
+    }
+
     return [
       {
         source: '/:path*{/}?',
@@ -38,7 +42,11 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self'",
               "img-src 'self' data: https://res.cloudinary.com https://*.cloudinary.com",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
+              // Use strict-dynamic to allow scripts loaded by Next.js runtime
+              // This allows Next.js to load its own scripts while preventing XSS
+              "script-src 'self' 'strict-dynamic' 'unsafe-eval'",
+              // Allow inline styles for Tailwind CSS and Next.js
+              // In production, consider using nonces for better security
               "style-src 'self' 'unsafe-inline'",
               "font-src 'self' data:",
               "connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com",
@@ -48,7 +56,13 @@ const nextConfig: NextConfig = {
               "form-action 'self'",
               "frame-ancestors 'self'",
               "upgrade-insecure-requests",
+              // Trusted Types for DOM XSS protection
+              "require-trusted-types-for 'script'",
             ].join('; '),
+          },
+          {
+            key: 'Cross-Origin-Opener-Policy',
+            value: 'same-origin',
           },
         ],
       },
@@ -61,6 +75,7 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+    qualities: [25, 50, 75, 85, 100],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,

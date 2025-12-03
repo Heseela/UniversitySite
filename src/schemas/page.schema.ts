@@ -214,7 +214,8 @@ export const PageSectionSchema = z
       .optional(),
     headlineAlignment: z.nativeEnum(EAlignment),
     blocks: PageBlocksSchema.optional(),
-    container: z.boolean().optional(),
+    isContainer: z.boolean(),
+    backgroundColor: z.string().optional(),
   })
   .strict();
 

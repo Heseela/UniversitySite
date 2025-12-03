@@ -13,7 +13,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,6 +25,8 @@ import FieldArraySortableContext from "@/components/dnd/field-array-sortable-con
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities"
 import { BLOGS_SLUG, COURSES_SLUG, EVENTS_SLUG, APPLY_FOR_JOB_SLUG, GALLERY_SLUG, JOBS_SLUG } from "@/app/slugs";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ColorPicker } from "@/components/ui/color-picker";
 
 const sectionDefaultValue: TPageSection = {
     tagline: "",
@@ -36,6 +38,8 @@ const sectionDefaultValue: TPageSection = {
         direction: "horizontal",
         items: []
     },
+    isContainer: true,
+    backgroundColor: "#fff",
 }
 
 export default function ContentTabContent({ slug }: { slug: string }) {
@@ -297,27 +301,46 @@ function SortableField({
                                                     />
                                                 )
                                             }
-
-                                            {/* <FormField
+                                            <FormField
                                                 control={form.control}
-                                                name={`sections.${idx}.container`}
-                                                render={({ field }) => {
-                                                    return (
-                                                        <FormItem className="flex flex-row items-center gap-2">
-                                                            <FormControl>
-                                                                <Checkbox
-                                                                    checked={field.value}
-                                                                    onCheckedChange={(checked) => field.onChange(checked)}
-                                                                />
-                                                            </FormControl>
-                                                            <FormLabel className="text-sm font-normal">
+                                                name={`sections.${idx}.isContainer`}
+                                                render={({ field }) => (
+                                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 h-fit">
+                                                        <FormControl>
+                                                            <Checkbox
+                                                                checked={field.value}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                        </FormControl>
+                                                        <div className="space-y-1 leading-none">
+                                                            <FormLabel>
                                                                 Is Container?
                                                             </FormLabel>
+                                                            <FormDescription>
+                                                                Enable this to wrap the section content within a centered container with horizontal padding.
+                                                            </FormDescription>
                                                             <FormMessage />
-                                                        </FormItem>
-                                                    )
-                                                }}
-                                            /> */}
+                                                        </div>
+                                                    </FormItem>
+                                                )}
+                                            />
+
+                                            <FormField
+                                                control={form.control}
+                                                name={`sections.${idx}.backgroundColor`}
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormLabel>Background Color</FormLabel>
+                                                        <FormControl>
+                                                            <ColorPicker
+                                                                value={field.value || "#ffffff"}
+                                                                onChange={color => field.onChange(color)}
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
 
                                         </AccordionContent>
                                     </AccordionItem>
