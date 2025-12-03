@@ -1,58 +1,30 @@
-export const EDITOR_COLORS = [
+export const PRESET_COLORS = [
     {
         name: "Background",
-        value: "var(--backgrond)",
+        value: "#ffffff",
     },
     {
         name: "Foreground",
-        value: "var(--foreground)",
-    },
-    {
-        name: "Card",
-        value: "var(--card)",
-    },
-    {
-        name: "Card Foreground",
-        value: "var(--card-foreground)",
+        value: "#0a0a0a",
     },
     {
         name: "Primary",
-        value: "var(--primary)",
+        value: "#21429a",
     },
     {
         name: "Primary Foreground",
-        value: "var(--primary-foreground)",
-    },
-    {
-        name: "Secondary",
-        value: "var(--secondary)",
-    },
-    {
-        name: "Secondary Foreground",
-        value: "var(--secondary-foreground)",
+        value: "#fafafa",
     },
     {
         name: "Muted",
-        value: "var(--muted)",
+        value: "#f5f5f5",
     },
     {
         name: "Muted Foreground",
-        value: "var(--muted-foreground)",
-    },
-    {
-        name: "Accent",
-        value: "var(--accent)",
-    },
-    {
-        name: "Accent Foreground",
-        value: "var(--accent-foreground)",
+        value: "#737373",
     },
     {
         name: "Destructive",
-        value: "var(--destructive)",
-    },
-    {
-        name: "Destructive Foreground",
-        value: "var(--destructive-foreground)",
+        value: "#e7000b",
     },
 ]

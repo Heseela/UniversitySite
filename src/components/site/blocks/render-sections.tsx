@@ -16,6 +16,7 @@ import { RenderFaqBlock } from "./faq";
 import { FC } from "react";
 import RenderTimelineBlock from "./timeline";
 import { RenderAlumniBlock } from "./alumni";
+import contrastRatio from "@/lib/contrast-ratio";
 
 type Props = {
   sections: TPageDto["sections"];
@@ -35,7 +36,6 @@ const blockToRender: Record<EBlock, FC<any>> = {
   [EBlock.Certification]: RenderCertificationBlock,
   [EBlock.Map]: RenderMapBlock,
   [EBlock.Timeline]: RenderTimelineBlock
-  
 }
 
 export default function RenderSections({ sections }: Props) {
@@ -51,15 +51,16 @@ export default function RenderSections({ sections }: Props) {
           <section
             key={idx}
             className={cn(
-              "py-20 relative even:bg-gray-50 first:!pt-20",
+              "py-20 relative first:!pt-20",
             )}
             style={
               {
                 "--cols": s.blocks?.items.length,
+                backgroundColor: s.backgroundColor,
               } as React.CSSProperties
             }
           >
-            <section className={"container mx-auto"}>
+            <section className={s.isContainer ? "container mx-auto" : "lg:px-8 px-4"}>
               {
                 (!!s.headline || !!s.tagline || !!s.subheadline) && (
                   <div
@@ -108,8 +109,13 @@ export default function RenderSections({ sections }: Props) {
 function SectionTagline(s: TPageDto["sections"][0]) {
   if (!s.tagline) return null;
 
+  const ratio = contrastRatio(s.backgroundColor || "#ffffff", "#21429a");
+
   return (
-    <span className="text-primary font-semibold">
+    <span className={cn(
+      "font-semibold",
+      ratio >= 4.5 ? "text-primary" : "text-white"
+    )}>
       {s.tagline}
     </span>
   )
@@ -118,10 +124,13 @@ function SectionTagline(s: TPageDto["sections"][0]) {
 function SectionHeadline(s: TPageDto["sections"][0]) {
   if (!s.headline) return null;
 
+  const ratio = contrastRatio(s.backgroundColor || "#ffffff", "#21429a");
+
   return (
     <h2
       className={cn(
-        "text-4xl font-bold text-primary",
+        "text-4xl font-bold",
+        ratio >= 4.5 ? "text-primary" : "text-white",
         s.headlineAlignment === EAlignment.Left
           ? "text-left"
           : s.headlineAlignment === EAlignment.Center
@@ -137,10 +146,13 @@ function SectionHeadline(s: TPageDto["sections"][0]) {
 function SectionSubHeadline(s: TPageDto["sections"][0]) {
   if (!s.subheadline) return null;
 
+  const ratio = contrastRatio(s.backgroundColor || "#ffffff", "#21429a");
+
   return (
     <p
       className={cn(
         "text-muted-foreground max-w-6xl text-balance",
+        ratio >= 4.5 ? "text-muted-foreground" : "text-white",
         s.headlineAlignment === EAlignment.Left
           ? "text-left"
           : s.headlineAlignment === EAlignment.Center

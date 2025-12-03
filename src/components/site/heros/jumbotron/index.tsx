@@ -29,6 +29,7 @@ export default function JumboTron({ hero }: { hero: THeroSectionDto }) {
             priority
             fetchPriority="high"
             aria-hidden="true"
+            sizes="100vw"
           />
           <div className="absolute inset-0 bg-black/30" aria-hidden="true" />
         </>
