@@ -37,29 +37,29 @@ const nextConfig: NextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()',
           },
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "img-src 'self' data: https://res.cloudinary.com https://*.cloudinary.com",
-              // Use strict-dynamic to allow scripts loaded by Next.js runtime
-              // This allows Next.js to load its own scripts while preventing XSS
-              "script-src 'self' 'strict-dynamic' 'unsafe-eval'",
-              // Allow inline styles for Tailwind CSS and Next.js
-              // In production, consider using nonces for better security
-              "style-src 'self' 'unsafe-inline'",
-              "font-src 'self' data:",
-              "connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com",
-              "frame-src 'self'",
-              "object-src 'none'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "frame-ancestors 'self'",
-              "upgrade-insecure-requests",
-              // Trusted Types for DOM XSS protection
-              "require-trusted-types-for 'script'",
-            ].join('; '),
-          },
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: [
+          //     "default-src 'self'",
+          //     "img-src 'self' data: https://res.cloudinary.com https://*.cloudinary.com",
+          //     // Use strict-dynamic to allow scripts loaded by Next.js runtime
+          //     // This allows Next.js to load its own scripts while preventing XSS
+          //     "script-src 'self' 'strict-dynamic' 'unsafe-eval'",
+          //     // Allow inline styles for Tailwind CSS and Next.js
+          //     // In production, consider using nonces for better security
+          //     "style-src 'self' 'unsafe-inline'",
+          //     "font-src 'self' data:",
+          //     "connect-src 'self' https://res.cloudinary.com https://*.cloudinary.com",
+          //     "frame-src 'self'",
+          //     "object-src 'none'",
+          //     "base-uri 'self'",
+          //     "form-action 'self'",
+          //     "frame-ancestors 'self'",
+          //     "upgrade-insecure-requests",
+          //     // Trusted Types for DOM XSS protection
+          //     "require-trusted-types-for 'script'",
+          //   ].join('; '),
+          // },
           {
             key: 'Cross-Origin-Opener-Policy',
             value: 'same-origin',
