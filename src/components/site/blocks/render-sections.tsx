@@ -17,6 +17,7 @@ import { FC } from "react";
 import RenderTimelineBlock from "./timeline";
 import { RenderAlumniBlock } from "./alumni";
 import contrastRatio from "@/lib/contrast-ratio";
+import CloudinaryImage from "@/components/ui/cloudinary-image";
 
 type Props = {
   sections: TPageDto["sections"];
@@ -50,9 +51,7 @@ export default function RenderSections({ sections }: Props) {
         return (
           <section
             key={idx}
-            className={cn(
-              "py-20 relative first:!pt-20",
-            )}
+            className={"py-20 relative first:!pt-20"}
             style={
               {
                 "--cols": s.blocks?.items.length,
@@ -60,7 +59,7 @@ export default function RenderSections({ sections }: Props) {
               } as React.CSSProperties
             }
           >
-            <section className={s.isContainer ? "container mx-auto" : "lg:px-8 px-4"}>
+            <section className={cn("relative z-1", s.isContainer ? "container mx-auto" : "lg:px-8 px-4")}>
               {
                 (!!s.headline || !!s.tagline || !!s.subheadline) && (
                   <div
@@ -99,6 +98,22 @@ export default function RenderSections({ sections }: Props) {
                 }
               </section>
             </section>
+            {
+              s.backgroundImage && (
+                <div className="absolute inset-0">
+                  <CloudinaryImage
+                    src={s.backgroundImage.secure_url}
+                    alt={s.backgroundImage.alt}
+                    fill
+                    loading="lazy"
+                    className="object-cover"
+                    aria-hidden="true"
+                    aria-label="Background"
+                  />
+                  <div className="absolute inset-0 bg-black/40" />
+                </div>
+              )
+            }
           </section>
         );
       })}

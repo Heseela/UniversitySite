@@ -38,7 +38,6 @@ export default function BlockField({ sectionIdx }: { sectionIdx: number }) {
             name={`sections.${sectionIdx}.blocks`}
             render={() => (
                 <FormItem>
-                    <FormLabel>Blocks</FormLabel>
                     <FieldArraySortableContext
                         fields={fields}
                         move={move}

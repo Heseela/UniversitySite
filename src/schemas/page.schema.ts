@@ -216,6 +216,7 @@ export const PageSectionSchema = z
     blocks: PageBlocksSchema.optional(),
     isContainer: z.boolean(),
     backgroundColor: z.string().optional(),
+    backgroundImage: mediaSchema.nullish(),
   })
   .strict();
 
